@@ -200,6 +200,39 @@
             }
         }
 
+
+
+
+        public function buscar_por_nome($nome)
+        {
+            $sql = "SELECT * FROM tutores WHERE nome LIKE ?";
+            $stm = $this->db->prepare($sql);
+            $stm->bindValue(1, '%' . $nome . '%');
+            $stm->execute();
+            return $stm->fetchAll(PDO::FETCH_OBJ);
+        }
+
+        public function buscar_por_rg($rg)
+        {
+            $sql = "SELECT * FROM tutores WHERE rg LIKE ?";
+            $stm = $this->db->prepare($sql);
+            $stm->bindValue(1, '%' . $rg . '%');
+            $stm->execute();
+            return $stm->fetchAll(PDO::FETCH_OBJ);
+        }
+
+        public function buscar_por_cpf($cpf)
+        {
+            $sql = "SELECT * FROM tutores WHERE cpf LIKE ?";
+            $stm = $this->db->prepare($sql);
+            $stm->bindValue(1, '%' . $cpf . '%');
+            $stm->execute();
+            return $stm->fetchAll(PDO::FETCH_OBJ);
+        }
+
+
+
+
         // EXCLUIR TUTOR
         public function excluir($tutor)
 		{

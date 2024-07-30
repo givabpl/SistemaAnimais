@@ -223,6 +223,18 @@
         // LISTAR
         public function listar()
         {
+
+            $limite = 15;
+
+            $pagina_atual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
+            $offset = ($pagina_atual - 1) * $limite;
+
+            $animalDAO = new animalDAO();
+            $retorno = $animalDAO->buscar_animais_paginados($offset, $limite);
+
+            $total_registros = $animalDAO->contar_animais();
+
+            $retorno_paginado = array_slice($retorno, $offset, $limite);
             // VERIFICA SESSAO DO VETERINARIO P/ EXIBIR DADOS PRIVADOS
             session_start();
             if(!isset($_SESSION["id_vet"]))

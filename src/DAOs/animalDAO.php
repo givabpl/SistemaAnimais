@@ -55,6 +55,8 @@
             return $stm->fetchAll(PDO::FETCH_OBJ);
         }
 
+
+
         // BUSCAR ANIMAIS PPUBLICO
         public function buscar_animais_publico()
         {
@@ -66,6 +68,31 @@
             $this->db = null;
             return $stm->fetchAll(PDO::FETCH_OBJ);
         }
+
+
+        public function buscar_animais_paginados($offset, $limite)
+        {
+            $sql = "SELECT animais.*, tutores.nome AS nome_tutor, tutores.sobrenome AS sobrenome_tutor 
+            FROM animais 
+            JOIN tutores ON animais.id_tutor = tutores.id_tutor
+            LIMIT :offset, :limite";
+            $stm = $this->db->prepare($sql);
+            $stm->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
+            $stm->bindValue(':limite', (int) $limite, PDO::PARAM_INT);
+            $stm->execute();
+            return $stm->fetchAll(PDO::FETCH_OBJ);
+        }
+
+        public function contar_animais()
+        {
+            $sql = "SELECT COUNT(*) AS total FROM animais";
+            $stm = $this->db->prepare($sql);
+            $stm->execute();
+            $result = $stm->fetch(PDO::FETCH_OBJ);
+            return $result->total;
+        }
+
+
 
         // ORDENAR ANIMAIS POR ORDEM ALFABETICA
         public function ordenar_animais_alf()
@@ -228,6 +255,37 @@
                 return null;
             }
         }
+
+
+
+        public function buscar_por_nome($nome)
+        {
+            $sql = "SELECT * FROM animais WHERE nome LIKE ?";
+            $stm = $this->db->prepare($sql);
+            $stm->bindValue(1, '%' . $nome . '%');
+            $stm->execute();
+            return $stm->fetchAll(PDO::FETCH_OBJ);
+        }
+        public function buscar_por_rga($rga)
+        {
+            $sql = "SELECT * FROM animais WHERE rga LIKE ?";
+            $stm = $this->db->prepare($sql);
+            $stm->bindValue(1, '%' . $rga . '%');
+            $stm->execute();
+            return $stm->fetchAll(PDO::FETCH_OBJ);
+        }
+
+        public function buscar_por_chip($chip)
+        {
+            $sql = "SELECT * FROM animais WHERE chip LIKE ?";
+            $stm = $this->db->prepare($sql);
+            $stm->bindValue(1, '%' . $chip . '%');
+            $stm->execute();
+            return $stm->fetchAll(PDO::FETCH_OBJ);
+        }
+
+
+
 
         // EXCLUIR ANIMAL
         public function excluir($animal)

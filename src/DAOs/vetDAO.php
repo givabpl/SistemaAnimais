@@ -68,4 +68,24 @@
                 return null;
             }
         }
+
+        public function buscar_por_nome($nome)
+        {
+            $sql = "SELECT * FROM veterinarios WHERE nome LIKE ?";
+            $stm = $this->db->prepare($sql);
+            $stm->bindValue(1, '%' . $nome . '%');
+            $stm->execute();
+            return $stm->fetchAll(PDO::FETCH_OBJ);
+        }
+
+        public function buscar_por_crmv($crmv)
+        {
+            $sql = "SELECT * FROM veterinarios WHERE crmv LIKE ?";
+            $stm = $this->db->prepare($sql);
+            $stm->bindValue(1, '%' . $crmv . '%');
+            $stm->execute();
+            return $stm->fetchAll(PDO::FETCH_OBJ);
+        }
+
+
     }

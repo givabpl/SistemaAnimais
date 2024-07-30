@@ -191,6 +191,38 @@
             }         
         }
 
+
+
+        public function buscar_por_titulo($titulo)
+        {
+            $sql = "SELECT * FROM prontuarios WHERE titulo LIKE ?";
+            $stm = $this->db->prepare($sql);
+            $stm->bindValue(1, '%' . $titulo . '%');
+            $stm->execute();
+            return $stm->fetchAll(PDO::FETCH_OBJ);
+        }
+
+        // tem que fazer join
+        public function buscar_por_vet($vet)
+        {
+            $sql = "SELECT * FROM prontuarios WHERE vet LIKE ?";
+            $stm = $this->db->prepare($sql);
+            $stm->bindValue(1, '%' . $vet . '%');
+            $stm->execute();
+            return $stm->fetchAll(PDO::FETCH_OBJ);
+        }
+
+        public function buscar_por_local($local)
+        {
+            $sql = "SELECT * FROM prontuarios WHERE local LIKE ?";
+            $stm = $this->db->prepare($sql);
+            $stm->bindValue(1, '%' . $local . '%');
+            $stm->execute();
+            return $stm->fetchAll(PDO::FETCH_OBJ);
+        }
+
+
+
         // EXCLUIR PRONTUARIO
         public function excluir($pront)
         {

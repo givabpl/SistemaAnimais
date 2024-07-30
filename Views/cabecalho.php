@@ -76,12 +76,13 @@
                         </li>
                         </ul>
                         <div class='collapse navbar-collapse justify-content-end'>
-                            <form class="d-flex" role="search">
+                            <form class="d-flex" role="search" method="get" action="#">
+                                <input type="hidden" name="controle" value="buscaController">
+                                <input type="hidden" name="metodo" value="buscar">
                                 <input class="form-control me-2" type="search" placeholder="Busca" aria-label="Search">
                                 <button class="btn btn-outline-success" type="submit">Buscar</button>
                             </form>
                         </div>
-                        
                     <?php endif; ?>
                 
             </div>
@@ -89,3 +90,38 @@
 	</nav>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <div class="container">
+        <!-- Adicione a seção de resultados de busca -->
+        <?php if (!empty($animais) || !empty($tutores) || !empty($vets) || !empty($pronts)): ?>
+            <h2>Resultados da Busca</h2>
+
+            <h3>Animais</h3>
+            <ul>
+                <?php foreach ($animais as $animal): ?>
+                    <li><?php echo $animal->nome; ?></li>
+                <?php endforeach; ?>
+            </ul>
+
+            <h3>Tutores</h3>
+            <ul>
+                <?php foreach ($tutores as $tutor): ?>
+                    <li><?php echo $tutor->nome; ?></li>
+                <?php endforeach; ?>
+            </ul>
+
+            <h3>Veterinários</h3>
+            <ul>
+                <?php foreach ($vets as $vet): ?>
+                    <li><?php echo $vet->nome; ?></li>
+                <?php endforeach; ?>
+            </ul>
+
+            <h3>Prontuários</h3>
+            <ul>
+                <?php foreach ($pronts as $pront): ?>
+                    <li><?php echo $pront->titulo; ?></li>
+                <?php endforeach; ?>
+            </ul>
+        <?php endif; ?>
+    </div>
