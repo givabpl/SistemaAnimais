@@ -20,6 +20,6 @@ Este projeto está organizado no modelo MVC (Model, View e Controller), em PHP.
 - **/Views/** contém views de início e subpastas referentes a cada classe, essas subpastas agregam as demais visões.
 - **/Controllers/** contém arquivos de classe que possuem métodos que realizam intermédio entre **Views, DAOs e Models**
 
-### Função de Cada Visão
-
-- index.php é requere inicioController, que requere inicio.php
+### Biblioteca Utilizada
+Esse projeto utiliza a biblioteca mPDF para gerar os PDFs de prontuário, receita, perfil do animal, animal desaparecido e animal perdido.
+Os arquivos de PDF estão em Views e inicial com pdf
