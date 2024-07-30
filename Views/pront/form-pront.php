@@ -159,18 +159,19 @@
                         value="<?php echo isset($_POST['receita'])?$_POST['receita']:'';?>"></textarea>
             </div>
 
-            <!-- INTERNACAO (SELECT SIM OU NAO) -->
-            <!-- RECEITA TEXT AREA-->
-
+            <!-- ARQUIVOS -->
             <div class="col-md-4">
-                <label for="arquivo" class="form-label">UPLOAD DE ARQUIVO</label> <br>
+                <label for="arquivos" class="form-label">UPLOAD DE ARQUIVO</label> <br>
                 <input 
                     type="file" 
-                    name="arquivo" 
-                    id="arquivo" 
-                    value="<?php echo isset($_POST['arquivo'])?$_POST['arquivo']:'';?>">            
+                    name="arquivos[]"
+                    id="arquivos"
+                    multiple
+                    value="<?php echo isset($_POST['arquivos'])?$_POST['arquivos']:'';?>">
+                    <div id="file-list"></div>
             </div>
 
+            <!-- PESO -->
             <div class="col-md-4">
                 <label for="peso" class="form-label">PESO (Kg)</label>
                 <input
@@ -207,12 +208,22 @@
             medTextarea.style.display = 'none';
         }
     });
+
     document.getElementById('internacao').addEventListener('change', function(){
         var intTextarea = document.getElementById('internacao_textarea');
         if(this.value === 'Sim') {
             intTextarea.style.display = 'block';
         } else {
             intTextarea.style.display = 'none';
+        }
+    });
+
+    document.getElementById('arquivos').addEventListener('change', function(){
+        var fileList = document.getElementById('file-list');
+        fileList.innerHTML = "";
+        for (var i = 0; i < this.files.length; i++) {
+            var file = this.files[i];
+            fileList.innerHTML += "<p>" + file.name + "</p>";
         }
     });
 </script>

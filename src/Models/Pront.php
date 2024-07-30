@@ -14,7 +14,7 @@
             private string $internacao = "",
             private string $internacao_info = "",
             private string $receita = "",
-            private string $arquivo = "",
+            private string $arquivos = "",
             private string $peso = "",
             private $animal = null,
             private $vet = null
@@ -71,9 +71,9 @@
             return $this->receita;
         }
 
-        public function getArquivo()
+        public function getArquivos()
         {
-            return $this->arquivo;
+            return $this->arquivos;
         }
 
         public function getPeso()

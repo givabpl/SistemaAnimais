@@ -171,11 +171,17 @@
         // GERAR PDF DO PERFIL DO ANIMAL
         public function gerar_pdf()
         {
+            session_start();
+            if(!isset($_SESSION["id_vet"]))
+            {
+                header("location:index.php?controle=achadoController&metodo=listar_publico");
+                exit();
+            }
             if(isset($_GET["id"]))
             {
                 $achado = new Achado($_GET["id"]);
                 $achadoDAO = new achadoDAO();
-                $retorno = $achadoDAO->buscar_achado_publico($achado);
+                $retorno = $achadoDAO->buscar_achado($achado);
             }
             require_once "Views/achado/pdf-achado.php";
         }

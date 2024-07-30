@@ -70,18 +70,28 @@
                     $erro = true;
                 }
 
-                $arquivo = "";
-                if(isset($_FILES["arquivo"]) && $_FILES["arquivo"]["error"] == UPLOAD_ERR_OK)
+                $arquivos = [];
+                if(isset($_FILES["arquivos"]))
                 {
-                    $arquivo = $_FILES["arquivo"]["name"];
-                    move_uploaded_file($_FILES["arquivo"]["tmp_name"], "uploads/" . $arquivo);
+                    $uploads_dir = "uploads/";
+                    foreach ($_FILES['arquivos']['error'] as $key => $error)
+                    {
+                        if ($error == UPLOAD_ERR_OK)
+                        {
+                            $tmp_name = $_FILES["arquivos"]["tmp_name"][$key];
+                            $name = basename($_FILES["arquivos"]["name"][$key]);
+                            move_uploaded_file($tmp_name, "$uploads_dir/$name");
+                            $arquivos[] = "$uploads_dir/$name";
+                        }
+                    }
                 }
+
                 if(!$erro)
                 {
                     $animal = new Animal($_POST["id_animal"]);
                     $vet = new Vet($_POST["vet"]);
 
-                    $pront = new Pront(titulo:$_POST["titulo"], dataa:$_POST["dataa"], locala:$_POST["locala"], descritivo:$_POST["descritivo"], medicacao:$_POST["medicacao"], medicacao_info:$_POST["medicacao_info"], internacao:$_POST["internacao"], internacao_info:$_POST["internacao_info"], receita:$_POST["receita"],arquivo:$arquivo, peso:$_POST["peso"], animal:$animal, vet:$vet);
+                    $pront = new Pront(titulo:$_POST["titulo"], dataa:$_POST["dataa"], locala:$_POST["locala"], descritivo:$_POST["descritivo"], medicacao:$_POST["medicacao"], medicacao_info:$_POST["medicacao_info"], internacao:$_POST["internacao"], internacao_info:$_POST["internacao_info"], receita:$_POST["receita"], arquivos:$arquivos, peso:$_POST["peso"], animal:$animal, vet:$vet);
 
                     $prontDAO = new prontDAO();
                     $prontDAO->criar($pront);

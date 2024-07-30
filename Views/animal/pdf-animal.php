@@ -74,7 +74,7 @@ try {
     $mpdf->WriteHTML($html);
 
     // Define o nome do arquivo PDF para download
-    $mpdf->Output('meu_primeiro_pdf.pdf', \Mpdf\Output\Destination::INLINE);
+    $mpdf->Output('pdf_perfil_animal.pdf', \Mpdf\Output\Destination::INLINE);
 
     echo "PDF gerado com sucesso!";
     

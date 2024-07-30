@@ -15,7 +15,7 @@
         // CRIAR PRONTUARIO
         public function criar($pront)
         {
-            $sql = "INSERT INTO prontuarios (titulo, dataa, locala, descritivo, medicacao, medicacao_info, internacao, internacao_info, receita, arquivo, peso, id_animal, id_vet) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            $sql = "INSERT INTO prontuarios (titulo, dataa, locala, descritivo, medicacao, medicacao_info, internacao, internacao_info, receita, arquivos, peso, id_animal, id_vet) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
             $stm = $this->db->prepare($sql);
             $stm->bindValue(1, $pront->getTitulo());
@@ -27,7 +27,7 @@
             $stm->bindValue(7, $pront->getInter());
             $stm->bindValue(8, $pront->getIntInfo());
             $stm->bindValue(9, $pront->getReceita());
-            $stm->bindValue(10, $pront->getArquivo());
+            $stm->bindValue(10, json_encode($pront->getArquivos()));
             $stm->bindValue(11, $pront->getPeso());
             $stm->bindValue(12, $pront->getAnimal()->getId());
             $stm->bindValue(13, $pront->getVet()->getId());

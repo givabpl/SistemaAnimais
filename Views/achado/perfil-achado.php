@@ -100,8 +100,9 @@
                     <div>
                         <button onclick="history.back()" class="btn btn-primary"><i class="bi bi-caret-left-fill"></i> Voltar</button>
 
-                        <a href="index.php?controle=perdidoController&metodo=gerar_pdf&id=<?= $dado->id_perdido ?>" class="btn btn-danger" target="_blank"><i class="bi bi-file-earmark-pdf"></i> PDF Encontrado</a>
+                        <a href="index.php?controle=achadoController&metodo=gerar_pdf&id=<?= $dado->id_achado ?>" class="btn btn-danger" target="_blank"><i class="bi bi-file-earmark-pdf"></i> Formulário</a>
                     </div>
+                        <br>
                     <p>
                         O PDF: Caso o tutor seja encontrado, preencher com informações do mesmo. Caso o tutor não seja encontrado, preencher com informações do novo tutor.
                         <br>

@@ -99,9 +99,9 @@
                                 Anexo 
                             </h6>
                             <p class="card-text">
-                                <?php if(!empty($dado->arquivo)): ?>
+                                <?php if(!empty($dado->arquivos)): ?>
                                     <i class="bi bi-download"></i>
-                                    <a href="uploads/<?= $dado->arquivo ?>" download>Download do Arquivo</a> <!-- LINK DE DOWNLOAD -->
+                                    <a href="uploads/<?= $dado->arquivos ?>" download>Download do Arquivo</a> <!-- LINK DE DOWNLOAD -->
                                 <?php else: ?>
                                     Nenhum anexo encontrado
                                 <?php endif; ?>
