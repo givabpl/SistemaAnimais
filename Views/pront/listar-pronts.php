@@ -1,0 +1,102 @@
+
+<?php require_once ROOT_PATH . '/views/cabecalho.php'; ?>
+
+<div class="content" id="listar-animais">
+    <div class="container">
+        
+        <?php
+            if(isset($_GET["msg"]))
+            {
+                echo "<div class='alert alert-success' role='alert'>{$_GET['msg']}</div>";
+            }
+        ?>
+    
+        <div>
+            <h1 class="row justify-content-center align-items-center">Prontuários</h1><br>
+                <div class="mb-3 row">
+                        <div class="col-2">
+                            <i class="bi bi-arrow-down-up"></i>
+                            Ordenar por
+                        </div>
+                        <div class="col-2">
+                            <a class="btn btn-outline-secondary" href="index.php?controle=prontController&metodo=listar">
+                                _/_/_ 
+                                Data
+                            </a>
+                        </div>
+
+                        <div class="col-2">
+                            <a class="btn btn-outline-secondary" href="index.php?controle=prontController&metodo=listar_local">
+                                <i class="bi bi-geo-alt"></i>
+                                Local
+                            </a>
+                        </div>
+
+                        <div class="col-2">
+                            <a class="btn btn-outline-secondary" href="index.php?controle=prontController&metodo=listar_tutor">
+                                <i class="bi bi-person-square"></i>
+                                Tutor
+                            </a>
+                        </div>
+
+                        <div class="col-2">
+                            <a class="btn btn-outline-secondary" href="index.php?controle=prontController&metodo=listar_vet">
+                                <i class="bi bi-activity"></i>
+                                Veterinário
+                            </a>
+                        </div>
+                </div>
+        
+                <div class="">
+                    
+                    <table class="table table-hover table-striped table-striped-color w-100">
+                        <tr>
+                            <th>Data</th>
+                            <th>Local</th>
+                            <th>Paciente</th>
+                            <th>Tutor</th>
+                            <th>Veterinário</th>
+                            <th>Ações</th>
+                        </tr>
+                        <?php if (is_array($retorno) || is_object($retorno)): ?>
+                            <?php foreach($retorno as $dado): ?>
+                                <tr>
+                                    <td>
+                                        <?= $dado->data_formatada ?>
+                                    </td>
+                                    <td><?= $dado->locala ?></td>
+                                    <td><?= $dado->nome_animal ?></td>
+                                    <td><?= $dado->nome_tutor ?>&nbsp;<?= $dado->sobrenome ?></td>
+                                    <td><?= $dado->nome_vet ?></td>
+                                    <td>
+                                        <div class="d-flex flex-wrap">
+                                            <div class="p-2">
+                                                <a class="btn btn-outline-primary" href="index.php?controle=prontController&metodo=abrir&id=<?= $dado->id_pront ?>">
+                                                    <i class="bi bi-eye"></i> Visualizar
+                                                </a>
+                                            </div>
+
+                                            <?php if(isset($_SESSION["tipo"]) && $_SESSION["tipo"] == "Administrador"): ?>
+                                                &nbsp;
+                                                <div class="p-2">
+                                                    <a class="btn btn-outline-danger" href="index.php?controle=prontController&metodo=excluir&id=<?= $dado->id_pront ?>&return_url=<?= urlencode($_SERVER['REQUEST_URI']) ?>">
+                                                        <i class="bi bi-x-square"></i> Excluir
+                                                    </a>
+                                                </div>
+                                            <?php endif; ?>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr><td colspan='4'>Nenhum prontuário encontrado.</td></tr>
+                        <?php endif; ?>
+                    </table>
+                </div>
+        </div>
+        <br>
+    
+    </div>
+</div>
+
+<?php require_once ROOT_PATH . '/views/rodape.html'; ?>

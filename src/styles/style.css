@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+
+body{
+    font-family: "Manrope", sans-serif;
+    font-weight: 400;
+    min-height: 100vh;
+}
+
+.navbar{
+    background-color: #c4e6ff;
+}
+
+.table-striped-color{
+    background-color: rgba(223, 236, 255, 0.486);
+}
+
+.card-body{
+    padding-bottom: 0.4em;
+}
+
+.container{
+    max-width: 1400px;
+}
+
+.card-header-prontuario{
+    padding: 0.5em;
+}
+
+.breadcrumb{
+    background-color: white;
+}
+
+.form-select-sexo{
+    width: 172px;
+    height: 36px;
+    border-radius: 5px;
+    border-color: rgb(185, 185, 185);
+}
+
+.form-select-tutor{
+    width: 220px;
+    height: 36px;
+    border-radius: 5px;
+    border-color: rgb(185, 185, 185);
+}
+
+.row{
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.list-group-item{
+    border: none;
+}
+
+h1{
+    color: rgb(42, 63, 122);
+    cursor: default;
+}
+
+.creditos{
+    margin: 40px 0px;
+    text-align: center;
+    font-size: 11px;
+}
+
+.footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.custom-line {
+    height: 1px;
+    background-color: #b8b8b8;
+    margin: 20px 0;
+    text-align: start; /* Para alguns navegadores */
+}
+
+label{
+    margin-top: 15px;
+}
+
+.no-indent {
+    padding-left: 0;
+    margin-left: 0;
+}
+
+.no-indent li {
+    padding-left: 0;
+    margin-left: 0;
+}
+
+.form-select-pront{
+    width: 200px;
+    height: 36px;
+    border-radius: 5px;
+    border-color: rgb(185, 185, 185);
+}

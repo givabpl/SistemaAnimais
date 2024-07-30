@@ -1,0 +1,20 @@
+{
+    "name": "gbsigolo/sistemaanimais",
+    "authors": [
+        {
+            "name": "Giovana",
+            "email": "gigisigolo@gmail.com"
+        }
+    ],
+    "require": {
+        "mpdf/mpdf": "^8.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "SistemaAnimais\\Controllers\\": "src/Controllers",
+            "SistemaAnimais\\DAOs\\": "src/DAOs/",
+            "SistemaAnimais\\Models\\": "src/Models/"
+        }
+    }
+}
+
