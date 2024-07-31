@@ -257,6 +257,12 @@
         }
 
 
+        public function pesquisa_todos($pesquisa)
+        {
+            $sql = "SELECT FROM animais WHERE nome LIKE %$pesquisa% OR rga LIKE %$pesquisa% OR chip LIKE %$pesquisa%";
+        }
+
+
 
         public function buscar_por_nome($nome)
         {

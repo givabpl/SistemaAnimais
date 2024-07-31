@@ -7,14 +7,18 @@ use SistemaAnimais\DAOs\prontDAO;
 
 class buscaController
 {
-    public function buscar()
+    public function buscar_animais()
     {
-        $query = $_GET['query'];
+        $pesquisa = $mysqli->real_scape_string($_GET['busca']);
         $entidade = $_GET['entidade_busca'];
         $tipo = $_GET['tipo_busca'];
         $redirect = $_GET['redirect'];
 
-        if($entidade === 'animal')
+        $animalDAO = new animalDAO();
+        $animalDAO->pesquisa_todos($pesquisa);
+
+
+        /*if($entidade === 'animal')
         {
             $animalDAO = new animalDAO();
             if ($tipo === 'nome')
@@ -64,6 +68,6 @@ class buscaController
                 $prontDAO->buscar_por_titulo($query)
             );
         }
-        require_once "Views/cabecalho.php";
+        require_once "Views/cabecalho.php";*/
     }
 }

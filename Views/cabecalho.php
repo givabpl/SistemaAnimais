@@ -55,9 +55,8 @@
                 <div class='collapse navbar-collapse justify-content-end'>
                     <div class='collapse navbar-collapse justify-content-end'>
 
-                        <form class="d-flex" role="search" method="get" action="#">
-                            <input type="hidden" name="controle" value="buscaController">
-                            <input type="hidden" name="metodo" value="buscar">
+                        <form class="d-flex" role="search" method="get" action="">
+
                             <select name="entidade_busca" class="form-control form-select-entidade-busca" id="entidade_busca"  onchange="updateTipoBusca()">
                                 <option value="todos">Todos</option>
                                 <option value="animal">Animal</option>
@@ -68,9 +67,7 @@
                                 <!-- As opções serão preenchidas dinamicamente pelo JavaScript -->
                             </select>
 
-
-
-                            <input class="form-control me-2" type="search" placeholder="Busca" aria-label="Search">
+                            <input name="busca" class="form-control me-2" type="search" placeholder="Busca" aria-label="Search">
 
                             <input class="btn btn-outline-success" type="submit" value="Buscar">
                         </form>
