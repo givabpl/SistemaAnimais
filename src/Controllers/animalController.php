@@ -75,8 +75,14 @@
                     $retorno = $animalDAO->buscar_rga($animal);
                     if(is_array($retorno) && count($retorno) > 0)
                     {
-                        $msg[0] = "Rga já cadastrado";
-                        $erro = true;
+                        if (strlen($retorno[0]['rga']) <= 4) // Verifica se o RGA tem 4 ou menos caracteres (para o caso de RGAs como '000' ou '---', que são inválidos, mas irão existir no banco de dados para animais que não possuem RGA)
+                        {
+                            $erro = false;
+                        }
+                        else{
+                            $msg[0] = "Rga já cadastrado";
+                            $erro = true;
+                        }
                     }
                 }
                 if(!$erro)

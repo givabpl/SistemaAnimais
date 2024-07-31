@@ -98,3 +98,11 @@ label{
     border-radius: 5px;
     border-color: rgb(185, 185, 185);
 }
+
+.form-select-tipo-busca{
+    width: 160px;
+}
+
+.form-select-entidade-busca{
+    width: 210px;
+}

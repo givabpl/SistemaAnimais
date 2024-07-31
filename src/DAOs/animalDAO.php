@@ -57,7 +57,7 @@
 
 
 
-        // BUSCAR ANIMAIS PPUBLICO
+        // BUSCAR ANIMAIS PUBLICO
         public function buscar_animais_publico()
         {
             $sql = "SELECT animais.*, tutores.nome AS nome_tutor

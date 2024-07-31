@@ -21,5 +21,6 @@ Este projeto está organizado no modelo MVC (Model, View e Controller), em PHP.
 - **/Controllers/** contém arquivos de classe que possuem métodos que realizam intermédio entre **Views, DAOs e Models**
 
 ### Biblioteca Utilizada
-Esse projeto utiliza a biblioteca mPDF para gerar os PDFs de prontuário, receita, perfil do animal, animal desaparecido e animal perdido.
+Esse projeto utiliza a biblioteca **mPDF** para gerar os PDFs de prontuário, receita, perfil do animal, animal desaparecido e animal perdido.
 Os arquivos de PDF estão em Views e inicial com pdf
+

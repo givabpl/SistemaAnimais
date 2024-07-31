@@ -51,14 +51,30 @@
                         <li class='nav-item'>
                             <a class='nav-link' href='index.php?controle=prontController&metodo=listar'>Prontuários</a>
                         </li>
-
                 </ul>
-                
-                        <div class='collapse navbar-collapse justify-content-end'>
-                            <form class="d-flex" role="search" method="get">
-                                <input class="form-control me-2" type="search" placeholder="Busca" aria-label="Search">&nbsp;
-                                <button class="btn btn-outline-success" type="submit">Buscar</button>
-                            </form>&nbsp;&nbsp;&nbsp;&nbsp;
+                <div class='collapse navbar-collapse justify-content-end'>
+                    <div class='collapse navbar-collapse justify-content-end'>
+
+                        <form class="d-flex" role="search" method="get" action="#">
+                            <input type="hidden" name="controle" value="buscaController">
+                            <input type="hidden" name="metodo" value="buscar">
+                            <select name="entidade_busca" class="form-control form-select-entidade-busca" id="entidade_busca"  onchange="updateTipoBusca()">
+                                <option value="todos">Todos</option>
+                                <option value="animal">Animal</option>
+                                <option value="tutor">Tutor</option>
+                                <option value="vet">Veterinário</option>
+                            </select>
+                            <select name="tipo_busca" class="form-control form-select-tipo-busca" id="tipo_busca">
+                                <!-- As opções serão preenchidas dinamicamente pelo JavaScript -->
+                            </select>
+
+
+
+                            <input class="form-control me-2" type="search" placeholder="Busca" aria-label="Search">
+
+                            <input class="btn btn-outline-success" type="submit" value="Buscar">
+                        </form>
+                    </div>
                             <ul class='navbar-nav'>
                                 <li class='nav-item'>
                                     <a class='nav-link' href='index.php?controle=vetController&metodo=logout'><i class="bi bi-power"></i> Sair</a>
@@ -75,14 +91,7 @@
                             <a class='nav-link' href='index.php?controle=animalController&metodo=listar_publico'>Animais</a>
                         </li>
                         </ul>
-                        <div class='collapse navbar-collapse justify-content-end'>
-                            <form class="d-flex" role="search" method="get" action="#">
-                                <input type="hidden" name="controle" value="buscaController">
-                                <input type="hidden" name="metodo" value="buscar">
-                                <input class="form-control me-2" type="search" placeholder="Busca" aria-label="Search">
-                                <button class="btn btn-outline-success" type="submit">Buscar</button>
-                            </form>
-                        </div>
+
                     <?php endif; ?>
                 
             </div>
@@ -91,37 +100,52 @@
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
-    <div class="container">
-        <!-- Adicione a seção de resultados de busca -->
-        <?php if (!empty($animais) || !empty($tutores) || !empty($vets) || !empty($pronts)): ?>
-            <h2>Resultados da Busca</h2>
+    <script>
+        function updateTipoBusca()
+        {
+            const entidade = document.getElementById('entidade_busca').value;
+            const tipoBusca = document.getElementById('tipo_busca');
 
-            <h3>Animais</h3>
-            <ul>
-                <?php foreach ($animais as $animal): ?>
-                    <li><?php echo $animal->nome; ?></li>
-                <?php endforeach; ?>
-            </ul>
+            // Limpa opcoes atuais
+            tipoBusca.innerHTML = '';
 
-            <h3>Tutores</h3>
-            <ul>
-                <?php foreach ($tutores as $tutor): ?>
-                    <li><?php echo $tutor->nome; ?></li>
-                <?php endforeach; ?>
-            </ul>
+            // Define as novas opcoes com base na entidade selecionada
+            let options = [];
+            if (entidade === 'animal')
+            {
+                options = [
+                    { value: 'nome', text: 'Nome'},
+                    { value: 'rga', text: 'RGA' },
+                    { value: 'chip', text: 'Chip' }
+                ];
+            }else if (entidade === 'tutor')
+            {
+                options = [
+                    { value: 'nome', text: 'Nome'}
+                ];
+            }else if (entidade === 'vet')
+            {
+                options = [
+                    { value: 'nome', text: 'Nome' },
+                    { value: 'crmv', text: 'CRMV' }
+                ];
+            }
 
-            <h3>Veterinários</h3>
-            <ul>
-                <?php foreach ($vets as $vet): ?>
-                    <li><?php echo $vet->nome; ?></li>
-                <?php endforeach; ?>
-            </ul>
+            // Adiciona novas opcoes ao select
+            options.forEach(option => {
+                const opt = document.createElement('option');
+                opt.value = option.value;
+                opt.textContent = option.text;
+                tipoBusca.appendChild(opt);
+            });
 
-            <h3>Prontuários</h3>
-            <ul>
-                <?php foreach ($pronts as $pront): ?>
-                    <li><?php echo $pront->titulo; ?></li>
-                <?php endforeach; ?>
-            </ul>
-        <?php endif; ?>
-    </div>
+
+        }
+        // Atualiza as opcoes do tipo de busca ao carregar a pagina
+        document.addEventListener('DOMContentLoaded', updateTipoBusca);
+
+        // Preenche o campo hidden com a URL atual
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('redirect').value = window.location.href;
+        });
+    </script>
