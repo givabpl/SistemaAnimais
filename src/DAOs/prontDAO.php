@@ -15,7 +15,7 @@
         // CRIAR PRONTUARIO
         public function criar($pront)
         {
-            $sql = "INSERT INTO prontuarios (titulo, dataa, locala, descritivo, medicacao, medicacao_info, internacao, internacao_info, receita, arquivos, peso, id_animal, id_vet) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            $sql = "INSERT INTO prontuarios (titulo, dataa, locala, descritivo, medicacao, medicacao_info, internacao, internacao_info, receita, arquivo, peso, id_animal, id_vet) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
             $stm = $this->db->prepare($sql);
             $stm->bindValue(1, $pront->getTitulo());
@@ -27,7 +27,7 @@
             $stm->bindValue(7, $pront->getInter());
             $stm->bindValue(8, $pront->getIntInfo());
             $stm->bindValue(9, $pront->getReceita());
-            $stm->bindValue(10, json_encode($pront->getArquivos()));
+            $stm->bindValue(10, $pront->getArquivo());
             $stm->bindValue(11, $pront->getPeso());
             $stm->bindValue(12, $pront->getAnimal()->getId());
             $stm->bindValue(13, $pront->getVet()->getId());
@@ -165,12 +165,12 @@
                     JOIN animais ON prontuarios.id_animal = animais.id_animal
                     JOIN tutores ON animais.id_tutor = tutores.id_tutor
                     JOIN veterinarios ON prontuarios.id_vet = veterinarios.id_vet
-                    WHERE prontuarios.id_animal = ?
+                    WHERE prontuarios.id_animal = :id_animal
                     LIMIT :offset, :limite";
             try
             {
                 $stm = $this->db->prepare($sql);
-                $stm->bindValue(1, $animal->getId());
+                $stm->bindValue(':id_animal', $animal->getId(), PDO::PARAM_INT);
                 $stm->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
                 $stm->bindValue(':limite', (int) $limite, PDO::PARAM_INT);
                 $stm->execute();
@@ -196,12 +196,12 @@
                     JOIN animais ON prontuarios.id_animal = animais.id_animal
                     JOIN tutores ON animais.id_tutor = tutores.id_tutor
                     JOIN veterinarios ON prontuarios.id_vet = veterinarios.id_vet
-                    WHERE prontuarios.id_vet = ?
+                    WHERE prontuarios.id_vet = :id_vet
                     LIMIT :offset, :limite";
             try
             {
                 $stm = $this->db->prepare($sql);
-                $stm->bindValue(1, $vet->getId());
+                $stm->bindValue(':id_vet', $vet->getId(), PDO::PARAM_INT);
                 $stm->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
                 $stm->bindValue(':limite', (int) $limite, PDO::PARAM_INT);
                 $stm->execute();

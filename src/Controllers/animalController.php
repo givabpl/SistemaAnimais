@@ -235,9 +235,16 @@
             $offset = ($pagina_atual - 1) * $limite;
 
             $animalDAO = new animalDAO();
-            $retorno = $animalDAO->buscar_animais_paginados($offset, $limite);
 
-            $total_registros = $animalDAO->contar_animais();
+            $pesquisa = isset($_GET['busca']) ? $_GET['busca'] : '';
+
+            if ($pesquisa) {
+                $retorno = $animalDAO->buscar_animais_por_nome_rga_chip($pesquisa, $limite, $offset);
+                $total_registros = $animalDAO->contar_animais_por_nome_rga_chip($pesquisa);
+            } else{
+                $retorno = $animalDAO->buscar_animais_paginados($offset, $limite);
+                $total_registros = $animalDAO->contar_animais();
+            }
 
             // VERIFICA SESSAO DO VETERINARIO P/ EXIBIR DADOS PRIVADOS
             session_start();

@@ -223,7 +223,9 @@
         fileList.innerHTML = "";
         for (var i = 0; i < this.files.length; i++) {
             var file = this.files[i];
-            fileList.innerHTML += "<p>" + file.name + "</p>";
+            var fileItem = document.createElement("p");
+            fileItem.textContent = file.name;
+            fileList.appendChild(fileItem);
         }
     });
 </script>

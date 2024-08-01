@@ -50,6 +50,20 @@
                     
             </div>
 
+            <!-- FORMULÁRIO DE BUSCA -->
+            <form method="get" action="index.php">
+                <input type="hidden" name="controle" value="animalController">
+                <input type="hidden" name="metodo" value="listar">
+                <div class="mb-3 row">
+                    <div class="col-md-8 col-sm-12">
+                        <input type="text" class="form-control" name="busca" placeholder="Buscar por nome, RGA ou chip" value="<?= isset($_GET['busca']) ? $_GET['busca'] : '' ?>">
+                    </div>
+                    <div class="col-md-4 col-sm-12">
+                        <button type="submit" class="btn btn-primary">Buscar</button>
+                    </div>
+                </div>
+            </form>
+
             <br>
             <div class="col-24">
                 <div class="row">

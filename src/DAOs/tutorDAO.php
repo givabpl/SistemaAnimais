@@ -41,7 +41,18 @@
             $stm->execute();
             $this->db = null;
             return $stm->fetchAll(PDO::FETCH_OBJ);
-        }  
+        }
+
+        // BUSCAR TUTORES PAGINADOS
+        public function buscar_tutores_paginados($offset, $limite)
+        {
+            $sql = "SELECT * FROM tutores LIMIT :offset, :limite";
+            $stm = $this->db->prepare($sql);
+            $stm->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
+            $stm->bindValue(':limite', (int) $limite, PDO::PARAM_INT);
+            $stm->execute();
+            return $stm->fetchAll(PDO::FETCH_OBJ);
+        }
 
         // BUSCAR TUTORES PUBLICO
         public function buscar_publico()
@@ -53,25 +64,26 @@
             return $stm->fetchAll(PDO::FETCH_OBJ);
         }  
 
-        // BUSCAR TUTORES EM ORDEM ALFABETICA
-        public function ordenar_tutores_alf()
+        // BUSCAR TUTORES EM ORDEM ALFABETICA PAGINADO
+        public function ordenar_tutores_alf($offset, $limite)
         {
-            $sql = "SELECT * FROM tutores ORDER BY nome";
+            $sql = "SELECT * FROM tutores 
+                    ORDER BY nome 
+                    LIMIT :offset, :limite";
             $stm = $this->db->prepare($sql);
             $stm->execute();
-            $this->db = null;
+            $stm->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
+            $stm->bindValue(':limite', (int) $limite, PDO::PARAM_INT);
             return $stm->fetchAll(PDO::FETCH_OBJ);
-        }  
+        }
 
-        // BUSCAR TUTORES EM ORDEM ALFABETICA PUBLICO
-        public function ordenar_tutores_alf_publico()
+        public function contar_tutores()
         {
-            $sql = "SELECT id_tutor, nome FROM tutores ORDER BY nome";
+            $sql = "SELECT COUNT(*) AS total FROM tutores";
             $stm = $this->db->prepare($sql);
             $stm->execute();
-            $this->db = null;
-            return $stm->fetchAll(PDO::FETCH_OBJ);
-        }  
+            return $stm->fetch(PDO::FETCH_OBJ)->total;
+        }
 
         
         // BUSCAR UM TUTOR
@@ -94,40 +106,22 @@
         }
 
         // BUSCAR ANIMAIS DE UM TUTOR PRIVADO (BUSCA NOME E SOBRENOME)
-        public function buscar_animais_tutor($tutor)
+        public function buscar_animais_tutor($tutor, $offset, $limite)
         {
-            $sql = "SELECT animais.*, animais.nome AS nome_animal, tutores.nome AS nome_tutor, tutores.sobrenome AS sobrenome_tutor
+            $sql = "SELECT animais.*, 
+                    animais.nome AS nome_animal, 
+                    tutores.nome AS nome_tutor, 
+                    tutores.sobrenome
                     FROM animais 
                     JOIN tutores ON animais.id_tutor = tutores.id_tutor
-                    WHERE animais.id_tutor = ?";
-
+                    WHERE animais.id_tutor = :id_tutor
+                    LIMIT :offset, :limite";
             try
             {
                 $stm = $this->db->prepare($sql);
-                $stm->bindValue(1, $tutor->getId());
-                $stm->execute();
-                $retorno = $stm->fetchAll(PDO::FETCH_OBJ);
-                return $retorno;
-            }
-            catch(PDOException $e)
-            {
-                echo "Problema ao buscar animais do tutor: " . $e->getMessage();
-                return null;
-            }
-        }
-
-        // BUSCAR ANIMAIS DE UM TUTOR PUBLICO (BUSCA APENAS O NOME)
-        public function buscar_animais_tutor_publico($tutor)
-        {
-            $sql = "SELECT animais.*, animais.nome AS nome_animal, tutores.nome AS nome_tutor 
-                    FROM animais 
-                    JOIN tutores ON animais.id_tutor = tutores.id_tutor
-                    WHERE animais.id_tutor = ?";
-
-            try
-            {
-                $stm = $this->db->prepare($sql);
-                $stm->bindValue(1, $tutor->getId());
+                $stm->bindValue('id_tutor', $tutor->getId(), PDO::PARAM_INT);
+                $stm->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
+                $stm->bindValue(':limite', (int) $limite, PDO::PARAM_INT);
                 $stm->execute();
                 $retorno = $stm->fetchAll(PDO::FETCH_OBJ);
                 return $retorno;

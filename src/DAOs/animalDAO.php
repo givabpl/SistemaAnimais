@@ -107,6 +107,29 @@
             return $stm->fetch(PDO::FETCH_OBJ)->total;
         }
 
+        public function buscar_animais_por_nome_rga_chip($pesquisa, $offset, $limite)
+        {
+            $sql = "SELECT * FROM animais WHERE nome LIKE ? OR rga LIKE ? OR chip LIKE ? LIMIT ? OFFSET ?";
+            $stm = $this->db->prepare($sql);
+            $like_pesquisa = '%' . $pesquisa . '%';
+            $stm->bind_param("sssii", $like_pesquisa, $like_pesquisa, $like_pesquisa, $limite, $offset);
+            $stm->execute();
+            $result = $stm->get_result();
+            return $result->fetch_all(MYSQLI_ASSOC);
+        }
+
+        public function contar_animais_por_nome_rga_chip($pesquisa)
+        {
+            $sql = "SELECT COUNT(*) as total FROM animais WHERE nome LIKE ? OR rga LIKE ? OR chip LIKE ?";
+            $stm = $this->db->prepare($sql);
+            $like_pesquisa = '%' . $pesquisa . '%';
+            $stm->bind_param("sss", $like_pesquisa, $like_pesquisa, $like_pesquisa);
+            $stm->execute();
+            $result = $stm->get_result();
+            $row = $result->fetch_assoc();
+            return $row['total'];
+        }
+
 
         // ORDENAR ANIMAIS POR ORDEM ALFABETICA
         public function ordenar_animais_alf($offset, $limite)
@@ -282,8 +305,11 @@
         public function pesquisa_todos($pesquisa)
         {
             $sql = "SELECT FROM animais WHERE nome LIKE %$pesquisa% OR rga LIKE %$pesquisa% OR chip LIKE %$pesquisa%";
+            $stm = $this->db->prepare($sql);
+            $stm->bindValue(1, '%' . $pesquisa . '%');
+            $stm->execute();
+            return $stm->fetchAll(PDO::FETCH_OBJ);
         }
-
 
 
         public function buscar_por_nome($nome)

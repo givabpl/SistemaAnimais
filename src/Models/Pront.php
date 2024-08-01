@@ -14,7 +14,7 @@
             private string $internacao = "",
             private string $internacao_info = "",
             private string $receita = "",
-            private string $arquivos = "",
+            private string $arquivo = "",
             private string $peso = "",
             private $animal = null,
             private $vet = null
@@ -71,9 +71,9 @@
             return $this->receita;
         }
 
-        public function getArquivos()
+        public function getArquivo()
         {
-            return $this->arquivos;
+            return $this->arquivo; // Decodifica a string JSON para um array
         }
 
         public function getPeso()
