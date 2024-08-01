@@ -139,6 +139,15 @@
         // LISTAR
         public function listar()
         {
+            $limite = 15;
+
+            $pagina_atual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
+            $offset = ($pagina_atual - 1) * $limite;
+
+            $perdidoDAO = new perdidoDAO();
+            $retorno = $perdidoDAO->buscar_perdidos_paginados($offset, $limite);
+
+            $total_registros = $perdidoDAO->contar_perdidos();
             // VERIFICA SESSAO DO VETERINARIO P/ EXIBIR DADOS PRIVADOS
             session_start();
             if(!isset($_SESSION["id_vet"]))
@@ -146,55 +155,24 @@
                 header("location:index.php?controle=perdidoController&metodo=listar_publico");
                 exit();
             }
-            $perdidoDAO = new perdidoDAO();
-            $retorno = $perdidoDAO->buscar_perdidos();
+
             require_once "Views/perdido/listar-animais-perdidos.php";
-            return $retorno;
         }
 
         // LISTAR PUBLICO
         public function listar_publico()
         {
+            $limite = 15;
+
+            $pagina_atual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
+            $offset = ($pagina_atual - 1) * $limite;
+
             $perdidoDAO = new perdidoDAO();
-            $retorno = $perdidoDAO->buscar_perdidos_publico();
+            $retorno = $perdidoDAO->buscar_perdidos_paginados_pub($offset, $limite);
+
+            $total_registros = $perdidoDAO->contar_perdidos();
             require_once "Views/perdido/pub-listar-animais-perdidos.php";
             return $retorno;
-        }
-
-        // BUSCAR UM ANIMAL (PERFIL)
-        public function buscar_perdido()
-        {
-            // VERIFICA SESSAO DO VETERINARIO P/ EXIBIR DADOS PRIVADOS
-            session_start();
-            if(!isset($_SESSION["id_vet"]))
-            {
-                header("location:index.php?controle=perdidoController&metodo=buscar_perdido_publico&id=". $_GET['id']);
-                exit();
-            }
-
-            if(isset($_GET["id"]))
-            {
-                $perdido = new Perdido($_GET["id"]);
-                $perdidoDAO = new perdidoDAO();
-                $retorno = $perdidoDAO->buscar_perdido($perdido);
-
-                require_once "Views/perdido/perfil-perdido.php";
-                return $retorno;
-            }
-        }
-
-        // BUSCAR UM ANIMAL PUBLICO (PERFIL)
-        public function buscar_perdido_publico()
-        {
-            if(isset($_GET["id"]))
-            {
-                $perdido = new Perdido($_GET["id"]);
-                $perdidoDAO = new perdidoDAO();
-                $retorno = $perdidoDAO->buscar_perdido_publico($perdido);
-
-                require_once "Views/perdido/pub-perfil-perdido.php";
-                return $retorno;
-            }
         }
 
         // LISTAR EM ORDEM ALFABETICA
@@ -239,14 +217,52 @@
             return $retorno;
         }
 
-         // LISTAR POR NOME DO TUTOR PUBLICO
-         public function listar_tutor_publico()
-         {
-             $perdidoDAO = new perdidoDAO();
-             $retorno = $perdidoDAO->ordenar_perdidos_tutor_publico();
-             require_once "Views/perdido/pub-listar-animais-perdidos.php";
-             return $retorno;
-         }
+        // LISTAR POR NOME DO TUTOR PUBLICO
+        public function listar_tutor_publico()
+        {
+            $perdidoDAO = new perdidoDAO();
+            $retorno = $perdidoDAO->ordenar_perdidos_tutor_publico();
+            require_once "Views/perdido/pub-listar-animais-perdidos.php";
+            return $retorno;
+        }
+
+        // BUSCAR UM ANIMAL (PERFIL)
+        public function buscar_perdido()
+        {
+            // VERIFICA SESSAO DO VETERINARIO P/ EXIBIR DADOS PRIVADOS
+            session_start();
+            if(!isset($_SESSION["id_vet"]))
+            {
+                header("location:index.php?controle=perdidoController&metodo=buscar_perdido_publico&id=". $_GET['id']);
+                exit();
+            }
+
+            if(isset($_GET["id"]))
+            {
+                $perdido = new Perdido($_GET["id"]);
+                $perdidoDAO = new perdidoDAO();
+                $retorno = $perdidoDAO->buscar_perdido($perdido);
+
+                require_once "Views/perdido/perfil-perdido.php";
+                return $retorno;
+            }
+        }
+
+        // BUSCAR UM ANIMAL PUBLICO (PERFIL)
+        public function buscar_perdido_publico()
+        {
+            if(isset($_GET["id"]))
+            {
+                $perdido = new Perdido($_GET["id"]);
+                $perdidoDAO = new perdidoDAO();
+                $retorno = $perdidoDAO->buscar_perdido_publico($perdido);
+
+                require_once "Views/perdido/pub-perfil-perdido.php";
+                return $retorno;
+            }
+        }
+
+
 
         // GERAR PDF DO PERFIL DO ANIMAL
         public function gerar_pdf()

@@ -110,6 +110,16 @@
         // LISTAR
         public function listar()
         {
+            $limite = 15;
+
+            $pagina_atual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
+            $offset = ($pagina_atual - 1) * $limite;
+
+            $achadoDAO = new achadoDAO();
+            $retorno = $achadoDAO->buscar_achados_paginados($offset, $limite);
+
+            $total_registros = $achadoDAO->contar_achados();
+
             // VERIFICA SESSAO DO VETERINARIO P/ EXIBIR DADOS PRIVADOS
             session_start();
             if(!isset($_SESSION["id_vet"]))
@@ -117,22 +127,28 @@
                 header("location:index.php?controle=achadoController&metodo=listar_publico");
                 exit();
             }
-            $achadoDAO = new achadoDAO();
-            $retorno = $achadoDAO->buscar_achados();
+
             require_once "Views/achado/listar-animais-achados.php";
-            return $retorno;
         }
 
         // LISTAR PUBLICO
         public function listar_publico()
         {
+            $limite = 15;
+
+            $pagina_atual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
+            $offset = ($pagina_atual - 1) * $limite;
+
             $achadoDAO = new achadoDAO();
-            $retorno = $achadoDAO->buscar_achados_publico();
+            $retorno = $achadoDAO->buscar_achados_paginados_pub($offset, $limite);
+
+            $total_registros = $achadoDAO->contar_achados();
+
             require_once "Views/achado/pub-listar-animais-achados.php";
             return $retorno;
         }
 
-        // BUSCAR UM ANIMAL (PERFIL)
+        // BUSCAR UM ANIMAL ACHADO (PERFIL)
         public function buscar_achado()
         {
             // VERIFICA SESSAO DO VETERINARIO P/ EXIBIR DADOS PRIVADOS
@@ -154,7 +170,7 @@
             }
         }
 
-        // BUSCAR UM ANIMAL PUBLICO (PERFIL)
+        // BUSCAR UM ANIMAL ACHADO PUBLICO (PERFIL)
         public function buscar_achado_publico()
         {
             if(isset($_GET["id"]))
@@ -168,7 +184,7 @@
             }
         }
 
-        // GERAR PDF DO PERFIL DO ANIMAL
+        // GERAR PDF DO PERFIL DO ACHADO
         public function gerar_pdf()
         {
             session_start();

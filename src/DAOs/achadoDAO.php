@@ -34,8 +34,8 @@
         }
 
 
-        // BUSCAR ANIMAIS achados
-        public function buscar_achados()
+        // BUSCA PAGINADA: ANIMAIS  (LIMITE 15)
+        public function buscar_achados_paginados($offset, $limite)
         {
             $sql = "SELECT achados.*, 
                     animais.sexo AS sexo,
@@ -43,14 +43,43 @@
                     animais.raca AS raca, 
                     animais.pelagem AS pelagem
                     FROM achados 
-                    JOIN animais ON achados.id_animal = animais.id_animal";
+                    JOIN animais ON achados.id_animal = animais.id_animal
+                    LIMIT :limite OFFSET :offset";
             $stm = $this->db->prepare($sql);
+            $stm->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
+            $stm->bindValue(':limite', (int) $limite, PDO::PARAM_INT);
             $stm->execute();
-            $this->db = null;
             return $stm->fetchAll(PDO::FETCH_OBJ);
         }
 
-        // BUSCAR ANIMAIS achadoS PUBLICO
+        // BUSCA PAGINADA: ANIMAIS  (LIMITE 15)
+        public function buscar_achados_paginados_pub($offset, $limite)
+        {
+            $sql = "SELECT achados.*, 
+                    animais.sexo AS sexo,
+                    animais.especie AS tipo, 
+                    animais.raca AS raca, 
+                    animais.pelagem AS pelagem
+                    FROM achados 
+                    JOIN animais ON achados.id_animal = animais.id_animal
+                    LIMIT :limite OFFSET :offset";
+            $stm = $this->db->prepare($sql);
+            $stm->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
+            $stm->bindValue(':limite', (int) $limite, PDO::PARAM_INT);
+            $stm->execute();
+            return $stm->fetchAll(PDO::FETCH_OBJ);
+        }
+
+        // BUSCA PAGINADA: CONTA ACHADOS
+        public function contar_achados()
+        {
+            $sql = "SELECT COUNT(*) AS total FROM achados";
+            $stm = $this->db->prepare($sql);
+            $stm->execute();
+            return $stm->fetch(PDO::FETCH_OBJ)->total;
+        }
+
+        // BUSCAR ANIMAIS ACHADOS PUBLICO
         public function buscar_achados_publico()
         {
             $sql = "SELECT achados.*, 

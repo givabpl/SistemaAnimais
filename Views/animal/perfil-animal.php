@@ -21,7 +21,7 @@
 
                         <h5 class="col-md-4">
                             <i class="bi bi-person-square"></i> <!--Í CONE -->
-                            <?= $dado->nome_tutor ?>&nbsp;<?= $dado->sobrenome_tutor ?> <!-- NOME DO TUTOR-->
+                            <?= $dado->nome_tutor ?>&nbsp;<?= $dado->sobrenome ?> <!-- NOME DO TUTOR-->
                         </h5>                    
 
                     </div>

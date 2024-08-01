@@ -229,7 +229,6 @@
         // LISTAR
         public function listar()
         {
-
             $limite = 15;
 
             $pagina_atual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
@@ -240,7 +239,6 @@
 
             $total_registros = $animalDAO->contar_animais();
 
-            $retorno_paginado = array_slice($retorno, $offset, $limite);
             // VERIFICA SESSAO DO VETERINARIO P/ EXIBIR DADOS PRIVADOS
             session_start();
             if(!isset($_SESSION["id_vet"]))
@@ -248,15 +246,39 @@
                 header("location:index.php?controle=animalController&metodo=listar_publico");
                 exit();
             }
-            $animalDAO = new animalDAO();
-            $retorno = $animalDAO->buscar_animais();
+
             require_once "Views/animal/listar-animais.php";
-            return $retorno;
+        }
+
+        // LISTAR PUBLICO
+        public function listar_publico()
+        {
+            $limite = 15;
+
+            $pagina_atual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
+            $offset = ($pagina_atual - 1) * $limite;
+
+            $animalDAO = new animalDAO();
+            $retorno = $animalDAO->buscar_animais_paginados_pub($offset, $limite);
+
+            $total_registros = $animalDAO->contar_animais();
+
+            require_once "Views/animal/pub-listar-animais.php";
         }
 
         // LISTAR EM ORDEM ALFABETICA
         public function listar_alf()
         {
+            $limite = 15;
+
+            $pagina_atual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
+            $offset = ($pagina_atual - 1) * $limite;
+
+            $animalDAO = new animalDAO();
+            $retorno =  $animalDAO->ordenar_animais_alf($offset, $limite);
+
+            $total_registros = $animalDAO->contar_animais();
+
             // VERIFICA SESSAO DO VETERINARIO P/ EXIBIR DADOS PRIVADOS
             session_start();
             if(!isset($_SESSION["id_vet"]))
@@ -264,25 +286,39 @@
                 header("location:index.php?controle=animalController&metodo=listar_alf_publico");
                 exit();
             }
-            $animalDAO = new animalDAO();
-            $retorno = $animalDAO->ordenar_animais_alf();
-            require_once "Views/animal/listar-animais.php";
 
-            return $retorno;
+            require_once "Views/animal/listar-animais.php";
         }
 
         // LISTAR EM ORDEM ALFABETICA PUBLICO
         public function listar_alf_publico()
         {
+            $limite = 15;
+
+            $pagina_atual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
+            $offset = ($pagina_atual - 1) * $limite;
+
             $animalDAO = new animalDAO();
-            $retorno = $animalDAO->ordenar_animais_alf_publico();
+            $retorno =  $animalDAO->ordenar_animais_alf_publico($offset, $limite);
+
+            $total_registros = $animalDAO->contar_animais();
+
             require_once "Views/animal/pub-listar-animais.php";
-            return $retorno;
         }
 
         // LISTAR POR NOME DO TUTOR
         public function listar_tutor()
         {
+            $limite = 15;
+
+            $pagina_atual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
+            $offset = ($pagina_atual - 1) * $limite;
+
+            $animalDAO = new animalDAO();
+            $retorno = $animalDAO->ordenar_animais_tutor($offset, $limite);
+
+            $total_registros = $animalDAO->contar_animais();
+
             // VERIFICA SESSAO DO VETERINARIO P/ EXIBIR DADOS PRIVADOS
             session_start();
             if(!isset($_SESSION["id_vet"]))
@@ -290,29 +326,25 @@
                 header("location:index.php?controle=animalController&metodo=listar_tutor_publico");
                 exit();
             }
-            $animalDAO = new animalDAO();
-            $retorno = $animalDAO->ordenar_animais_tutor();
+
             require_once "Views/animal/listar-animais.php";
-            return $retorno;
         }
 
          // LISTAR POR NOME DO TUTOR PUBLICO
          public function listar_tutor_publico()
          {
-             $animalDAO = new animalDAO();
-             $retorno = $animalDAO->ordenar_animais_tutor_publico();
-             require_once "Views/animal/pub-listar-animais.php";
-             return $retorno;
-         }
+             $limite = 15;
 
-        // LISTAR PUBLICO
-        public function listar_publico()
-        {
-            $animalDAO = new animalDAO();
-            $retorno = $animalDAO->buscar_animais_publico();
-            require_once "Views/animal/pub-listar-animais.php";
-            return $retorno;
-        }
+             $pagina_atual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
+             $offset = ($pagina_atual - 1) * $limite;
+
+             $animalDAO = new animalDAO();
+             $retorno = $animalDAO->ordenar_animais_tutor_publico($offset, $limite);
+
+             $total_registros = $animalDAO->contar_animais();
+
+             require_once "Views/animal/pub-listar-animais.php";
+         }
 
         // GERAR PDF DO PERFIL DO ANIMAL
         public function gerar_pdf()

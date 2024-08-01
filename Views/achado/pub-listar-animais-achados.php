@@ -1,4 +1,7 @@
-<?php require_once ROOT_PATH . '/views/cabecalho.php'; ?>
+<?php
+    require_once ROOT_PATH . '/views/cabecalho.php';
+    $total_paginas = ceil($total_registros / $limite);
+?>
 
 <div class="content" id="listar-animais">
     <div class="container">
@@ -57,8 +60,6 @@
                                     <?= $dado->telefone2 ?> <br>
 
                                     <a href="index.php?controle=achadoController&metodo=buscar_achado&id=<?= $dado->id_achado ?>" class="mb-2 btn btn-outline-primary">Mais informações</a>&nbsp;&nbsp;&nbsp;&nbsp;
-
-                                    <a href="index.php?controle=achadoController&metodo=excluir&id=<?= $dado->id_achado ?>" class="mb-2 btn btn-danger"><i class="bi bi-x-square"></i> Excluir</a>
                                 </p>
                             </div>
                         </div>
@@ -70,6 +71,32 @@
             <?php endif; ?>
         </div>
         <br>
+        <!-- Paginação -->
+        <nav aria-label="Navegação de página">
+            <ul class="pagination justify-content-center">
+                <?php if ($pagina_atual > 1): ?>
+                    <li class="page-item">
+                        <a class="page-link" href="index.php?controle=achadoController&metodo=listar&pagina=<?= $pagina_atual - 1 ?>" aria-label="Anterior">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                <?php endif; ?>
+
+                <?php for ($i = 1; $i <= $total_paginas; $i++): ?>
+                    <li class="page-item <?= $i == $pagina_atual ? 'active' : '' ?>">
+                        <a class="page-link" href="index.php?controle=achadoController&metodo=listar&pagina=<?= $i ?>"><?= $i ?></a>
+                    </li>
+                <?php endfor; ?>
+
+                <?php if ($pagina_atual < $total_paginas): ?>
+                    <li class="page-item">
+                        <a class="page-link" href="index.php?controle=achadoController&metodo=listar&pagina=<?= $pagina_atual + 1 ?>" aria-label="Próximo">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                <?php endif; ?>
+            </ul>
+        </nav>
     </div>
 </div>
 

@@ -55,8 +55,17 @@
             return $stm->fetchAll(PDO::FETCH_OBJ);
         }
 
-        // BUSCAR PRONTUARIOS - ORDENAR POR LOCAL
-        public function ordenar_pronts_local()
+        // BUSCA PAGINADA: CONTAR PRONTS
+        public function contar_pronts()
+        {
+            $sql = "SELECT COUNT(*) AS total FROM prontuarios";
+            $stm = $this->db->prepare($sql);
+            $stm->execute();
+            return $stm->fetch(PDO::FETCH_OBJ)->total;
+        }
+
+        // BUSCA PAGINADA: PRONTUARIOS  (LIMITE 15)
+        public function buscar_pronts_paginados($offset, $limite)
         {
             $sql = "SELECT prontuarios.*, 
                            DATE_FORMAT(dataa, '%d/%m/%Y') AS data_formatada,
@@ -68,15 +77,17 @@
                     JOIN animais ON prontuarios.id_animal = animais.id_animal
                     JOIN tutores ON animais.id_tutor = tutores.id_tutor
                     JOIN veterinarios ON prontuarios.id_vet = veterinarios.id_vet
-                    ORDER BY locala ASC";
+                    ORDER BY dataa DESC
+                    LIMIT :offset, :limite";
             $stm = $this->db->prepare($sql);
+            $stm->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
+            $stm->bindValue(':limite', (int) $limite, PDO::PARAM_INT);
             $stm->execute();
-            $this->db = null;
             return $stm->fetchAll(PDO::FETCH_OBJ);
         }
 
-        // BUSCAR PRONTUARIOS - ORDENAR POR LOCAL
-        public function ordenar_pronts_tutor()
+        // BUSCAR PRONTUARIOS - ORDENAR POR LOCAL - PAGINADOS
+        public function ordenar_pronts_local($offset, $limite)
         {
             $sql = "SELECT prontuarios.*, 
                            DATE_FORMAT(dataa, '%d/%m/%Y') AS data_formatada,
@@ -88,15 +99,17 @@
                     JOIN animais ON prontuarios.id_animal = animais.id_animal
                     JOIN tutores ON animais.id_tutor = tutores.id_tutor
                     JOIN veterinarios ON prontuarios.id_vet = veterinarios.id_vet
-                    ORDER BY nome_tutor ASC";
+                    ORDER BY locala ASC
+                    LIMIT :offset, :limite";
             $stm = $this->db->prepare($sql);
+            $stm->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
+            $stm->bindValue(':limite', (int) $limite, PDO::PARAM_INT);
             $stm->execute();
-            $this->db = null;
             return $stm->fetchAll(PDO::FETCH_OBJ);
         }
 
-        // BUSCAR PRONTUARIOS - ORDENAR POR LOCAL
-        public function ordenar_pronts_vet()
+        // BUSCAR PRONTUARIOS - ORDENAR POR LOCAL - PAGINADOS
+        public function ordenar_pronts_tutor($offset, $limite)
         {
             $sql = "SELECT prontuarios.*, 
                            DATE_FORMAT(dataa, '%d/%m/%Y') AS data_formatada,
@@ -108,15 +121,17 @@
                     JOIN animais ON prontuarios.id_animal = animais.id_animal
                     JOIN tutores ON animais.id_tutor = tutores.id_tutor
                     JOIN veterinarios ON prontuarios.id_vet = veterinarios.id_vet
-                    ORDER BY nome_vet ASC";
+                    ORDER BY nome_tutor ASC
+                    LIMIT :offset, :limite";
             $stm = $this->db->prepare($sql);
+            $stm->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
+            $stm->bindValue(':limite', (int) $limite, PDO::PARAM_INT);
             $stm->execute();
-            $this->db = null;
             return $stm->fetchAll(PDO::FETCH_OBJ);
         }
 
-        // BUSCAR PRONTUARIOS DE UM ANIMAL
-        public function buscar_pronts_animal($animal)
+        // BUSCAR PRONTUARIOS - ORDENAR POR LOCAL - PAGINADOS
+        public function ordenar_pronts_vet($offset, $limite)
         {
             $sql = "SELECT prontuarios.*, 
                            DATE_FORMAT(dataa, '%d/%m/%Y') AS data_formatada,
@@ -128,11 +143,36 @@
                     JOIN animais ON prontuarios.id_animal = animais.id_animal
                     JOIN tutores ON animais.id_tutor = tutores.id_tutor
                     JOIN veterinarios ON prontuarios.id_vet = veterinarios.id_vet
-                    WHERE prontuarios.id_animal = ?";
+                    ORDER BY nome_vet ASC
+                    LIMIT :offset, :limite";
+            $stm = $this->db->prepare($sql);
+            $stm->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
+            $stm->bindValue(':limite', (int) $limite, PDO::PARAM_INT);
+            $stm->execute();
+            return $stm->fetchAll(PDO::FETCH_OBJ);
+        }
+
+        // BUSCAR PRONTUARIOS DE UM ANIMAL - PAGINADOS
+        public function buscar_pronts_animal($animal, $offset, $limite)
+        {
+            $sql = "SELECT prontuarios.*, 
+                           DATE_FORMAT(dataa, '%d/%m/%Y') AS data_formatada,
+                           animais.nome AS nome_animal, 
+                           tutores.nome AS nome_tutor, 
+                           tutores.sobrenome, 
+                           veterinarios.nome AS nome_vet
+                    FROM prontuarios 
+                    JOIN animais ON prontuarios.id_animal = animais.id_animal
+                    JOIN tutores ON animais.id_tutor = tutores.id_tutor
+                    JOIN veterinarios ON prontuarios.id_vet = veterinarios.id_vet
+                    WHERE prontuarios.id_animal = ?
+                    LIMIT :offset, :limite";
             try
             {
                 $stm = $this->db->prepare($sql);
                 $stm->bindValue(1, $animal->getId());
+                $stm->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
+                $stm->bindValue(':limite', (int) $limite, PDO::PARAM_INT);
                 $stm->execute();
                 return $stm->fetchAll(PDO::FETCH_OBJ);
             }
@@ -144,7 +184,7 @@
         }
 
         // BUSCAR PRONTUARIOS DE UM VETERINARIO
-        public function buscar_pronts_vet($vet)
+        public function buscar_pronts_vet($vet, $offset, $limite)
         {
             $sql = "SELECT prontuarios.*, 
                            DATE_FORMAT(dataa, '%d/%m/%Y') AS data_formatada,
@@ -156,11 +196,14 @@
                     JOIN animais ON prontuarios.id_animal = animais.id_animal
                     JOIN tutores ON animais.id_tutor = tutores.id_tutor
                     JOIN veterinarios ON prontuarios.id_vet = veterinarios.id_vet
-                    WHERE prontuarios.id_vet = ?";
+                    WHERE prontuarios.id_vet = ?
+                    LIMIT :offset, :limite";
             try
             {
                 $stm = $this->db->prepare($sql);
                 $stm->bindValue(1, $vet->getId());
+                $stm->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
+                $stm->bindValue(':limite', (int) $limite, PDO::PARAM_INT);
                 $stm->execute();
                 return $stm->fetchAll(PDO::FETCH_OBJ);
             }

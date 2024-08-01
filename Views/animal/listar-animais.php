@@ -1,5 +1,6 @@
-<?php require_once ROOT_PATH . '/views/cabecalho.php';
-$total_paginas = ceil($total_registros / $limite);
+<?php
+    require_once ROOT_PATH . '/views/cabecalho.php';
+    $total_paginas = ceil($total_registros / $limite);
 ?>
 
 <div class="content" id="listar-animais">
@@ -50,54 +51,56 @@ $total_paginas = ceil($total_registros / $limite);
             </div>
 
             <br>
-            <div class="">
-                <table class="table table-hover table-striped table-striped-color w-100">
-                    <tr>
-                        <th>RGA</th>
-                        <th>n° chip</th>
-                        <th>Nome</th>
-                        <th>Espécie</th>
-                        <th>Raça</th>
-                        <th>Tutor</th>
-                        <th>Ações</th>
-                    </tr>
-                    <?php if (is_array($retorno) || is_object($retorno)): ?>
-                        <?php foreach($retorno as $dado): ?>
-                            <tr>
-                                <td><?= $dado->rga ?></td>
-                                <td><?= $dado->chip ?></td>
-                                <td><?= $dado->nome ?></td>
-                                <td><?= $dado->especie ?></td>
-                                <td><?= $dado->raca ?></td>
-                                <td><?= $dado->nome_tutor ?>&nbsp;<?= $dado->sobrenome_tutor ?></td>
-                                <td>
-                                    <a class="btn btn-outline-success" href="index.php?controle=animalController&metodo=buscar_animal&id=<?= $dado->id_animal ?>">
-                                        <span class="material-symbols-outlined" style="vertical-align: middle; margin-top: -5px;">pets</span> <!-- ÍCONE --> 
-                                        Perfil
-                                    </a>
-                                        &nbsp;
-                                    <a class="btn btn-outline-primary" href="index.php?controle=prontController&metodo=listar_pronts_animal&id=<?= $dado->id_animal ?>">
-                                        <i class="bi bi-clipboard-pulse"></i> Prontuários
-                                    </a>
-                                        
-                                    <?php if(isset($_SESSION["tipo"]) && $_SESSION["tipo"] == "Administrador"): ?>
-                                        &nbsp;
-                                        <a class="btn btn-outline-warning" href="index.php?controle=animalController&metodo=editar&id=<?= $dado->id_animal ?>">
-                                            <i class="bi bi-pencil-square"></i> Editar
+            <div class="col-24">
+                <div class="row">
+                    <table class="table table-hover table-striped table-striped-color">
+                        <tr>
+                            <th>RGA</th>
+                            <th>n° chip</th>
+                            <th>Nome</th>
+                            <th>Espécie</th>
+                            <th>Raça</th>
+                            <th>Tutor</th>
+                            <th>Ações</th>
+                        </tr>
+                        <?php if (is_array($retorno) || is_object($retorno)): ?>
+                            <?php foreach($retorno as $dado): ?>
+                                <tr>
+                                    <td><?= $dado->rga ?></td>
+                                    <td><?= $dado->chip ?></td>
+                                    <td><?= $dado->nome ?></td>
+                                    <td><?= $dado->especie ?></td>
+                                    <td><?= $dado->raca ?></td>
+                                    <td><?= $dado->nome_tutor ?>&nbsp;<?= $dado->sobrenome ?></td>
+                                    <td>
+                                        <a class="btn btn-outline-success" href="index.php?controle=animalController&metodo=buscar_animal&id=<?= $dado->id_animal ?>">
+                                            <span class="material-symbols-outlined" style="vertical-align: middle; margin-top: -5px;">pets</span> <!-- ÍCONE -->
+                                            Perfil
                                         </a>
                                             &nbsp;
-                                        <a class="btn btn-outline-danger" href="index.php?controle=animalController&metodo=excluir&id=<?= $dado->id_animal ?>">
-                                            <i class="bi bi-x-square"></i> Excluir
+                                        <a class="btn btn-outline-primary" href="index.php?controle=prontController&metodo=listar_pronts_animal&id=<?= $dado->id_animal ?>">
+                                            <i class="bi bi-clipboard-pulse"></i> Prontuários
                                         </a>
 
-                                    <?php endif; ?>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <tr><td colspan='4'>Nenhum animal encontrado.</td></tr>
-                    <?php endif; ?>
-                </table>
+                                        <?php if(isset($_SESSION["tipo"]) && $_SESSION["tipo"] == "Administrador"): ?>
+                                            &nbsp;
+                                            <a class="btn btn-outline-warning" href="index.php?controle=animalController&metodo=editar&id=<?= $dado->id_animal ?>">
+                                                <i class="bi bi-pencil-square"></i> Editar
+                                            </a>
+                                                &nbsp;
+                                            <a class="btn btn-outline-danger" href="index.php?controle=animalController&metodo=excluir&id=<?= $dado->id_animal ?>">
+                                                <i class="bi bi-x-square"></i> Excluir
+                                            </a>
+
+                                        <?php endif; ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr><td colspan='4'>Nenhum animal encontrado.</td></tr>
+                        <?php endif; ?>
+                    </table>
+                </div>
                 <!-- Paginação -->
                 <nav aria-label="Navegação de página">
                     <ul class="pagination justify-content-center">
