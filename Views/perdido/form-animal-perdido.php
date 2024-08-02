@@ -77,9 +77,10 @@
                 <div class="col-md-2 ">
                     <label for="sexo">SEXO</label>  <br> 
                     <select class="form-select-sexo" name="sexo" aria-label="label select example">
-                        <option value="0">----</option>
+                        <option value="0"></option>
                         <option value="Fêmea">Fêmea</option>
                         <option value="Macho">Macho</option>
+                        <option value="Macho">Não identificado</option>
                         <option value="<?php echo isset($_POST['sexo'])?$_POST['sexo']:'';?>"></option>
                     </select>
 

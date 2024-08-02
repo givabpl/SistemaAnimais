@@ -109,27 +109,35 @@
             return $stm->fetch(PDO::FETCH_OBJ)->total;
         }
 
-        public function buscar_animais_por_nome_rga_chip($pesquisa, $offset, $limite)
+        public function buscar_animais_por_nome_rga_chip($pesquisa, $limite, $offset)
         {
-            $sql = "SELECT * FROM animais WHERE nome LIKE ? OR rga LIKE ? OR chip LIKE ? LIMIT ? OFFSET ?";
+            $pesquisa = '%' . $pesquisa . '%';
+            $sql = "SELECT * FROM animais WHERE nome LIKE :pesquisa OR rga LIKE :pesquisa OR chip LIKE :pesquisa LIMIT :limite OFFSET :offset";
             $stm = $this->db->prepare($sql);
-            $like_pesquisa = '%' . $pesquisa . '%';
-            $stm->bind_param("sssii", $like_pesquisa, $like_pesquisa, $like_pesquisa, $limite, $offset);
+
+            echo 'SQL: ' . $sql . '<br>';
+            echo 'Pesquisa: ' . $pesquisa . '<br>';
+            echo 'Limite: ' . $limite . '<br>';
+            echo 'Offset: ' . $offset . '<br>';
+
+
+            $stm->bindValue(':pesquisa', $pesquisa, PDO::PARAM_STR);
+            $stm->bindValue(':limite', (int) $limite, PDO::PARAM_INT);
+            $stm->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
             $stm->execute();
-            $result = $stm->get_result();
-            return $result->fetch_all(MYSQLI_ASSOC);
+
+            $retorno = $stm->fetchAll(PDO::FETCH_OBJ);
+            return $retorno;
         }
 
         public function contar_animais_por_nome_rga_chip($pesquisa)
         {
-            $sql = "SELECT COUNT(*) as total FROM animais WHERE nome LIKE ? OR rga LIKE ? OR chip LIKE ?";
+            $pesquisa = '%' . $pesquisa . '%';
+            $sql = "SELECT COUNT(*) as total FROM animais WHERE nome LIKE :pesquisa OR rga LIKE :pesquisa OR chip LIKE :pesquisa";
             $stm = $this->db->prepare($sql);
-            $like_pesquisa = '%' . $pesquisa . '%';
-            $stm->bind_param("sss", $like_pesquisa, $like_pesquisa, $like_pesquisa);
+            $stm->bindValue(':pesquisa', $pesquisa, PDO::PARAM_STR);
             $stm->execute();
-            $result = $stm->get_result();
-            $row = $result->fetch_assoc();
-            return $row['total'];
+            return $stm->fetch(PDO::FETCH_OBJ)->total;
         }
 
 

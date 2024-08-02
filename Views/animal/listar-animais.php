@@ -51,7 +51,7 @@
             </div>
 
             <!-- FORMULÁRIO DE BUSCA -->
-            <form method="get" action="index.php">
+            <form method="get" action="">
                 <input type="hidden" name="controle" value="animalController">
                 <input type="hidden" name="metodo" value="listar">
                 <div class="mb-3 row">
@@ -77,6 +77,7 @@
                             <th>Tutor</th>
                             <th>Ações</th>
                         </tr>
+                        <?php print_r($retorno);  ?>
                         <?php if (is_array($retorno) || is_object($retorno)): ?>
                             <?php foreach($retorno as $dado): ?>
                                 <tr>

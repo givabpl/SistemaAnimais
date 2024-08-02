@@ -33,7 +33,7 @@
                     $msg[2] = "Preencha a data de nascimento";
                     $erro = true;
                 }
-                if(empty($_POST["sexo"]))
+                if($_POST["sexo"] === "0")
                 {
                     $msg[3] = "Selecione o sexo";
                     $erro = true;
@@ -242,6 +242,8 @@
             if ($pesquisa) {
                 $retorno = $animalDAO->buscar_animais_por_nome_rga_chip($pesquisa, $limite, $offset);
                 $total_registros = $animalDAO->contar_animais_por_nome_rga_chip($pesquisa);
+
+                echo 'Pesquisa: ' . $pesquisa;
             } else{
                 $retorno = $animalDAO->buscar_animais_paginados($offset, $limite);
                 $total_registros = $animalDAO->contar_animais();

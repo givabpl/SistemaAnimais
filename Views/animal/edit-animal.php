@@ -11,6 +11,7 @@
         ?>
 
         <h1>Editar Animal</h1>
+        <!-- FORMULÁRIO -->
         
         <form action="#" method="post">
             <!-- INPUTS NESSA LINHA: -->

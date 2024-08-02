@@ -74,9 +74,10 @@
                 <div class="col-md-2 ">
                     <label for="sexo">SEXO</label>  <br> 
                     <select class="form-select-sexo" name="sexo" aria-label="Flabel select example">
-                        <option value="0">----</option>
+                        <option value="0"></option>
                         <option value="Fêmea">Fêmea</option>
                         <option value="Macho">Macho</option>
+                        <option value="Macho">Não identificado</option>
                     </select>
 
                     <div style="color:red"><?php echo $msg[3] != ""?$msg[3]:'';?></div>
@@ -181,18 +182,21 @@
                 </div>
         </div>
 
+        <!-- SELECT TUTOR -->
         <div class="mb-3">
             <div class="col">
                 <!-- TUTOR -->
                 <label for="tutor" class="form-label">TUTOR</label> <br>
-                <select name="tutor" id="tutor" class="form-select-tutor">
+
+                <select name="tutor" id="tutor-select" class="form-select-tutor">
                     <option value="0">Selecione um tutor</option>
                     <?php foreach($retorno as $dado): ?>
                         <option value="<?php echo $dado->id_tutor; ?>" <?php echo (isset($_POST["tutor"]) && $_POST["tutor"] == $dado->id_tutor) ? 'selected' : ''; ?>>
-                            <?php echo $dado->nome; ?>
+                            <?php echo $dado->nome; ?>  <?php echo $dado->sobrenome; ?>
                         </option>
                     <?php endforeach; ?>
                 </select>
+
                 <div style="color:red"><?php echo $msg[9] != ""?$msg[9]:'';?></div>
             </div>
         </div>
@@ -204,5 +208,15 @@
         </form>
     </div>
 </div>
+    <!-- PERMITE BUSCA DENTRO DO SELECT PARA FACILITAR -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#tutor-select').select2({
+                placeholder: "Selecione um tutor",
+                allowClear: true
+            });
+        });
+    </script>
 
 <?php require_once ROOT_PATH . '/views/rodape.html'; ?>
