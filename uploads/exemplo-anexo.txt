@@ -1,0 +1,78 @@
+# Prontuário Médico Veterinário
+
+## Dados do Animal
+- **Nome:** [Nome do Cachorro]
+- **Espécie:** Canina
+- **Raça:** [Raça do Cachorro]
+- **Sexo:** [Sexo do Cachorro]
+- **Idade:** [Idade do Cachorro]
+- **Peso:** [Peso do Cachorro]
+- **RGA:** [Número do RGA]
+- **Microchip:** [Número do Microchip]
+
+## Dados do Tutor
+- **Nome:** [Nome do Tutor]
+- **Telefone:** [Telefone do Tutor]
+- **Endereço:** [Endereço do Tutor]
+
+## Histórico Clínico
+- **Doenças Pré-existentes:** [Doenças Pré-existentes]
+- **Vacinações:** [Vacinações]
+- **Medicações:** [Medicações em Uso]
+- **Alergias:** [Alergias Conhecidas]
+- **Cirurgias Anteriores:** [Cirurgias Anteriores]
+
+## Motivo da Consulta
+- **Descrição:** [Descrição do Motivo da Consulta]
+
+## Exame Físico
+- **Temperatura Corporal:** [Temperatura Corporal]
+- **Frequência Cardíaca:** [Frequência Cardíaca]
+- **Frequência Respiratória:** [Frequência Respiratória]
+- **Estado Geral:** [Estado Geral do Animal]
+- **Mucosas:** [Descrição das Mucosas]
+- **Pele e Pelagem:** [Condição da Pele e Pelagem]
+- **Linfonodos:** [Avaliação dos Linfonodos]
+- **Sistema Respiratório:** [Avaliação do Sistema Respiratório]
+- **Sistema Cardiovascular:** [Avaliação do Sistema Cardiovascular]
+- **Sistema Digestório:** [Avaliação do Sistema Digestório]
+- **Sistema Urinário:** [Avaliação do Sistema Urinário]
+- **Sistema Musculoesquelético:** [Avaliação do Sistema Musculoesquelético]
+- **Sistema Nervoso:** [Avaliação do Sistema Nervoso]
+
+## Diagnóstico Presuntivo
+- **Diagnóstico:** [Diagnóstico Presuntivo]
+
+## Exames Complementares
+- **Exames Solicitados:** [Lista de Exames Solicitados]
+- **Resultados dos Exames:** [Resultados dos Exames]
+
+## Diagnóstico Definitivo
+- **Diagnóstico:** [Diagnóstico Definitivo]
+
+## Plano Terapêutico
+- **Medicação:** [Medicação Prescrita]
+- **Dosagem:** [Dosagem da Medicação]
+- **Duração:** [Duração do Tratamento]
+- **Outras Recomendações:** [Outras Recomendações]
+
+## Procedimentos Realizados
+- **Procedimento:** [Descrição do Procedimento Realizado]
+- **Data:** [Data do Procedimento]
+
+## Observações Adicionais
+- [Qualquer Observação Adicional]
+
+## Dados do Veterinário
+- **Nome:** [Nome do Veterinário]
+- **CRMV:** [Número do CRMV]
+- **Assinatura:** ___________________________
+
+---
+
+### Notas Finais
+Este prontuário deve ser mantido atualizado em cada consulta e revisão do paciente. Todos os dados devem ser inseridos de maneira precisa e detalhada para garantir o melhor atendimento ao animal.
+
+---
+
+**Este é um documento confidencial e de uso exclusivo da clínica veterinária.**

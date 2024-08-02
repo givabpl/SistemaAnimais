@@ -75,6 +75,7 @@
                     tutores.sobrenome
                     FROM animais 
                     JOIN tutores ON animais.id_tutor = tutores.id_tutor
+                    ORDER BY id_animal DESC
                     LIMIT :offset, :limite";
             $stm = $this->db->prepare($sql);
             $stm->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
@@ -90,6 +91,7 @@
                     tutores.nome AS nome_tutor
                     FROM animais 
                     JOIN tutores ON animais.id_tutor = tutores.id_tutor
+                    ORDER BY id_animal DESC
                     LIMIT :offset, :limite";
             $stm = $this->db->prepare($sql);
             $stm->bindValue(':offset', (int) $offset, PDO::PARAM_INT);

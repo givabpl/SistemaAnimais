@@ -3,8 +3,8 @@
     $total_paginas = ceil($total_registros / $limite);
 ?>
 
-<div class="content" id="listar-animais">
-    <div class="container">
+<div class="content p-4" id="listar-animais">
+    <div class="container-fluid">
         
         <?php
             if(isset($_GET["msg"]))

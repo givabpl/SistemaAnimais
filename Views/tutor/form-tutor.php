@@ -42,7 +42,7 @@
                     <label for="rg" class="form-label">RG</label>
                     <input 
                         type="text" 
-                        maxlength="9" 
+                        maxlength="12"
                         class="form-control" 
                         name="rg" 
                         id="rg" 
@@ -55,7 +55,7 @@
                     <label for="cpf" class="form-label">CPF</label>
                     <input 
                         type="text" 
-                        maxlength="11" 
+                        maxlength="14"
                         class="form-control" 
                         name="cpf" 
                         id="cpf" 
@@ -148,5 +148,73 @@
         </form>
     </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const rgInput = document.getElementById('rg');
+        const cpfInput = document.getElementById('cpf');
+
+        rgInput.addEventListener('input', function () {
+            let rg = rgInput.value.replace(/\D/g, '');
+            rg = rg.replace(/(\d{2})(\d)/, '$1.$2');
+            rg = rg.replace(/(\d{3})(\d)/, '$1.$2');
+            rg = rg.replace(/(\d{3})(\d)$/, '$1-$2');
+            rgInput.value = rg;
+        });
+
+        cpfInput.addEventListener('input', function () {
+            let cpf = cpfInput.value.replace(/\D/g, '');
+            cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2');
+            cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2');
+            cpf = cpf.replace(/(\d{3})(\d{2})$/, '$1-$2');
+            cpfInput.value = cpf;
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const phoneInputs = document.querySelectorAll('#telefone1, #telefone2');
+
+        phoneInputs.forEach(input => {
+            input.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                let formattedValue = '';
+
+                if (value.length <= 11) {
+                    // Format as (DDD) NNNN-NNNN
+                    if (value.length > 3) {
+                        formattedValue += '(' + value.substring(0, 3) + ') ';
+                        value = value.substring(3);
+                    }
+                    if (value.length > 4) {
+                        formattedValue += value.substring(0, 4) + '-' + value.substring(4, 8);
+                    } else {
+                        formattedValue += value;
+                    }
+                } else {
+                    // Format as (DDD) 9 NNNN-NNNN
+                    if (value.length > 3) {
+                        formattedValue += '(' + value.substring(0, 3) + ') ';
+                        value = value.substring(3);
+                    }
+                    if (value.length > 1) {
+                        formattedValue += value[0] + ' ';
+                        value = value.substring(1);
+                    }
+                    if (value.length > 4) {
+                        formattedValue += value.substring(0, 4) + '-' + value.substring(4, 8);
+                    } else {
+                        formattedValue += value;
+                    }
+                }
+
+                e.target.value = formattedValue;
+            });
+        });
+    });
+
+
+
+
+</script>
+
 
 <?php require_once ROOT_PATH . '/views/rodape.html'; ?>

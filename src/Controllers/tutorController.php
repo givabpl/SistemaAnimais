@@ -87,8 +87,9 @@
 
                     $tutorDAO = new tutorDAO();
                     $retorno = $tutorDAO->inserir($tutor);
+                    $msg = "Tutor cadastrado com sucesso";
 
-                    header("location:index.php?controle=tutorController&metodo=listar");
+                    header("location:index.php?controle=tutorController&metodo=listar&msg=$msg");
                 }
             }
             require_once "Views/tutor/form-tutor.php";

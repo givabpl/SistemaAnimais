@@ -46,7 +46,7 @@
         // BUSCAR TUTORES PAGINADOS
         public function buscar_tutores_paginados($offset, $limite)
         {
-            $sql = "SELECT * FROM tutores LIMIT :offset, :limite";
+            $sql = "SELECT * FROM tutores ORDER BY id_tutor DESC LIMIT :offset, :limite";
             $stm = $this->db->prepare($sql);
             $stm->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
             $stm->bindValue(':limite', (int) $limite, PDO::PARAM_INT);
@@ -67,13 +67,11 @@
         // BUSCAR TUTORES EM ORDEM ALFABETICA PAGINADO
         public function ordenar_tutores_alf($offset, $limite)
         {
-            $sql = "SELECT * FROM tutores 
-                    ORDER BY nome 
-                    LIMIT :offset, :limite";
+            $sql = "SELECT * FROM tutores ORDER BY nome ASC LIMIT :offset, :limite";
             $stm = $this->db->prepare($sql);
-            $stm->execute();
             $stm->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
             $stm->bindValue(':limite', (int) $limite, PDO::PARAM_INT);
+            $stm->execute();
             return $stm->fetchAll(PDO::FETCH_OBJ);
         }
 

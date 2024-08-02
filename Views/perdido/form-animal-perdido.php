@@ -9,7 +9,7 @@
             }
         ?>
 
-        <h1 class="h2 col">Registrar animal perdido</h1>
+        <h1 class="h2 col">Registrar animal desaparecido</h1>
         <form action="#" method="post" enctype="multipart/form-data"> <!-- INÍCIO FORMULÁRIO -->
 
             <h3 class="col-md-6">Informações do Animal</h3>
@@ -80,6 +80,7 @@
                         <option value="0">----</option>
                         <option value="Fêmea">Fêmea</option>
                         <option value="Macho">Macho</option>
+                        <option value="<?php echo isset($_POST['sexo'])?$_POST['sexo']:'';?>"></option>
                     </select>
 
                     <div style="color:red"><?php echo $msg[2] != ""?$msg[2]:'';?></div>
@@ -329,6 +330,47 @@
 				reader.readAsDataURL(img.files[0]);
 			}
 		}
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const phoneInputs = document.querySelectorAll('#telefone1, #telefone2');
+
+            phoneInputs.forEach(input => {
+                input.addEventListener('input', function(e) {
+                    let value = e.target.value.replace(/\D/g, '');
+                    let formattedValue = '';
+
+                    if (value.length <= 11) {
+                        // Format as (DDD) NNNN-NNNN
+                        if (value.length > 3) {
+                            formattedValue += '(' + value.substring(0, 3) + ') ';
+                            value = value.substring(3);
+                        }
+                        if (value.length > 4) {
+                            formattedValue += value.substring(0, 4) + '-' + value.substring(4, 8);
+                        } else {
+                            formattedValue += value;
+                        }
+                    } else {
+                        // Format as (DDD) 9 NNNN-NNNN
+                        if (value.length > 3) {
+                            formattedValue += '(' + value.substring(0, 3) + ') ';
+                            value = value.substring(3);
+                        }
+                        if (value.length > 1) {
+                            formattedValue += value[0] + ' ';
+                            value = value.substring(1);
+                        }
+                        if (value.length > 4) {
+                            formattedValue += value.substring(0, 4) + '-' + value.substring(4, 8);
+                        } else {
+                            formattedValue += value;
+                        }
+                    }
+
+                    e.target.value = formattedValue;
+                });
+            });
+        });
 	</script>
 
 <?php require_once ROOT_PATH . '/views/rodape.html'; ?>
