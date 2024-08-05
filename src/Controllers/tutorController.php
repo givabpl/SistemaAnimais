@@ -191,9 +191,17 @@
             $offset = ($pagina_atual - 1) * $limite;
 
             $tutorDAO = new tutorDAO();
-            $retorno = $tutorDAO->buscar_tutores_paginados($offset, $limite);
 
-            $total_registros = $tutorDAO->contar_tutores();
+            $pesquisa = isset($_GET['busca']) ? $_GET['busca'] : '';
+
+            if ($pesquisa)
+            {
+                $retorno = $tutorDAO->buscar_tutores_pesquisa($pesquisa, $limite, $offset);
+                $total_registros = $tutorDAO->contar_tutores_pesquisa($pesquisa);
+            } else {
+                $retorno = $tutorDAO->buscar_tutores_paginados($offset, $limite);
+                $total_registros = $tutorDAO->contar_tutores();
+            }
 
             // VERIFICA SESSAO DO VETERINARIO P/ EXIBIR DADOS PRIVADOS
             session_start();
@@ -238,26 +246,26 @@
             $pagina_atual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
             $offset = ($pagina_atual - 1) * $limite;
 
-            // VERIFICA SESSAO DO VETERINARIO P/ EXIBIR DADOS PRIVADOS
-            session_start();
-            if(!isset($_SESSION["id_vet"]))
-            {
-                header("location:index.php");
-                exit();
-            }
-            
             if(isset($_GET["id"]))
             {
                 $tutor = new Tutor($_GET["id"]);
                 $tutorDAO = new tutorDAO();
-                $retorno = $tutorDAO->buscar_animais_tutor($tutor, $offset, $limite);
 
-                $total_registros = $tutorDAO->contar_tutores();
+                $pesquisa = isset($_GET['busca']) ? $_GET['busca'] : '';
+                if ($pesquisa) {
+                    $retorno = $tutorDAO->buscar_animais_tutor_pesquisa($tutor, $pesquisa, $limite, $offset);
+                    $total_registros = $tutorDAO->contar_animais_tutor_pesquisa($tutor, $pesquisa);
+                } else {
+                    $retorno = $tutorDAO->buscar_animais_tutor($tutor, $offset, $limite);
+                    $total_registros = $tutorDAO->contar_animais_tutor($tutor);
+                }
 
-                if(empty($retorno))
+                // VERIFICA SESSAO DO VETERINARIO P/ EXIBIR DADOS PRIVADOS
+                session_start();
+                if(!isset($_SESSION["id_vet"]))
                 {
-                    $tutorDAO = new tutorDAO();
-                    $retorno = $tutorDAO->buscar_animal_tutor($tutor);
+                    header("location:index.php");
+                    exit();
                 }
 
                 require_once "Views/tutor/listar-animais-tutor.php";

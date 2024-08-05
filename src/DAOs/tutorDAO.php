@@ -33,7 +33,29 @@
             return $this->db->lastInsertId();
         }
 
-        // BUSCAR TUTORES (PRIVADO: CONTEM TODOS OS DADOS SO TUTOR)
+        // EDITAR TUTOR
+        public function editar($tutor)
+        {
+            $sql = "UPDATE tutores SET nome = ?, sobrenome = ?, rg = ?, cpf = ?, cep = ?, logradouro = ?, numero = ?, bairro = ?, telefone1 = ?, telefone2 = ? WHERE id_tutor = ?";
+
+            $stm = $this->db->prepare($sql);
+            $stm->bindValue(1, $tutor->getNome());
+            $stm->bindValue(2, $tutor->getSobrenome());
+            $stm->bindValue(3, $tutor->getRg());
+            $stm->bindValue(4, $tutor->getCpf());
+            $stm->bindValue(5, $tutor->getCep());
+            $stm->bindValue(6, $tutor->getLogradouro());
+            $stm->bindValue(7, $tutor->getNumero());
+            $stm->bindValue(8, $tutor->getBairro());
+            $stm->bindValue(9, $tutor->getTel1());
+            $stm->bindValue(10, $tutor->getTel2());
+            $stm->bindValue(11, $tutor->getId());
+            $stm->execute();
+            $this->db = null;
+            return "Tutor editado com sucesso";
+        }
+
+        // BUSCAR TUTORES (PRIVADO: CONTEM TODOS OS DADOS DO TUTOR)
         public function buscar_tutores()
         {
             $sql = "SELECT * FROM tutores";
@@ -54,15 +76,110 @@
             return $stm->fetchAll(PDO::FETCH_OBJ);
         }
 
-        // BUSCAR TUTORES PUBLICO
-        public function buscar_publico()
+        // BUSCA PAGINADA: CONTA TUTORES
+        public function contar_tutores()
         {
-            $sql = "SELECT id_tutor, nome FROM tutores";
+            $sql = "SELECT COUNT(*) AS total FROM tutores";
             $stm = $this->db->prepare($sql);
             $stm->execute();
-            $this->db = null;
-            return $stm->fetchAll(PDO::FETCH_OBJ);
-        }  
+            return $stm->fetch(PDO::FETCH_OBJ)->total;
+        }
+
+        // BUSCAR TUTORES PESQUISA
+        public function buscar_tutores_pesquisa($pesquisa, $limite, $offset)
+        {
+            $pesquisa = '%' . $pesquisa . '%';
+            $sql = "SELECT * FROM tutores
+                    WHERE nome LIKE :pesquisa
+                       OR sobrenome LIKE :pesquisa
+                       OR rg LIKE :pesquisa
+                       OR cpf LIKE :pesquisa
+                       OR logradouro LIKE :pesquisa
+                       OR bairro LIKE :pesquisa";
+
+            $stm = $this->db->prepare($sql);
+
+            $stm->bindValue(':pesquisa', $pesquisa, PDO::PARAM_STR);
+            $stm->bindValue(':limite', (int) $limite, PDO::PARAM_INT);
+            $stm->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
+            $stm->execute();
+
+            $retorno = $stm->fetchAll(PDO::FETCH_OBJ);
+            return $retorno;
+        }
+
+        // CONTAR TUTORES PESQUISA
+        public function contar_tutores_pesquisa($pesquisa)
+        {
+            $sql = "SELECT COUNT(*) AS total 
+                    FROM tutores
+                    WHERE nome LIKE :pesquisa
+                       OR sobrenome LIKE :pesquisa
+                       OR rg LIKE :pesquisa
+                       OR cpf LIKE :pesquisa
+                       OR logradouro LIKE :pesquisa
+                       OR bairro LIKE :pesquisa";
+
+            $stm = $this->db->prepare($sql);
+            $stm->bindValue(':pesquisa', $pesquisa, PDO::PARAM_STR);
+            $stm->execute();
+            return $stm->fetch(PDO::FETCH_OBJ)->total;
+        }
+
+        // BUSCAR ANIMAIS DE UM TUTOR PESQUISA
+        public function buscar_animais_tutor_pesquisa($tutor, $pesquisa, $limite, $offset)
+        {
+            $pesquisa = '%' . $pesquisa . '%';
+
+            $sql = "SELECT animais.*
+                           tutores.id_tutor
+                           tutores.nome AS nome_tutor, 
+                           tutores.sobrenome
+                    FROM animais 
+                    JOIN tutores ON animais.id_tutor = tutores.id_tutor
+                    WHERE animais.nome LIKE :pesquisa
+                       OR animais.rga LIKE :pesquisa
+                       OR animais.chip LIKE :pesquisa
+                       OR animais.especie LIKE :pesquisa
+                       OR animais.raca LIKE :pesquisa
+                       OR animais.pelagem LIKE :pesquisa
+                       AND animais.id_tutor = :id_tutor
+                    LIMIT :offset, :limite";
+
+            $stm = $this->db->prepare($sql);
+
+            $stm->bindValue('id_tutor', $tutor->getId(), PDO::PARAM_INT);
+            $stm->bindValue(':pesquisa', $pesquisa, PDO::PARAM_STR);
+            $stm->bindValue(':limite', (int) $limite, PDO::PARAM_INT);
+            $stm->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
+            $stm->execute();
+
+            $retorno = $stm->fetchAll(PDO::FETCH_OBJ);
+            return $retorno;
+        }
+
+        // CONTAR ANIMAIS DE UM TUTOR PESQUISA
+        public function contar_animais_tutor_pesquisa($tutor, $pesquisa)
+        {
+            $pesquisa = '%' . $pesquisa . '%';
+            $sql = "SELECT COUNT(*) AS total 
+                    FROM animais
+                    JOIN tutores ON animais.id_tutor = tutores.id_tutor
+                    WHERE animais.nome LIKE :pesquisa
+                       OR animais.rga LIKE :pesquisa
+                       OR animais.chip LIKE :pesquisa
+                       OR animais.especie LIKE :pesquisa
+                       OR animais.raca LIKE :pesquisa
+                       OR animais.pelagem LIKE :pesquisa
+                       AND animais.id_tutor = :id_tutor
+                    ";
+
+            $stm = $this->db->prepare($sql);
+            $stm->bindValue('id_tutor', $tutor->getId(), PDO::PARAM_INT);
+            $stm->bindValue(':pesquisa', $pesquisa, PDO::PARAM_STR);
+            $stm->execute();
+            return $stm->fetch(PDO::FETCH_OBJ)->total;
+        }
 
         // BUSCAR TUTORES EM ORDEM ALFABETICA PAGINADO
         public function ordenar_tutores_alf($offset, $limite)
@@ -75,15 +192,6 @@
             return $stm->fetchAll(PDO::FETCH_OBJ);
         }
 
-        public function contar_tutores()
-        {
-            $sql = "SELECT COUNT(*) AS total FROM tutores";
-            $stm = $this->db->prepare($sql);
-            $stm->execute();
-            return $stm->fetch(PDO::FETCH_OBJ)->total;
-        }
-
-        
         // BUSCAR UM TUTOR
         public function buscar_tutor($tutor)
         {
@@ -129,6 +237,20 @@
                 echo "Problema ao buscar animais do tutor: " . $e->getMessage();
                 return null;
             }
+        }
+
+        // CONTAR ANIMAIS TUTOR
+        public function contar_animais_tutor($tutor)
+        {
+            $sql = "SELECT COUNT(*) AS total
+                    FROM animais
+                    JOIN tutores ON animais.id_tutor = tutores.id_tutor
+                    WHERE animais.id_tutor = :id_tutor";
+
+            $stm = $this->db->prepare($sql);
+            $stm->bindValue('id_tutor', $tutor->getId(), PDO::PARAM_INT);
+            $stm->execute();
+            return $stm->fetch(PDO::FETCH_OBJ)->total;
         }
 
         // BUSCAR NOME DO ANIMAL & NOME DO TUTOR
@@ -193,38 +315,6 @@
         }
 
 
-
-
-        public function buscar_por_nome($nome)
-        {
-            $sql = "SELECT * FROM tutores WHERE nome LIKE ?";
-            $stm = $this->db->prepare($sql);
-            $stm->bindValue(1, '%' . $nome . '%');
-            $stm->execute();
-            return $stm->fetchAll(PDO::FETCH_OBJ);
-        }
-
-        public function buscar_por_rg($rg)
-        {
-            $sql = "SELECT * FROM tutores WHERE rg LIKE ?";
-            $stm = $this->db->prepare($sql);
-            $stm->bindValue(1, '%' . $rg . '%');
-            $stm->execute();
-            return $stm->fetchAll(PDO::FETCH_OBJ);
-        }
-
-        public function buscar_por_cpf($cpf)
-        {
-            $sql = "SELECT * FROM tutores WHERE cpf LIKE ?";
-            $stm = $this->db->prepare($sql);
-            $stm->bindValue(1, '%' . $cpf . '%');
-            $stm->execute();
-            return $stm->fetchAll(PDO::FETCH_OBJ);
-        }
-
-
-
-
         // EXCLUIR TUTOR
         public function excluir($tutor)
 		{
@@ -252,25 +342,5 @@
 			}
 		}
 
-        // EDITAR TUTOR
-        public function editar($tutor)
-        {
-            $sql = "UPDATE tutores SET nome = ?, sobrenome = ?, rg = ?, cpf = ?, cep = ?, logradouro = ?, numero = ?, bairro = ?, telefone1 = ?, telefone2 = ? WHERE id_tutor = ?";
 
-            $stm = $this->db->prepare($sql);
-            $stm->bindValue(1, $tutor->getNome());
-            $stm->bindValue(2, $tutor->getSobrenome());
-            $stm->bindValue(3, $tutor->getRg());
-            $stm->bindValue(4, $tutor->getCpf());
-            $stm->bindValue(5, $tutor->getCep());
-            $stm->bindValue(6, $tutor->getLogradouro());
-            $stm->bindValue(7, $tutor->getNumero());
-            $stm->bindValue(8, $tutor->getBairro());
-            $stm->bindValue(9, $tutor->getTel1());
-            $stm->bindValue(10, $tutor->getTel2());
-            $stm->bindValue(11, $tutor->getId());
-            $stm->execute();
-            $this->db = null;
-            return "Tutor editado com sucesso";
-        }
     }

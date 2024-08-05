@@ -240,11 +240,9 @@
             $pesquisa = isset($_GET['busca']) ? $_GET['busca'] : '';
 
             if ($pesquisa) {
-                $retorno = $animalDAO->buscar_animais_por_nome_rga_chip($pesquisa, $limite, $offset);
-                $total_registros = $animalDAO->contar_animais_por_nome_rga_chip($pesquisa);
-
-                echo 'Pesquisa: ' . $pesquisa;
-            } else{
+                $retorno = $animalDAO->buscar_animais_pesquisa($pesquisa, $limite, $offset);
+                $total_registros = $animalDAO->contar_animais_pesquisa($pesquisa);
+            } else {
                 $retorno = $animalDAO->buscar_animais_paginados($offset, $limite);
                 $total_registros = $animalDAO->contar_animais();
             }

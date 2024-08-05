@@ -49,6 +49,7 @@
             $sql = "SELECT animais.*, tutores.nome AS nome_tutor, tutores.sobrenome 
                     FROM animais 
                     JOIN tutores ON animais.id_tutor = tutores.id_tutor";
+
             $stm = $this->db->prepare($sql);
             $stm->execute();
             $this->db = null;
@@ -58,9 +59,11 @@
         // BUSCAR ANIMAIS PUBLICO
         public function buscar_animais_publico()
         {
-            $sql = "SELECT animais.*, tutores.nome AS nome_tutor
+            $sql = "SELECT animais.*, 
+                           tutores.nome AS nome_tutor
                     FROM animais 
                     JOIN tutores ON animais.id_tutor = tutores.id_tutor";
+
             $stm = $this->db->prepare($sql);
             $stm->execute();
             $this->db = null;
@@ -71,12 +74,13 @@
         public function buscar_animais_paginados($offset, $limite)
         {
             $sql = "SELECT animais.*, 
-                    tutores.nome AS nome_tutor, 
-                    tutores.sobrenome
+                           tutores.nome AS nome_tutor, 
+                           tutores.sobrenome
                     FROM animais 
                     JOIN tutores ON animais.id_tutor = tutores.id_tutor
                     ORDER BY id_animal DESC
                     LIMIT :offset, :limite";
+
             $stm = $this->db->prepare($sql);
             $stm->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
             $stm->bindValue(':limite', (int) $limite, PDO::PARAM_INT);
@@ -88,11 +92,12 @@
         public function buscar_animais_paginados_pub($offset, $limite)
         {
             $sql = "SELECT animais.*, 
-                    tutores.nome AS nome_tutor
+                           tutores.nome AS nome_tutor
                     FROM animais 
                     JOIN tutores ON animais.id_tutor = tutores.id_tutor
                     ORDER BY id_animal DESC
                     LIMIT :offset, :limite";
+
             $stm = $this->db->prepare($sql);
             $stm->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
             $stm->bindValue(':limite', (int) $limite, PDO::PARAM_INT);
@@ -109,17 +114,25 @@
             return $stm->fetch(PDO::FETCH_OBJ)->total;
         }
 
-        public function buscar_animais_por_nome_rga_chip($pesquisa, $limite, $offset)
+        // BUSCAR ANIMAIS PESQUISA
+        public function buscar_animais_pesquisa($pesquisa, $limite, $offset)
         {
             $pesquisa = '%' . $pesquisa . '%';
-            $sql = "SELECT * FROM animais WHERE nome LIKE :pesquisa OR rga LIKE :pesquisa OR chip LIKE :pesquisa LIMIT :limite OFFSET :offset";
+            $sql = "SELECT animais.*,
+                           tutores.nome AS nome_tutor,
+                           tutores.sobrenome
+                    FROM animais
+                    JOIN tutores ON animais.id_tutor = tutores.id_tutor
+                    WHERE animais.nome LIKE :pesquisa 
+                       OR animais.rga LIKE :pesquisa 
+                       OR animais.chip LIKE :pesquisa 
+                       OR animais.especie LIKE :pesquisa 
+                       OR animais.raca LIKE :pesquisa 
+                       OR tutores.nome LIKE :pesquisa 
+                       OR tutores.sobrenome LIKE :pesquisa 
+                    LIMIT :limite OFFSET :offset";
+
             $stm = $this->db->prepare($sql);
-
-            echo 'SQL: ' . $sql . '<br>';
-            echo 'Pesquisa: ' . $pesquisa . '<br>';
-            echo 'Limite: ' . $limite . '<br>';
-            echo 'Offset: ' . $offset . '<br>';
-
 
             $stm->bindValue(':pesquisa', $pesquisa, PDO::PARAM_STR);
             $stm->bindValue(':limite', (int) $limite, PDO::PARAM_INT);
@@ -130,10 +143,21 @@
             return $retorno;
         }
 
-        public function contar_animais_por_nome_rga_chip($pesquisa)
+        // CONTAR ANIMAIS PESQUISA
+        public function contar_animais_pesquisa($pesquisa)
         {
             $pesquisa = '%' . $pesquisa . '%';
-            $sql = "SELECT COUNT(*) as total FROM animais WHERE nome LIKE :pesquisa OR rga LIKE :pesquisa OR chip LIKE :pesquisa";
+            $sql = "SELECT COUNT(*) as total 
+                    FROM animais 
+                    JOIN tutores ON animais.id_tutor = tutores.id_tutor
+                    WHERE animais.nome LIKE :pesquisa 
+                       OR animais.rga LIKE :pesquisa 
+                       OR animais.chip LIKE :pesquisa 
+                       OR animais.especie LIKE :pesquisa 
+                       OR animais.raca LIKE :pesquisa 
+                       OR tutores.nome LIKE :pesquisa 
+                       OR tutores.sobrenome LIKE :pesquisa";
+
             $stm = $this->db->prepare($sql);
             $stm->bindValue(':pesquisa', $pesquisa, PDO::PARAM_STR);
             $stm->execute();
@@ -144,7 +168,9 @@
         // ORDENAR ANIMAIS POR ORDEM ALFABETICA
         public function ordenar_animais_alf($offset, $limite)
         {
-            $sql = "SELECT animais.*, tutores.nome AS nome_tutor, tutores.sobrenome
+            $sql = "SELECT animais.*, 
+                           tutores.nome AS nome_tutor, 
+                           tutores.sobrenome
                     FROM animais 
                     JOIN tutores ON animais.id_tutor = tutores.id_tutor
                     ORDER BY nome
@@ -159,7 +185,8 @@
         // ORDENAR ANIMAIS POR ORDEM ALFABETICA PUBLICO
         public function ordenar_animais_alf_publico($offset, $limite)
         {
-            $sql = "SELECT animais.*, tutores.nome AS nome_tutor
+            $sql = "SELECT animais.*, 
+                           tutores.nome AS nome_tutor
                     FROM animais 
                     JOIN tutores ON animais.id_tutor = tutores.id_tutor
                     ORDER BY nome
@@ -174,7 +201,9 @@
         // ORDENAR ANIMAIS POR NOME DO TUTOR
         public function ordenar_animais_tutor($offset, $limite)
         {
-            $sql = "SELECT animais.*, tutores.nome AS nome_tutor, tutores.sobrenome 
+            $sql = "SELECT animais.*, 
+                           tutores.nome AS nome_tutor, 
+                           tutores.sobrenome 
                     FROM animais 
                     JOIN tutores ON animais.id_tutor = tutores.id_tutor
                     ORDER BY nome_tutor
@@ -189,7 +218,8 @@
         // ORDENAR ANIMAIS POR NOME DO TUTOR PUBLICO
         public function ordenar_animais_tutor_publico($offset, $limite)
         {
-            $sql = "SELECT animais.*, tutores.nome AS nome_tutor
+            $sql = "SELECT animais.*, 
+                           tutores.nome AS nome_tutor
                     FROM animais 
                     JOIN tutores ON animais.id_tutor = tutores.id_tutor
                     ORDER BY nome_tutor
@@ -204,30 +234,9 @@
         // BUSCAR NOME DO ANIMAL & NOME DO TUTOR
         public function buscar_animal_tutor($animal)
         {
-            $sql = "SELECT animais.nome AS nome_animal, tutores.nome AS nome_tutor, tutores.sobrenome
-                    FROM animais 
-                    JOIN tutores ON animais.id_tutor = tutores.id_tutor
-                    WHERE animais.id_animal = ?";
-            try
-            {
-                $stm = $this->db->prepare($sql);
-                $stm->bindValue(1, $animal->getId());
-                $stm->execute();
-                $retorno =  $stm->fetchAll(PDO::FETCH_OBJ);
-                return $retorno;
-
-            }
-            catch(PDOException $e)
-            {
-                echo "Problema ao buscar animal: " . $e->getMessage();
-                return null;
-            }
-        }
-
-        // BUSCAR NOME DO ANIMAL & NOME DO TUTOR PUBLICO
-        public function buscar_animal_tutor_publico($animal)
-        {
-            $sql = "SELECT animais.nome AS nome_animal, tutores.nome AS nome_tutor
+            $sql = "SELECT animais.nome AS nome_animal, 
+                           tutores.nome AS nome_tutor, 
+                           tutores.sobrenome
                     FROM animais 
                     JOIN tutores ON animais.id_tutor = tutores.id_tutor
                     WHERE animais.id_animal = ?";
@@ -251,11 +260,12 @@
         // BUSCAR UM ANIMAL
         public function buscar_animal($animal)
         {
-            $sql = "SELECT animais.*, tutores.nome AS nome_tutor, tutores.sobrenome 
+            $sql = "SELECT animais.*, 
+                           tutores.nome AS nome_tutor,
+                           tutores.sobrenome 
                     FROM animais 
                     JOIN tutores ON animais.id_tutor = tutores.id_tutor 
                     WHERE animais.id_animal = ?";
-
             try
             {
                 $stm = $this->db->prepare($sql);
@@ -273,7 +283,9 @@
         // BUSCAR UM ANIMAL PUBLICO
         public function buscar_animal_publico($animal)
         {
-            $sql = "SELECT animais.*, tutores.nome AS nome_tutor, tutores.sobrenome
+            $sql = "SELECT animais.*, 
+                           tutores.nome AS nome_tutor, 
+                           tutores.sobrenome
                     FROM animais 
                     JOIN tutores ON animais.id_tutor = tutores.id_tutor 
                     WHERE animais.id_animal = ?";
@@ -314,7 +326,10 @@
 
         public function pesquisa_todos($pesquisa)
         {
-            $sql = "SELECT FROM animais WHERE nome LIKE %$pesquisa% OR rga LIKE %$pesquisa% OR chip LIKE %$pesquisa%";
+            $sql = "SELECT FROM animais 
+                    WHERE nome LIKE %$pesquisa% 
+                    OR rga LIKE %$pesquisa% 
+                    OR chip LIKE %$pesquisa%";
             $stm = $this->db->prepare($sql);
             $stm->bindValue(1, '%' . $pesquisa . '%');
             $stm->execute();
@@ -347,8 +362,6 @@
             $stm->execute();
             return $stm->fetchAll(PDO::FETCH_OBJ);
         }
-
-
 
 
         // EXCLUIR ANIMAL

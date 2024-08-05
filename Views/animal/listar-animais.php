@@ -18,31 +18,31 @@
 
             <!-- BOTOES -->
             <div class="mb-3 row">
-                <div class="col-2">
+                <div class="col-2 mb-2">
                     <i class="bi bi-arrow-down-up"></i>
                     Ordenar por
                 </div>
-                <div class="col-md-2 col-sm-12">
+                <div class="col-md-2 col-sm-12 mb-2">
                     <a class="btn btn-outline-secondary" href="index.php?controle=animalController&metodo=listar">
                         _/_/_ 
                         Cadastro
                     </a>
                 </div>
 
-                <div class="col-md-2 col-sm-12">
+                <div class="col-md-2 col-sm-12 mb-2">
                     <a class="btn btn-outline-secondary" href="index.php?controle=animalController&metodo=listar_alf">
                         A - B
                     </a>
                 </div>
 
-                <div class="col-md-2 col-sm-12">
+                <div class="col-md-2 col-sm-12 mb-2">
                     <a class="btn btn-outline-secondary" href="index.php?controle=animalController&metodo=listar_tutor">
                         <i class="bi bi-person-square"></i>
                         Tutor
                     </a>
                 </div>
 
-                <div class="col-md-4 d-flex justify-content-end">
+                <div class="col-md-4 d-flex justify-content-end mb-2">
                     <div>
                         <a  class="btn btn-primary" href="index.php?controle=animalController&metodo=inserir">Cadastrar um animal</a>&nbsp;&nbsp;
                     </div>
@@ -52,14 +52,26 @@
 
             <!-- FORMULÁRIO DE BUSCA -->
             <form method="get" action="">
+
                 <input type="hidden" name="controle" value="animalController">
                 <input type="hidden" name="metodo" value="listar">
+
                 <div class="mb-3 row">
-                    <div class="col-md-8 col-sm-12">
-                        <input type="text" class="form-control" name="busca" placeholder="Buscar por nome, RGA ou chip" value="<?= isset($_GET['busca']) ? $_GET['busca'] : '' ?>">
-                    </div>
-                    <div class="col-md-4 col-sm-12">
-                        <button type="submit" class="btn btn-primary">Buscar</button>
+                    <div class="input-group col-md-6 col-sm-12">
+                        <!-- BOTÃO LIMPAR BUSCA -->
+                        <button class="btn btn-outline-secondary" type="button" id="clear-search-button">
+                            <i class="bi bi-x-square"></i>
+                        </button>
+                        <input
+                                type="text"
+                                class="form-control"
+                                name="busca"
+                                placeholder="Buscar por nome, RGA, chip, espécie, raça ou tutor"
+                                value="<?= isset($_GET['busca']) ? $_GET['busca'] : '' ?>">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-search"></i>
+                            Buscar
+                        </button>
                     </div>
                 </div>
             </form>
@@ -77,7 +89,6 @@
                             <th>Tutor</th>
                             <th>Ações</th>
                         </tr>
-                        <?php print_r($retorno);  ?>
                         <?php if (is_array($retorno) || is_object($retorno)): ?>
                             <?php foreach($retorno as $dado): ?>
                                 <tr>
@@ -148,5 +159,12 @@
         <br>
     </div>
 </div>
+
+<script>
+    document.getElementById('clear-search-button').addEventListener('click', function() {
+        window.location.href = 'index.php?controle=animalController&metodo=listar';
+    });
+
+</script>
 
 <?php require_once ROOT_PATH . '/views/rodape.html'; ?>
