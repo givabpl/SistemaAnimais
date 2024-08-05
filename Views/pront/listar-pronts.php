@@ -15,87 +15,126 @@
     
         <div>
             <h1 class="row justify-content-center align-items-center">Prontuários</h1><br>
-                <div class="mb-3 row">
-                        <div class="col-2">
-                            <i class="bi bi-arrow-down-up"></i>
-                            Ordenar por
-                        </div>
-                        <div class="col-2">
-                            <a class="btn btn-outline-secondary" href="index.php?controle=prontController&metodo=listar">
-                                _/_/_ 
-                                Data
-                            </a>
-                        </div>
 
-                        <div class="col-2">
-                            <a class="btn btn-outline-secondary" href="index.php?controle=prontController&metodo=listar_local">
-                                <i class="bi bi-geo-alt"></i>
-                                Local
-                            </a>
-                        </div>
-
-                        <div class="col-2">
-                            <a class="btn btn-outline-secondary" href="index.php?controle=prontController&metodo=listar_tutor">
-                                <i class="bi bi-person-square"></i>
-                                Tutor
-                            </a>
-                        </div>
-
-                        <div class="col-2">
-                            <a class="btn btn-outline-secondary" href="index.php?controle=prontController&metodo=listar_vet">
-                                <i class="bi bi-activity"></i>
-                                Veterinário
-                            </a>
-                        </div>
+            <!-- BOTÕES -->
+            <div class="mb-3 row">
+                <div class="col-2">
+                    <i class="bi bi-arrow-down-up"></i>
+                    Ordenar por
                 </div>
+                <div class="col-2">
+                    <a class="btn btn-outline-secondary" href="index.php?controle=prontController&metodo=listar">
+                        _/_/_
+                        Data
+                    </a>
+                </div>
+
+                <div class="col-2">
+                    <a class="btn btn-outline-secondary" href="index.php?controle=prontController&metodo=listar_local">
+                        <i class="bi bi-geo-alt"></i>
+                        Local
+                    </a>
+                </div>
+
+                <div class="col-2">
+                    <a class="btn btn-outline-secondary" href="index.php?controle=prontController&metodo=listar_tutor">
+                        <i class="bi bi-person-square"></i>
+                        Tutor
+                    </a>
+                </div>
+
+                <div class="col-2">
+                    <a class="btn btn-outline-secondary" href="index.php?controle=prontController&metodo=listar_vet">
+                        <i class="bi bi-activity"></i>
+                        Veterinário
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-10">
+                    <!-- FORMULÁRIO DE BUSCA -->
+                    <form method="get" action="">
+
+                        <input type="hidden" name="controle" value="prontController">
+                        <input type="hidden" name="metodo" value="listar">
+
+                        <div class="mb-3 row">
+                            <div class="input-group col-md-8 col-sm-12">
+                                <!-- BOTÃO LIMPAR BUSCA -->
+                                <button class="btn btn-outline-secondary" type="button" id="clear-search-button">
+                                    <i class="bi bi-x-square"></i>
+                                </button>
+                                <input
+                                        type="text"
+                                        class="form-control"
+                                        name="busca"
+                                        placeholder="Buscar por título, data, animal, tutor, veterinário ou local"
+                                        value="<?= isset($_GET['busca']) ? $_GET['busca'] : '' ?>">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-search"></i>
+                                    Buscar
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-2">
+                    <a href="index.php?controle=prontController&metodo=estatisticas" class="btn btn-outline-primary">
+                        <i class="bi bi-bar-chart-line"></i>Estatísticas
+                    </a>
+                </div>
+            </div>
+
+
+            <br>
         
-                <div class="">
+            <div class="">
                     
-                    <table class="table table-hover table-striped table-striped-color w-100">
-                        <tr>
-                            <th>Data</th>
-                            <th>Local</th>
-                            <th>Paciente</th>
-                            <th>Tutor</th>
-                            <th>Veterinário</th>
-                            <th>Ações</th>
-                        </tr>
-                        <?php if (is_array($retorno) || is_object($retorno)): ?>
-                            <?php foreach($retorno as $dado): ?>
-                                <tr>
-                                    <td>
-                                        <?= $dado->data_formatada ?>
-                                    </td>
-                                    <td><?= $dado->locala ?></td>
-                                    <td><?= $dado->nome_animal ?></td>
-                                    <td><?= $dado->nome_tutor ?>&nbsp;<?= $dado->sobrenome ?></td>
-                                    <td><?= $dado->nome_vet ?></td>
-                                    <td>
-                                        <div class="d-flex flex-wrap">
+                <table class="table table-hover table-striped table-striped-color w-100">
+                    <tr>
+                        <th>Data</th>
+                        <th>Local</th>
+                        <th>Paciente</th>
+                        <th>Tutor</th>
+                        <th>Veterinário</th>
+                        <th>Ações</th>
+                    </tr>
+                    <?php if (is_array($retorno) || is_object($retorno)): ?>
+                        <?php foreach($retorno as $dado): ?>
+                            <tr>
+                                <td>
+                                    <?= $dado->data_formatada ?>
+                                </td>
+                                <td><?= $dado->locala ?></td>
+                                <td><?= $dado->nome_animal ?></td>
+                                <td><?= $dado->nome_tutor ?>&nbsp;<?= $dado->sobrenome ?></td>
+                                <td><?= $dado->nome_vet ?></td>
+                                <td>
+                                    <div class="d-flex flex-wrap">
+                                        <div class="p-2">
+                                            <a class="btn btn-outline-primary" href="index.php?controle=prontController&metodo=abrir&id=<?= $dado->id_pront ?>">
+                                                <i class="bi bi-eye"></i> Visualizar
+                                            </a>
+                                        </div>
+
+                                        <?php if(isset($_SESSION["tipo"]) && $_SESSION["tipo"] == "Administrador"): ?>
+                                            &nbsp;
                                             <div class="p-2">
-                                                <a class="btn btn-outline-primary" href="index.php?controle=prontController&metodo=abrir&id=<?= $dado->id_pront ?>">
-                                                    <i class="bi bi-eye"></i> Visualizar
+                                                <a class="btn btn-outline-danger" href="index.php?controle=prontController&metodo=excluir&id=<?= $dado->id_pront ?>&return_url=<?= urlencode($_SERVER['REQUEST_URI']) ?>">
+                                                    <i class="bi bi-x-square"></i> Excluir
                                                 </a>
                                             </div>
-
-                                            <?php if(isset($_SESSION["tipo"]) && $_SESSION["tipo"] == "Administrador"): ?>
-                                                &nbsp;
-                                                <div class="p-2">
-                                                    <a class="btn btn-outline-danger" href="index.php?controle=prontController&metodo=excluir&id=<?= $dado->id_pront ?>&return_url=<?= urlencode($_SERVER['REQUEST_URI']) ?>">
-                                                        <i class="bi bi-x-square"></i> Excluir
-                                                    </a>
-                                                </div>
-                                            <?php endif; ?>
-                                        </div>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                        <?php else: ?>
-                            <tr><td colspan='4'>Nenhum prontuário encontrado.</td></tr>
-                        <?php endif; ?>
-                    </table>
-                </div>
-        </div>
+                                        <?php endif; ?>
+                                    </div>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <tr><td colspan='4'>Nenhum prontuário encontrado.</td></tr>
+                    <?php endif; ?>
+                </table>
+            </div>
         <br>
         <!-- Paginação -->
         <nav aria-label="Navegação de página">
@@ -126,5 +165,12 @@
     
     </div>
 </div>
+
+<script>
+    document.getElementById('clear-search-button').addEventListener('click', function() {
+        window.location.href = 'index.php?controle=prontController&metodo=listar';
+    });
+
+</script>
 
 <?php require_once ROOT_PATH . '/views/rodape.html'; ?>

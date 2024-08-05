@@ -15,7 +15,7 @@
         <div>
             <h1 class="row justify-content-center">Tutores</h1><br>
 
-            <!-- BOTOES -->
+            <!-- BOTÕES -->
             <div class="mb-3 row">
                 <div class="col-2 mb-2">
                     <i class="bi bi-arrow-down-up"></i>
@@ -64,6 +64,7 @@
                     </div>
                 </div>
             </form>
+            <br>
 
             <table class="table table-hover table-striped table-striped-color col-24-outline">
                 <tr>

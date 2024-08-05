@@ -131,8 +131,9 @@
         {
             $pesquisa = '%' . $pesquisa . '%';
 
-            $sql = "SELECT animais.*
-                           tutores.id_tutor
+            $sql = "SELECT animais.*,
+                           animais.nome AS nome_animal,
+                           tutores.id_tutor,
                            tutores.nome AS nome_tutor, 
                            tutores.sobrenome
                     FROM animais 

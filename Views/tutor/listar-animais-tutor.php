@@ -21,10 +21,9 @@
 
             <!-- FORMULÁRIO DE BUSCA -->
             <form method="get" action="">
-
                 <input type="hidden" name="controle" value="tutorController">
                 <input type="hidden" name="metodo" value="listar_animais">
-                <input type="hidden" name="id" value="<?php $retorno[0]->id_tutor ?>">
+                <input type="hidden" name="id" value="<?= $retorno[0]->id_tutor ?>">
             <?php endif; ?>
                 <div class="mb-3 row">
                     <div class="input-group col-md-6 col-sm-12">
@@ -43,9 +42,13 @@
                             Buscar
                         </button>
                     </div>
+                    <!-- BOTÃO CADASTRAR UM ANIMAL -->
+                    <div class="justify-content-end col-md-6">
+                        <a  class="btn btn-primary" href="index.php?controle=animalController&metodo=inserir">Cadastrar um animal</a>&nbsp;&nbsp;
+                    </div>
                 </div>
             </form>
-
+            <br>
 
             <div class="">
                 <table class="table table-hover table-striped table-striped-color">
@@ -98,7 +101,7 @@
                         <tr><td colspan='4'>Nenhum animal encontrado.</td></tr>
                     <?php endif;?>
                     </table>
-                    <a  class="btn btn-primary" href="index.php?controle=animalController&metodo=inserir">Cadastrar um animal</a>&nbsp;&nbsp;
+
         </div>
         </div>
         <br>
@@ -108,7 +111,7 @@
 
 <script>
     document.getElementById('clear-search-button').addEventListener('click', function() {
-        window.location.href = 'index.php?controle=tutorController&metodo=listar_animais';
+        window.location.href = 'index.php?controle=tutorController&metodo=listar_animais&id=<?= $retorno[0]->id_tutor ?>';
     });
 
 </script>

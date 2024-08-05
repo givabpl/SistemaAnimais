@@ -34,9 +34,35 @@
 
                 <?php endif; ?>
             </div>
-            <div>
-                
-            </div>
+
+            <!-- FORMULÁRIO DE BUSCA -->
+            <form method="get" action="">
+
+                <input type="hidden" name="controle" value="prontController">
+                <input type="hidden" name="metodo" value="listar_pronts_vet">
+                <input type="hidden" name="id" value="<?= $retorno[0]->id_vet ?>">
+
+                <div class="mb-3 row">
+                    <div class="input-group col-md-6 col-sm-12">
+                        <!-- BOTÃO LIMPAR BUSCA -->
+                        <button class="btn btn-outline-secondary" type="button" id="clear-search-button">
+                            <i class="bi bi-x-square"></i>
+                        </button>
+                        <input
+                                type="text"
+                                class="form-control"
+                                name="busca"
+                                placeholder="Buscar por título, data, animal, tutor, veterinário ou local"
+                                value="<?= isset($_GET['busca']) ? $_GET['busca'] : '' ?>">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-search"></i>
+                            Buscar
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <br>
+
             <table class="table table-hover table-striped table-striped-color col-24">
                 <tr>
                     <th>Título</th>

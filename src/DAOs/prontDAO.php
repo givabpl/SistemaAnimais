@@ -27,7 +27,7 @@
             $stm->bindValue(7, $pront->getInter());
             $stm->bindValue(8, $pront->getIntInfo());
             $stm->bindValue(9, $pront->getReceita());
-            $stm->bindValue(10, $pront->getArquivo());
+            $stm->bindValue(10, $pront->getArquivo ());
             $stm->bindValue(11, $pront->getPeso());
             $stm->bindValue(12, $pront->getAnimal()->getId());
             $stm->bindValue(13, $pront->getVet()->getId());
@@ -84,6 +84,190 @@
             $stm->bindValue(':limite', (int) $limite, PDO::PARAM_INT);
             $stm->execute();
             return $stm->fetchAll(PDO::FETCH_OBJ);
+        }
+
+        // BUSCAR PRONTUÁRIOS PESQUISA
+        public function buscar_pronts_pesquisa($pesquisa, $limite, $offset)
+        {
+            $pesquisa = '%' . $pesquisa . '%';
+
+            $sql = "SELECT prontuarios.*,
+                           DATE_FORMAT(dataa, '%d/%m/%Y') AS data_formatada,
+                           animais.nome AS nome_animal,
+                           tutores.nome AS nome_tutor,
+                           tutores.nome AS nome_tutor,
+                           tutores.sobrenome,
+                           veterinarios.nome AS nome_vet
+                     FROM prontuarios
+                     JOIN animais ON prontuarios.id_animal = animais.id_animal
+                     JOIN tutores ON animais.id_tutor = tutores.id_tutor
+                     JOIN veterinarios ON prontuarios.id_vet = veterinarios.id_vet
+                     WHERE prontuarios.titulo LIKE :pesquisa
+                        OR DATE_FORMAT(prontuarios.dataa, '%d/%m/%Y') LIKE :pesquisa
+                        OR prontuarios.locala LIKE :pesquisa
+                        OR animais.nome LIKE :pesquisa
+                        OR tutores.nome LIKE :pesquisa
+                        OR tutores.sobrenome LIKE :pesquisa
+                        OR veterinarios.nome LIKE :pesquisa
+                     LIMIT :offset, :limite";
+
+            $stm = $this->db->prepare($sql);
+            $stm->bindValue(':pesquisa', $pesquisa, PDO::PARAM_STR);
+            $stm->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
+            $stm->bindValue(':limite', (int) $limite, PDO::PARAM_INT);
+            $stm->execute();
+            return $stm->fetchAll(PDO::FETCH_OBJ);
+        }
+
+        // CONTAR PRONTUÁRIOS PESQUISA
+        public function contar_pronts_pesquisa($pesquisa)
+        {
+            $sql = "SELECT COUNT(*) AS total
+                    FROM prontuarios
+                    JOIN animais ON prontuarios.id_animal = animais.id_animal
+                    JOIN tutores ON animais.id_tutor = tutores.id_tutor
+                    JOIN veterinarios ON prontuarios.id_vet = veterinarios.id_vet 
+                    WHERE prontuarios.titulo LIKE :pesquisa
+                       OR DATE_FORMAT(prontuarios.dataa, '%d/%m/%Y') LIKE :pesquisa
+                       OR prontuarios.locala LIKE :pesquisa
+                       OR animais.nome LIKE :pesquisa
+                       OR tutores.nome LIKE :pesquisa
+                       OR tutores.sobrenome LIKE :pesquisa
+                       OR veterinarios.nome LIKE :pesquisa";
+
+            $stm = $this->db->prepare($sql);
+            $stm->bindValue(':pesquisa', $pesquisa, PDO::PARAM_STR);
+            $stm->execute();
+            return $stm->fetch(PDO::FETCH_OBJ)->total;
+        }
+
+        // BUSCAR PRONTUÁRIOS DE UM VETERINÁRIO PESQUISA
+        public function buscar_pronts_vet_pesquisa($vet, $pesquisa, $limite, $offset)
+        {
+            $pesquisa = '%' . $pesquisa . '%';
+
+            $sql = "SELECT prontuarios.*,
+                           DATE_FORMAT(dataa, '%d/%m/%Y') AS data_formatada,
+                           animais.nome AS nome_animal,
+                           tutores.nome AS nome_tutor,
+                           tutores.nome AS nome_tutor,
+                           tutores.sobrenome,
+                           veterinarios.nome AS nome_vet
+                     FROM prontuarios
+                     JOIN animais ON prontuarios.id_animal = animais.id_animal
+                     JOIN tutores ON animais.id_tutor = tutores.id_tutor
+                     JOIN veterinarios ON prontuarios.id_vet = veterinarios.id_vet
+                     WHERE prontuarios.titulo LIKE :pesquisa
+                        OR DATE_FORMAT(prontuarios.dataa, '%d/%m/%Y') LIKE :pesquisa
+                        OR prontuarios.locala LIKE :pesquisa
+                        OR animais.nome LIKE :pesquisa
+                        OR tutores.nome LIKE :pesquisa
+                        OR tutores.sobrenome LIKE :pesquisa
+                        OR veterinarios.nome LIKE :pesquisa
+                        AND prontuarios.id_vet = :vet
+                     LIMIT :offset, :limite";
+
+            $stm = $this->db->prepare($sql);
+            $stm->bindValue('id_vet', $vet->getId(), PDO::PARAM_INT);
+            $stm->bindValue(':pesquisa', $pesquisa, PDO::PARAM_STR);
+            $stm->bindValue(':limite', (int) $limite, PDO::PARAM_INT);
+            $stm->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
+            $stm->execute();
+            return $stm->fetchAll(PDO::FETCH_OBJ);
+        }
+
+        // CONTAR PRONTUÁRIOS DE UM VETERINÁRIO PESQUISA
+        public function contar_pronts_vet_pesquisa($vet, $pesquisa)
+        {
+            $sql = "SELECT COUNT(*) AS total
+                    FROM prontuarios
+                    JOIN animais ON prontuarios.id_animal = animais.id_animal
+                    JOIN tutores ON animais.id_tutor = tutores.id_tutor
+                    JOIN veterinarios ON prontuarios.id_vet = veterinarios.id_vet 
+                    WHERE prontuarios.titulo LIKE :pesquisa
+                       OR DATE_FORMAT(prontuarios.dataa, '%d/%m/%Y') LIKE :pesquisa
+                       OR animais.nome LIKE :pesquisa
+                       OR tutores.nome LIKE :pesquisa
+                       OR tutores.sobrenome LIKE :pesquisa
+                       OR veterinarios.nome LIKE :pesquisa
+                    AND prontuarios.id_vet = :vet";
+
+            $stm = $this->db->prepare($sql);
+            $stm->bindValue('id_vet', $vet->getId(), PDO::PARAM_INT);
+            $stm->bindValue(':pesquisa', $pesquisa, PDO::PARAM_STR);
+            $stm->execute();
+            return $stm->fetch(PDO::FETCH_OBJ)->total;
+        }
+
+        // BUSCAR PRONTUÁRIOS DE UM VETERINÁRIO PESQUISA
+        public function buscar_pronts_animal_pesquisa($animal, $pesquisa, $limite, $offset)
+        {
+            $pesquisa = '%' . $pesquisa . '%';
+
+            $sql = "SELECT prontuarios.*,
+                           DATE_FORMAT(dataa, '%d/%m/%Y') AS data_formatada,
+                           animais.nome AS nome_animal,
+                           tutores.nome AS nome_tutor,
+                           tutores.nome AS nome_tutor,
+                           tutores.sobrenome,
+                           veterinarios.nome AS nome_vet
+                     FROM prontuarios
+                     JOIN animais ON prontuarios.id_animal = animais.id_animal
+                     JOIN tutores ON animais.id_tutor = tutores.id_tutor
+                     JOIN veterinarios ON prontuarios.id_vet = veterinarios.id_vet
+                     WHERE prontuarios.titulo LIKE :pesquisa
+                        OR DATE_FORMAT(prontuarios.dataa, '%d/%m/%Y') LIKE :pesquisa
+                        OR prontuarios.locala LIKE :pesquisa
+                        OR animais.nome LIKE :pesquisa
+                        OR tutores.nome LIKE :pesquisa
+                        OR tutores.sobrenome LIKE :pesquisa
+                        OR veterinarios.nome LIKE :pesquisa
+                        AND prontuarios.id_animal = :animal
+                     LIMIT :offset, :limite";
+
+            $stm = $this->db->prepare($sql);
+            $stm->bindValue('id_animal', $animal->getId(), PDO::PARAM_INT);
+            $stm->bindValue(':pesquisa', $pesquisa, PDO::PARAM_STR);
+            $stm->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
+            $stm->bindValue(':limite', (int) $limite, PDO::PARAM_INT);
+            $stm->execute();
+            return $stm->fetchAll(PDO::FETCH_OBJ);
+        }
+
+        // CONTAR PRONTUÁRIOS DE UM ANIMAL PESQUISA
+        public function contar_pronts_animal_pesquisa($animal, $pesquisa)
+        {
+            $sql = "SELECT COUNT(*) AS total
+                    FROM prontuarios
+                    JOIN animais ON prontuarios.id_animal = animais.id_animal
+                    JOIN tutores ON animais.id_tutor = tutores.id_tutor
+                    JOIN veterinarios ON prontuarios.id_vet = veterinarios.id_vet 
+                    WHERE prontuarios.titulo LIKE :pesquisa
+                       OR DATE_FORMAT(prontuarios.dataa, '%d/%m/%Y') LIKE :pesquisa
+                       OR animais.nome LIKE :pesquisa
+                       OR tutores.nome LIKE :pesquisa
+                       OR tutores.sobrenome LIKE :pesquisa
+                       OR veterinarios.nome LIKE :pesquisa
+                    AND prontuarios.id_animal = :animal";
+
+            $stm = $this->db->prepare($sql);
+            $stm->bindValue('id_animal', $animal->getId(), PDO::PARAM_INT);
+            $stm->bindValue(':pesquisa', $pesquisa, PDO::PARAM_STR);
+            $stm->execute();
+            return $stm->fetch(PDO::FETCH_OBJ)->total;
+        }
+
+        // CONTAR PRONTUÁRIOS ANIMAL
+        public function contar_pronts_animal($animal)
+        {
+            $sql = "SELECT COUNT(*) AS total 
+                    FROM prontuarios
+                    JOIN animais ON prontuarios.id_animal = animais.id_animal
+                    WHERE prontuarios.id_animal = :id_animal";
+            $stm = $this->db->prepare($sql);
+            $stm->bindValue('id_animal', $animal->getId(), PDO::PARAM_INT);
+            $stm->execute();
+            return $stm->fetch(PDO::FETCH_OBJ)->total;
         }
 
         // BUSCAR PRONTUARIOS - ORDENAR POR LOCAL - PAGINADOS
@@ -214,6 +398,19 @@
             }    
         }
 
+        // CONTAR PRONTUÁRIOS DE UM VETERINÁRIO
+        public function contar_pronts_vet($vet)
+        {
+            $sql = "SELECT COUNT(*) AS total 
+                    FROM prontuarios
+                    JOIN veterinarios ON prontuarios.id_vet = veterinarios.id_vet
+                    WHERE prontuarios.id_vet = :id_vet";
+            $stm = $this->db->prepare($sql);
+            $stm->bindValue('id_vet', $vet->getId(), PDO::PARAM_INT);
+            $stm->execute();
+            return $stm->fetch(PDO::FETCH_OBJ)->total;
+        }
+
 
         // BUSCAR UM PRONTUARIO
         public function buscar_pront($pront)
@@ -233,38 +430,6 @@
                 return null;
             }         
         }
-
-
-
-        public function buscar_por_titulo($titulo)
-        {
-            $sql = "SELECT * FROM prontuarios WHERE titulo LIKE ?";
-            $stm = $this->db->prepare($sql);
-            $stm->bindValue(1, '%' . $titulo . '%');
-            $stm->execute();
-            return $stm->fetchAll(PDO::FETCH_OBJ);
-        }
-
-        // tem que fazer join
-        public function buscar_por_vet($vet)
-        {
-            $sql = "SELECT * FROM prontuarios WHERE vet LIKE ?";
-            $stm = $this->db->prepare($sql);
-            $stm->bindValue(1, '%' . $vet . '%');
-            $stm->execute();
-            return $stm->fetchAll(PDO::FETCH_OBJ);
-        }
-
-        public function buscar_por_local($local)
-        {
-            $sql = "SELECT * FROM prontuarios WHERE local LIKE ?";
-            $stm = $this->db->prepare($sql);
-            $stm->bindValue(1, '%' . $local . '%');
-            $stm->execute();
-            return $stm->fetchAll(PDO::FETCH_OBJ);
-        }
-
-
 
         // EXCLUIR PRONTUARIO
         public function excluir($pront)

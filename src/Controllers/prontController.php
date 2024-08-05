@@ -107,64 +107,6 @@
             require_once "Views/pront/form-pront.php";
         }
 
-        // LISTAR PRONTUARIOS DE UM ANIMAL
-        public function listar_pronts_animal()
-        {
-            $limite = 15;
-
-            $pagina_atual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
-            $offset = ($pagina_atual - 1) * $limite;
-
-            session_start();
-            if(!isset($_SESSION["id_vet"]))
-            {
-                header("location:index.php");
-                exit();
-            }
-            if(isset($_GET["id"]))
-            {
-                $animal = new Animal($_GET["id"]);
-                $prontDAO = new prontDAO();
-                $retorno = $prontDAO->buscar_pronts_animal($animal, $offset, $limite);
-
-                $total_registros = $prontDAO->contar_pronts();
-
-                if(empty($retorno))
-                {
-                    $animalDAO = new animalDAO();
-                    $retorno = $animalDAO->buscar_animal_tutor($animal);
-                }
-                require_once "Views/pront/listar-pronts-animal.php";
-            }
-        }
-
-        // LISTAR PRONTUARIOS DE UM VETERINARIO
-        public function listar_pronts_vet()
-        {
-            $limite = 15;
-
-            $pagina_atual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
-            $offset = ($pagina_atual - 1) * $limite;
-
-            // VERIFICA SESSAO DO VETERINARIO P/ EXIBIR DADOS PRIVADOS
-            session_start();
-            if(!isset($_SESSION["id_vet"]))
-            {
-                header("location:index.php");
-                exit();
-            }
-            if(isset($_GET["id"]))
-            {
-                $vet = new Vet($_GET["id"]);
-                $prontDAO = new prontDAO();
-                $retorno = $prontDAO->buscar_pronts_vet($vet, $offset, $limite);
-
-                $total_registros = $prontDAO->contar_pronts();
-
-                require_once "Views/pront/listar-pronts-vet.php";
-            }
-        }
-
         // LISTAR
         public function listar()
         {
@@ -174,9 +116,17 @@
             $offset = ($pagina_atual - 1) * $limite;
 
             $prontDAO = new prontDAO();
-            $retorno = $prontDAO->buscar_pronts_paginados($offset, $limite);
 
-            $total_registros = $prontDAO->contar_pronts();
+            $pesquisa = isset($_GET['busca']) ? $_GET['busca'] : '';
+
+            if ($pesquisa)
+            {
+                $retorno = $prontDAO->buscar_pronts_pesquisa($pesquisa, $limite, $offset);
+                $total_registros = $prontDAO->contar_pronts_pesquisa($pesquisa);
+            } else {
+                $retorno = $prontDAO->buscar_pronts_paginados($offset, $limite);
+                $total_registros = $prontDAO->contar_pronts();
+            }
 
             // VERIFICA SESSAO DO VETERINARIO P/ EXIBIR DADOS PRIVADOS
             session_start();
@@ -211,7 +161,7 @@
             }
 
             require_once "Views/pront/listar-pronts.php";
-        } 
+        }
 
         // LISTAR: ORDENAR POR TUTOR
         public function listar_tutor()
@@ -235,7 +185,7 @@
             }
 
             require_once "Views/pront/listar-pronts.php";
-        } 
+        }
 
         // LISTAR: ORDENAR POR VETERINARIO
         public function listar_vet()
@@ -259,7 +209,73 @@
             }
 
             require_once "Views/pront/listar-pronts.php";
-        } 
+        }
+
+
+        // LISTAR PRONTUARIOS DE UM ANIMAL
+        public function listar_pronts_animal()
+        {
+            $limite = 15;
+
+            $pagina_atual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
+            $offset = ($pagina_atual - 1) * $limite;
+
+            if(isset($_GET["id"])) {
+                $animal = new Animal($_GET["id"]);
+                $prontDAO = new prontDAO();
+
+                $pesquisa = isset($_GET['busca']) ? $_GET['busca'] : '';
+                if ($pesquisa) {
+                    $retorno = $prontDAO->buscar_pronts_animal_pesquisa($animal, $pesquisa, $limite, $offset);
+                    $total_registros = $prontDAO->contar_pronts_animal_pesquisa($animal, $pesquisa);
+                } else {
+                    $retorno = $prontDAO->buscar_pronts_animal($animal, $offset, $limite);
+                    $total_registros = $prontDAO->contar_pronts_animal($animal);
+                }
+
+                // VERIFICA SESSAO DO VETERINARIO P/ EXIBIR DADOS PRIVADOS
+                session_start();
+                if (!isset($_SESSION["id_vet"])) {
+                    header("location:index.php");
+                    exit();
+                }
+
+                require_once "Views/pront/listar-pronts-animal.php";
+            }
+        }
+
+        // LISTAR PRONTUARIOS DE UM VETERINÁRIO
+        public function listar_pronts_vet()
+        {
+            $limite = 15;
+
+            $pagina_atual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
+            $offset = ($pagina_atual - 1) * $limite;
+
+            if(isset($_GET["id"])) {
+                $vet = new Vet($_GET["id"]);
+                $prontDAO = new prontDAO();
+
+                $pesquisa = isset($_GET['busca']) ? $_GET['busca'] : '';
+                if ($pesquisa) {
+                    $retorno = $prontDAO->buscar_pronts_vet_pesquisa($vet, $pesquisa, $limite, $offset);
+                    $total_registros = $prontDAO->contar_pronts_vet_pesquisa($vet, $pesquisa);
+                } else {
+                    $retorno = $prontDAO->buscar_pronts_vet($vet, $offset, $limite);
+                    $total_registros = $prontDAO->contar_pronts_vet($vet);
+                }
+
+                // VERIFICA SESSAO DO VETERINARIO P/ EXIBIR DADOS PRIVADOS
+                session_start();
+                if (!isset($_SESSION["id_vet"])) {
+                    header("location:index.php");
+                    exit();
+                }
+
+                require_once "Views/pront/listar-pronts-vet.php";
+            }
+        }
+
 
         // ABRIR
         public function abrir() 
