@@ -138,12 +138,12 @@
                            tutores.sobrenome
                     FROM animais 
                     JOIN tutores ON animais.id_tutor = tutores.id_tutor
-                    WHERE animais.nome LIKE :pesquisa
+                    WHERE (animais.nome LIKE :pesquisa
                        OR animais.rga LIKE :pesquisa
                        OR animais.chip LIKE :pesquisa
                        OR animais.especie LIKE :pesquisa
                        OR animais.raca LIKE :pesquisa
-                       OR animais.pelagem LIKE :pesquisa
+                       OR animais.pelagem LIKE :pesquisa)
                        AND animais.id_tutor = :id_tutor
                     LIMIT :offset, :limite";
 
@@ -166,12 +166,12 @@
             $sql = "SELECT COUNT(*) AS total 
                     FROM animais
                     JOIN tutores ON animais.id_tutor = tutores.id_tutor
-                    WHERE animais.nome LIKE :pesquisa
+                    WHERE (animais.nome LIKE :pesquisa
                        OR animais.rga LIKE :pesquisa
                        OR animais.chip LIKE :pesquisa
                        OR animais.especie LIKE :pesquisa
                        OR animais.raca LIKE :pesquisa
-                       OR animais.pelagem LIKE :pesquisa
+                       OR animais.pelagem LIKE :pesquisa)
                        AND animais.id_tutor = :id_tutor
                     ";
 
@@ -192,6 +192,19 @@
             $stm->execute();
             return $stm->fetchAll(PDO::FETCH_OBJ);
         }
+
+        // BUSCAR DADOS DO TUTOR
+        public function buscar_dados_tutor($tutor)
+        {
+            $sql = "SELECT nome, sobrenome 
+            FROM tutores 
+            WHERE id_tutor = :id_tutor";
+            $stm = $this->db->prepare($sql);
+            $stm->bindValue(':id_tutor', $tutor->getId(), PDO::PARAM_INT);
+            $stm->execute();
+            return $stm->fetch(PDO::FETCH_OBJ);
+        }
+
 
         // BUSCAR UM TUTOR
         public function buscar_tutor($tutor)

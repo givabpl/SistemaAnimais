@@ -16,23 +16,23 @@
             <h1 class="row justify-content-center">Tutores</h1><br>
 
             <!-- BOTÕES -->
-            <div class="mb-3 row">
-                <div class="col-2 mb-2">
+            <div class="d-flex flex-wrap">
+                <div class="p-2 g-6"">
                     <i class="bi bi-arrow-down-up"></i>
                     Ordenar por
                 </div>
-                <div class="col-md-2 col-sm-12 mb-2">
+                <div class="p-2 g-6"">
                     <a class="btn btn-outline-secondary" href="index.php?controle=tutorController&metodo=listar">
                         _/_/_ 
                         Cadastro
                     </a>
                 </div>
-                <div class="col-md-2 col-sm-12 mb-2">
+                <div class="p-2 g-6"">
                     <a class="btn btn-outline-secondary" href="index.php?controle=tutorController&metodo=listar_alf">
                         A - B
                     </a>
                 </div>
-                <div class="col-md-4 d-flex justify-content-end mb-2">
+                <div class="p-2 g-6"">
                     <div>
                         <a class="btn btn-primary" href="index.php?controle=tutorController&metodo=inserir">Cadastrar um tutor</a>&nbsp;
                     </div>

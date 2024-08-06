@@ -17,33 +17,33 @@
             <h1 class="row justify-content-center align-items-center">Prontuários</h1><br>
 
             <!-- BOTÕES -->
-            <div class="mb-3 row">
-                <div class="col-2">
+            <div class="d-flex flex-wrap">
+                <div class="p-2 g-6">
                     <i class="bi bi-arrow-down-up"></i>
                     Ordenar por
                 </div>
-                <div class="col-2">
+                <div class="p-2 g-6"">
                     <a class="btn btn-outline-secondary" href="index.php?controle=prontController&metodo=listar">
                         _/_/_
                         Data
                     </a>
                 </div>
 
-                <div class="col-2">
+                <div class="p-2 g-6"">
                     <a class="btn btn-outline-secondary" href="index.php?controle=prontController&metodo=listar_local">
                         <i class="bi bi-geo-alt"></i>
                         Local
                     </a>
                 </div>
 
-                <div class="col-2">
+                <div class="p-2 g-6"">
                     <a class="btn btn-outline-secondary" href="index.php?controle=prontController&metodo=listar_tutor">
                         <i class="bi bi-person-square"></i>
                         Tutor
                     </a>
                 </div>
 
-                <div class="col-2">
+                <div class="p-2 g-6"">
                     <a class="btn btn-outline-secondary" href="index.php?controle=prontController&metodo=listar_vet">
                         <i class="bi bi-activity"></i>
                         Veterinário

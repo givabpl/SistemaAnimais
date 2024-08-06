@@ -16,14 +16,14 @@
         <h1 class="h2 row justify-content-center">Animais Encontrados</h1><br>
 
         <!-- BOTOES -->
-        <div class="mb-3 row justify-content-start">
-            <div class="col-md-4 com-sm-12 mb-2">
+        <div class="d-flex flex-wrap justify-content-center">
+            <div class="p-2 g-6"">
                 <a class="btn btn-danger" href="index.php?controle=perdidoController&metodo=inserir">Registrar animal desaparecido</a>&nbsp;&nbsp;
             </div>
-            <div class="col-md-4 com-sm-12 mb-2">
+            <div class="p-2 g-6"">
                 <a class="btn btn-primary" href="index.php?controle=achadoController&metodo=inserir">Registrar animal encontrado</a>&nbsp;&nbsp;
             </div>
-            <div class="col-md-4 col-sm-12 mb-2">
+            <div class="p-2 g-6"">
                 <a class="btn btn-outline-primary" href="index.php?controle=perdidoController&metodo=listar">Ver animais desaparecidos</a>&nbsp;&nbsp;
             </div>
         </div>

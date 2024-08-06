@@ -16,19 +16,19 @@
         <div>
             <h1 class="row justify-content-center">Animais Desaparecidos</h1><br>
             <!-- MENU DE ORDEM -->
-            <div class="mb-3 row">
-                <div class="p-2">
+            <div class="d-flex flex-wrap justify-content-center">
+                <div class="p-2 g-6">
                     <i class="bi bi-arrow-down-up"></i>
                     Ordenar por
                 </div>
-                <div class="p-2">
+                <div class="p-2 g-6">
                     <a class="btn btn-outline-secondary" href="index.php?controle=perdidoController&metodo=listar">
                         _/_/_ 
                         Data
                     </a>
                 </div>
 
-                <div class="p-2">
+                <div class="p-2 g-6">
                     <a class="btn btn-outline-secondary" href="index.php?controle=perdidoController&metodo=listar_alf">
                         A - B
                     </a>

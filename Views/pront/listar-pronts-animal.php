@@ -17,25 +17,24 @@
             <h1 class="row justify-content-center align-items-center">Prontuários</h1><br>
             <br>
             <div>
-                <?php if (is_array($retorno) && count($retorno) > 0): ?>
 
-                    <div class="mb-3 row">
-                        <div class="col-md-8">
-                            <h3>
-                                <?= $retorno[0]->nome_animal ?>
-                            </h3>
-                        
-                            <h5 class="card-title">
-                                Tutor: <?= $retorno[0]->nome_tutor ?>
-                            </h5>
-                        </div>
-                        
-                        <div class="col-md-4 d-flex justify-content-end">
-                            <div>
-                                <a href="index.php?controle=prontController&metodo=criar&id=<?= $_GET['id'] ?>" class="btn btn-primary"><i class="bi bi-clipboard2-plus"></i> Novo prontuário</a>
-                            </div>
+                <div class="mb-3 row">
+                    <div class="col-md-8">
+                        <h3>
+                            <?= $dados_animal_tutor->nome_animal ?>
+                        </h3>
+
+                        <h5 class="card-title">
+                            Tutor: <?= $dados_animal_tutor->nome_tutor ?> <?= $dados_animal_tutor->sobrenome ?>
+                        </h5>
+                    </div>
+
+                    <div class="col-md-4 d-flex justify-content-end">
+                        <div>
+                            <a href="index.php?controle=prontController&metodo=criar&id=<?= $_GET['id'] ?>" class="btn btn-primary"><i class="bi bi-clipboard2-plus"></i> Novo prontuário</a>
                         </div>
                     </div>
+                </div>
 
 
             </div>
@@ -43,8 +42,8 @@
             <form method="get" action="">
                 <input type="hidden" name="controle" value="prontController">
                 <input type="hidden" name="metodo" value="listar_pronts_animal">
-                <input type="hidden" name="id" value="<?= $retorno[0]->id_animal ?>">
-            <?php endif; ?>
+                <input type="hidden" name="id" value="<?= $_GET['id'] ?>">
+
                 <div class="mb-3 row">
                     <div class="input-group col-md-6 col-sm-12">
                         <!-- BOTÃO LIMPAR BUSCA -->

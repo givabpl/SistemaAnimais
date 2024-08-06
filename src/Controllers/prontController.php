@@ -224,6 +224,9 @@
                 $animal = new Animal($_GET["id"]);
                 $prontDAO = new prontDAO();
 
+                // Buscar dados do animal e tutor
+                $dados_animal_tutor = $prontDAO->buscar_dados_animal_tutor($animal);
+
                 $pesquisa = isset($_GET['busca']) ? $_GET['busca'] : '';
                 if ($pesquisa) {
                     $retorno = $prontDAO->buscar_pronts_animal_pesquisa($animal, $pesquisa, $limite, $offset);
@@ -255,6 +258,9 @@
             if(isset($_GET["id"])) {
                 $vet = new Vet($_GET["id"]);
                 $prontDAO = new prontDAO();
+
+                // Buscar dados do veterinário
+                $dados_vet = $prontDAO->buscar_dados_vet($vet);
 
                 $pesquisa = isset($_GET['busca']) ? $_GET['busca'] : '';
                 if ($pesquisa) {

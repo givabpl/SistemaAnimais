@@ -10,7 +10,7 @@
             <h1 class="row justify-content-center align-items-center">Animais</h1><br>
 
             <!-- BOTÕES -->
-            <div class="mb-3 d-flex">
+            <div class="d-flex flex-wrap">
                 <div class="p-2 g-6">
                     <i class="bi bi-arrow-down-up"></i>
                     Ordenar por

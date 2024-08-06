@@ -35,21 +35,22 @@
         public function buscar_perdidos_paginados($offset, $limite)
         {
             $sql = "SELECT perdidos.*, 
-                    tutores.nome AS nome_tutor, 
-                    tutores.sobrenome, 
-                    tutores.telefone1, 
-                    tutores.telefone2, 
-                    animais.rga, 
-                    animais.chip, 
-                    animais.nome AS nome_animal, 
-                    animais.sexo,
-                    animais.especie, 
-                    animais.raca, 
-                    animais.pelagem
+                           tutores.nome AS nome_tutor, 
+                           tutores.sobrenome, 
+                           tutores.telefone1, 
+                           tutores.telefone2, 
+                           animais.rga, 
+                           animais.chip, 
+                           animais.nome AS nome_animal, 
+                           animais.sexo,
+                           animais.especie, 
+                           animais.raca, 
+                           animais.pelagem
                     FROM perdidos 
                     JOIN tutores ON perdidos.id_tutor = tutores.id_tutor
                     JOIN animais ON perdidos.id_animal = animais.id_animal
                     LIMIT :offset, :limite"; // ou id_perdido
+
             $stm = $this->db->prepare($sql);
             $stm->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
             $stm->bindValue(':limite', (int) $limite, PDO::PARAM_INT);
@@ -61,16 +62,16 @@
         public function buscar_perdidos_paginados_pub($offset, $limite)
         {
             $sql = "SELECT perdidos.*, 
-                    tutores.nome AS nome_tutor, 
-                    tutores.telefone1, 
-                    tutores.telefone2, 
-                    animais.rga, 
-                    animais.chip, 
-                    animais.nome AS nome_animal, 
-                    animais.sexo,
-                    animais.especie, 
-                    animais.raca, 
-                    animais.pelagem
+                           tutores.nome AS nome_tutor, 
+                           tutores.telefone1, 
+                           tutores.telefone2, 
+                           animais.rga, 
+                           animais.chip, 
+                           animais.nome AS nome_animal, 
+                           animais.sexo,
+                           animais.especie, 
+                           animais.raca, 
+                           animais.pelagem
                     FROM perdidos 
                     JOIN tutores ON perdidos.id_tutor = tutores.id_tutor
                     JOIN animais ON perdidos.id_animal = animais.id_animal
@@ -92,48 +93,112 @@
         }
 
         // ORDENAR ANIMAIS PERDIDOS POR ORDEM ALFABETICA
-        public function ordenar_perdidos_alf()
+        public function ordenar_perdidos_alf($offset, $limite)
         {
-            $sql = "SELECT animais.*, tutores.nome AS nome_tutor, tutores.sobrenome
-                    FROM animais 
-                    JOIN tutores ON animais.id_tutor = tutores.id_tutor
-                    ORDER BY nome";
+            $sql = "SELECT perdidos.*, 
+                           tutores.nome AS nome_tutor, 
+                           tutores.sobrenome, 
+                           tutores.telefone1, 
+                           tutores.telefone2, 
+                           animais.rga, 
+                           animais.chip, 
+                           animais.nome AS nome_animal, 
+                           animais.sexo,
+                           animais.especie, 
+                           animais.raca, 
+                           animais.pelagem
+                    FROM perdidos 
+                    JOIN tutores ON perdidos.id_tutor = tutores.id_tutor
+                    JOIN animais ON perdidos.id_animal = animais.id_animal
+                    ORDER BY animais.nome
+                    LIMIT :offset, :limite";
+
             $stm = $this->db->prepare($sql);
+            $stm->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
+            $stm->bindValue(':limite', (int) $limite, PDO::PARAM_INT);
             $stm->execute();
-            $this->db = null;
             return $stm->fetchAll(PDO::FETCH_OBJ);
         }
 
         // ORDENAR ANIMAIS PERDIDOS POR ORDEM ALFABETICA PUBLICO
-        public function ordenar_perdidos_alf_publico()
+        public function ordenar_perdidos_alf_publico($offset, $limite)
         {
-            $sql = "";
+            $sql = "SELECT perdidos.*, 
+                           tutores.nome AS nome_tutor, 
+                           tutores.telefone1, 
+                           tutores.telefone2, 
+                           animais.rga, 
+                           animais.chip, 
+                           animais.nome AS nome_animal, 
+                           animais.sexo,
+                           animais.especie, 
+                           animais.raca, 
+                           animais.pelagem
+                    FROM perdidos 
+                    JOIN tutores ON perdidos.id_tutor = tutores.id_tutor
+                    JOIN animais ON perdidos.id_animal = animais.id_animal
+                    ORDER BY animais.nome
+                    LIMIT :offset, :limite";
+
             $stm = $this->db->prepare($sql);
+            $stm->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
+            $stm->bindValue(':limite', (int) $limite, PDO::PARAM_INT);
             $stm->execute();
-            $this->db = null;
             return $stm->fetchAll(PDO::FETCH_OBJ);
         }
 
         // ORDENAR ANIMAIS PERDIDOS POR NOME DO TUTOR
-        public function ordenar_perdidos_tutor()
+        public function ordenar_perdidos_tutor($offset, $limite)
         {
-            $sql = "SELECT animais.*, tutores.nome AS nome_tutor, tutores.sobrenome 
-                    FROM animais 
-                    JOIN tutores ON animais.id_tutor = tutores.id_tutor
-                    ORDER BY nome_tutor";
+            $sql = "SELECT perdidos.*, 
+                           tutores.nome AS nome_tutor, 
+                           tutores.sobrenome,
+                           tutores.telefone1, 
+                           tutores.telefone2, 
+                           animais.rga, 
+                           animais.chip, 
+                           animais.nome AS nome_animal, 
+                           animais.sexo,
+                           animais.especie, 
+                           animais.raca, 
+                           animais.pelagem
+                    FROM perdidos 
+                    JOIN tutores ON perdidos.id_tutor = tutores.id_tutor
+                    JOIN animais ON perdidos.id_animal = animais.id_animal
+                    ORDER BY tutores.nome
+                    LIMIT :offset, :limite";
+
             $stm = $this->db->prepare($sql);
+            $stm->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
+            $stm->bindValue(':limite', (int) $limite, PDO::PARAM_INT);
             $stm->execute();
-            $this->db = null;
             return $stm->fetchAll(PDO::FETCH_OBJ);
         }
 
         // ORDENAR ANIMAIS PERDIDOS POR NOME DO TUTOR PUBLICO
-        public function ordenar_perdidos_tutor_publico()
+        public function ordenar_perdidos_tutor_publico($offset, $limite)
         {
-            $sql = "";
+            $sql = "SELECT perdidos.*, 
+                           tutores.nome AS nome_tutor, 
+                           tutores.telefone1, 
+                           tutores.telefone2, 
+                           animais.rga, 
+                           animais.chip, 
+                           animais.nome AS nome_animal, 
+                           animais.sexo,
+                           animais.especie, 
+                           animais.raca, 
+                           animais.pelagem
+                    FROM perdidos 
+                    JOIN tutores ON perdidos.id_tutor = tutores.id_tutor
+                    JOIN animais ON perdidos.id_animal = animais.id_animal
+                    ORDER BY tutores.nome
+                    LIMIT :offset, :limite";
+
             $stm = $this->db->prepare($sql);
+            $stm->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
+            $stm->bindValue(':limite', (int) $limite, PDO::PARAM_INT);
             $stm->execute();
-            $this->db = null;
             return $stm->fetchAll(PDO::FETCH_OBJ);
         }
 

@@ -11,20 +11,20 @@
         ?>
     
         <div>
-            <?php if (is_array($retorno) && count($retorno) > 0): ?>
-                <div class="mb-3 row">
-                    <div class="col-md-8">
-                        <h3>Animais de <?= $retorno[0]->nome_tutor ?></h3>
-                    </div>
+
+            <div class="mb-3 row">
+                <div class="col-md-8">
+                    <h3>Animais de <?= $dados_tutor->nome ?> <?= $dados_tutor->sobrenome ?></h3>
                 </div>
+            </div>
 
 
             <!-- FORMULÁRIO DE BUSCA -->
             <form method="get" action="">
                 <input type="hidden" name="controle" value="tutorController">
                 <input type="hidden" name="metodo" value="listar_animais">
-                <input type="hidden" name="id" value="<?= $retorno[0]->id_tutor ?>">
-            <?php endif; ?>
+                <input type="hidden" name="id" value="<?= $_GET['id'] ?>">
+
                 <div class="mb-3 row">
                     <div class="input-group col-md-6 col-sm-12">
                         <!-- BOTÃO LIMPAR BUSCA -->

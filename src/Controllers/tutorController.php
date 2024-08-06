@@ -251,6 +251,9 @@
                 $tutor = new Tutor($_GET["id"]);
                 $tutorDAO = new tutorDAO();
 
+                // Buscar dados do veterinário
+                $dados_tutor = $tutorDAO->buscar_dados_tutor($tutor);
+
                 $pesquisa = isset($_GET['busca']) ? $_GET['busca'] : '';
                 if ($pesquisa) {
                     $retorno = $tutorDAO->buscar_animais_tutor_pesquisa($tutor, $pesquisa, $limite, $offset);

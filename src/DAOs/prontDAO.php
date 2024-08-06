@@ -157,13 +157,13 @@
                      JOIN animais ON prontuarios.id_animal = animais.id_animal
                      JOIN tutores ON animais.id_tutor = tutores.id_tutor
                      JOIN veterinarios ON prontuarios.id_vet = veterinarios.id_vet
-                     WHERE prontuarios.titulo LIKE :pesquisa
+                     WHERE (prontuarios.titulo LIKE :pesquisa
                         OR DATE_FORMAT(prontuarios.dataa, '%d/%m/%Y') LIKE :pesquisa
                         OR prontuarios.locala LIKE :pesquisa
                         OR animais.nome LIKE :pesquisa
                         OR tutores.nome LIKE :pesquisa
                         OR tutores.sobrenome LIKE :pesquisa
-                        OR veterinarios.nome LIKE :pesquisa
+                        OR veterinarios.nome LIKE :pesquisa)
                         AND prontuarios.id_vet = :id_vet
                      LIMIT :offset, :limite";
 
@@ -186,12 +186,12 @@
                     JOIN animais ON prontuarios.id_animal = animais.id_animal
                     JOIN tutores ON animais.id_tutor = tutores.id_tutor
                     JOIN veterinarios ON prontuarios.id_vet = veterinarios.id_vet 
-                    WHERE prontuarios.titulo LIKE :pesquisa
+                    WHERE (prontuarios.titulo LIKE :pesquisa
                        OR DATE_FORMAT(prontuarios.dataa, '%d/%m/%Y') LIKE :pesquisa
                        OR animais.nome LIKE :pesquisa
                        OR tutores.nome LIKE :pesquisa
                        OR tutores.sobrenome LIKE :pesquisa
-                       OR veterinarios.nome LIKE :pesquisa
+                       OR veterinarios.nome LIKE :pesquisa)
                     AND prontuarios.id_vet = :id_vet";
 
             $stm = $this->db->prepare($sql);
@@ -217,13 +217,13 @@
                      JOIN animais ON prontuarios.id_animal = animais.id_animal
                      JOIN tutores ON animais.id_tutor = tutores.id_tutor
                      JOIN veterinarios ON prontuarios.id_vet = veterinarios.id_vet
-                     WHERE prontuarios.titulo LIKE :pesquisa
+                     WHERE (prontuarios.titulo LIKE :pesquisa
                         OR DATE_FORMAT(prontuarios.dataa, '%d/%m/%Y') LIKE :pesquisa
                         OR prontuarios.locala LIKE :pesquisa
                         OR animais.nome LIKE :pesquisa
                         OR tutores.nome LIKE :pesquisa
                         OR tutores.sobrenome LIKE :pesquisa
-                        OR veterinarios.nome LIKE :pesquisa
+                        OR veterinarios.nome LIKE :pesquisa)
                         AND prontuarios.id_animal = :id_animal
                      LIMIT :offset, :limite";
 
@@ -244,12 +244,12 @@
                     JOIN animais ON prontuarios.id_animal = animais.id_animal
                     JOIN tutores ON animais.id_tutor = tutores.id_tutor
                     JOIN veterinarios ON prontuarios.id_vet = veterinarios.id_vet 
-                    WHERE prontuarios.titulo LIKE :pesquisa
+                    WHERE (prontuarios.titulo LIKE :pesquisa
                        OR DATE_FORMAT(prontuarios.dataa, '%d/%m/%Y') LIKE :pesquisa
                        OR animais.nome LIKE :pesquisa
                        OR tutores.nome LIKE :pesquisa
                        OR tutores.sobrenome LIKE :pesquisa
-                       OR veterinarios.nome LIKE :pesquisa
+                       OR veterinarios.nome LIKE :pesquisa)
                     AND prontuarios.id_animal = :id_animal";
 
             $stm = $this->db->prepare($sql);
@@ -259,18 +259,7 @@
             return $stm->fetch(PDO::FETCH_OBJ)->total;
         }
 
-        // CONTAR PRONTUÁRIOS ANIMAL
-        public function contar_pronts_animal($animal)
-        {
-            $sql = "SELECT COUNT(*) AS total 
-                    FROM prontuarios
-                    JOIN animais ON prontuarios.id_animal = animais.id_animal
-                    WHERE prontuarios.id_animal = :id_animal";
-            $stm = $this->db->prepare($sql);
-            $stm->bindValue('id_animal', $animal->getId(), PDO::PARAM_INT);
-            $stm->execute();
-            return $stm->fetch(PDO::FETCH_OBJ)->total;
-        }
+
 
         // BUSCAR PRONTUARIOS - ORDENAR POR LOCAL - PAGINADOS
         public function ordenar_pronts_local($offset, $limite)
@@ -369,6 +358,35 @@
             }    
         }
 
+        // CONTAR PRONTUÁRIOS ANIMAL
+        public function contar_pronts_animal($animal)
+        {
+            $sql = "SELECT COUNT(*) AS total 
+                    FROM prontuarios
+                    JOIN animais ON prontuarios.id_animal = animais.id_animal
+                    WHERE prontuarios.id_animal = :id_animal";
+            $stm = $this->db->prepare($sql);
+            $stm->bindValue('id_animal', $animal->getId(), PDO::PARAM_INT);
+            $stm->execute();
+            return $stm->fetch(PDO::FETCH_OBJ)->total;
+        }
+
+        // BUSCAR DADOS DO ANIMAL E TUTOR
+        public function buscar_dados_animal_tutor($animal)
+        {
+            $sql = "SELECT animais.nome AS nome_animal, 
+                   tutores.nome AS nome_tutor, 
+                   tutores.sobrenome
+            FROM animais
+            JOIN tutores ON animais.id_tutor = tutores.id_tutor
+            WHERE animais.id_animal = :id_animal";
+            $stm = $this->db->prepare($sql);
+            $stm->bindValue(':id_animal', $animal->getId(), PDO::PARAM_INT);
+            $stm->execute();
+            return $stm->fetch(PDO::FETCH_OBJ);
+        }
+
+
         // BUSCAR PRONTUARIOS DE UM VETERINARIO
         public function buscar_pronts_vet($vet, $offset, $limite)
         {
@@ -411,6 +429,18 @@
             $stm->bindValue('id_vet', $vet->getId(), PDO::PARAM_INT);
             $stm->execute();
             return $stm->fetch(PDO::FETCH_OBJ)->total;
+        }
+
+        // BUSCAR DADOS DO VETERINÁRIO
+        public function buscar_dados_vet($vet)
+        {
+            $sql = "SELECT nome, sobrenome 
+            FROM veterinarios 
+            WHERE id_vet = :id_vet";
+            $stm = $this->db->prepare($sql);
+            $stm->bindValue(':id_vet', $vet->getId(), PDO::PARAM_INT);
+            $stm->execute();
+            return $stm->fetch(PDO::FETCH_OBJ);
         }
 
 

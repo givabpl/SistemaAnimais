@@ -16,23 +16,19 @@
             <h1 class="row justify-content-center align-items-center">Prontuários</h1><br>
             <br>
             <div>
-                <?php if (is_array($retorno) && count($retorno) > 0): ?>
-
-                    <div class="mb-3 row">
-                        <div class="col-md-8">
-                            <h3>
-                                <?= $retorno[0]->nome_vet ?>
-                            </h3>
-                        </div>
-                        
-                        <div class="col-md-4 d-flex justify-content-end">
-                            <div>
-                                <a href="index.php?controle=prontController&metodo=criar&id=<?= $_GET['id'] ?>" class="btn btn-primary"><i class="bi bi-clipboard2-plus"></i> Novo prontuário</a>
-                            </div>
-                        </div>
+                <div class="mb-3 row">
+                    <div class="col-md-8">
+                        <h3>
+                            <?= $dados_vet->nome ?>
+                        </h3>
                     </div>
 
-                <?php endif; ?>
+                    <div class="col-md-4 d-flex justify-content-end">
+                        <div>
+                            <a href="index.php?controle=prontController&metodo=criar&id=<?= $_GET['id'] ?>" class="btn btn-primary"><i class="bi bi-clipboard2-plus"></i> Novo prontuário</a>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- FORMULÁRIO DE BUSCA -->
@@ -40,7 +36,7 @@
 
                 <input type="hidden" name="controle" value="prontController">
                 <input type="hidden" name="metodo" value="listar_pronts_vet">
-                <input type="hidden" name="id" value="<?= $retorno[0]->id_vet ?>">
+                <input type="hidden" name="id" value="<?= $_GET['id'] ?>">
 
                 <div class="mb-3 row">
                     <div class="input-group col-md-6 col-sm-12">

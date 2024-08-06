@@ -171,6 +171,7 @@
             $retorno = $perdidoDAO->buscar_perdidos_paginados_pub($offset, $limite);
 
             $total_registros = $perdidoDAO->contar_perdidos();
+
             require_once "Views/perdido/pub-listar-animais-perdidos.php";
             return $retorno;
         }
@@ -178,6 +179,16 @@
         // LISTAR EM ORDEM ALFABETICA
         public function listar_alf()
         {
+            $limite = 15;
+
+            $pagina_atual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
+            $offset = ($pagina_atual - 1) * $limite;
+
+            $perdidoDAO = new perdidoDAO();
+            $retorno = $perdidoDAO->ordenar_perdidos_alf($offset, $limite);
+
+            $total_registros = $perdidoDAO->contar_perdidos();
+
             // VERIFICA SESSAO DO VETERINARIO P/ EXIBIR DADOS PRIVADOS
             session_start();
             if(!isset($_SESSION["id_vet"]))
@@ -185,18 +196,23 @@
                 header("location:index.php?controle=perdidoController&metodo=listar_alf_publico");
                 exit();
             }
-            $perdidoDAO = new perdidoDAO();
-            $retorno = $perdidoDAO->ordenar_perdidos_alf();
-            require_once "Views/perdido/listar-animais-perdidos.php";
 
-            return $retorno;
+            require_once "Views/perdido/listar-animais-perdidos.php";
         }
 
         // LISTAR EM ORDEM ALFABETICA PUBLICO
         public function listar_alf_publico()
         {
+            $limite = 15;
+
+            $pagina_atual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
+            $offset = ($pagina_atual - 1) * $limite;
+
             $perdidoDAO = new perdidoDAO();
-            $retorno = $perdidoDAO->ordenar_perdidos_alf_publico();
+            $retorno = $perdidoDAO->ordenar_perdidos_alf_publico($offset, $limite);
+
+            $total_registros = $perdidoDAO->contar_perdidos();
+
             require_once "Views/perdido/pub-listar-animais-perdidos.php";
             return $retorno;
         }
@@ -204,6 +220,16 @@
         // LISTAR POR NOME DO TUTOR
         public function listar_tutor()
         {
+            $limite = 15;
+
+            $pagina_atual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
+            $offset = ($pagina_atual - 1) * $limite;
+
+            $perdidoDAO = new perdidoDAO();
+            $retorno = $perdidoDAO->ordenar_perdidos_tutor($offset, $limite);
+
+            $total_registros = $perdidoDAO->contar_perdidos();
+
             // VERIFICA SESSAO DO VETERINARIO P/ EXIBIR DADOS PRIVADOS
             session_start();
             if(!isset($_SESSION["id_vet"]))
@@ -211,19 +237,24 @@
                 header("location:index.php?controle=perdidoController&metodo=listar_tutor_publico");
                 exit();
             }
-            $perdidoDAO = new perdidoDAO();
-            $retorno = $perdidoDAO->ordenar_perdidos_tutor();
+
             require_once "Views/perdido/listar-animais-perdidos.php";
-            return $retorno;
         }
 
         // LISTAR POR NOME DO TUTOR PUBLICO
         public function listar_tutor_publico()
         {
+            $limite = 15;
+
+            $pagina_atual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
+            $offset = ($pagina_atual - 1) * $limite;
+
             $perdidoDAO = new perdidoDAO();
-            $retorno = $perdidoDAO->ordenar_perdidos_tutor_publico();
+            $retorno = $perdidoDAO->ordenar_perdidos_tutor_publico($offset, $limite);
+
+            $total_registros = $perdidoDAO->contar_perdidos();
+
             require_once "Views/perdido/pub-listar-animais-perdidos.php";
-            return $retorno;
         }
 
         // BUSCAR UM ANIMAL (PERFIL)
