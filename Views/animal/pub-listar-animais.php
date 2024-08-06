@@ -6,26 +6,21 @@
 <div class="content" id="listar-animais">
     <div class="container">
         <div>
+            <!-- TÍTULO -->
             <h1 class="row justify-content-center align-items-center">Animais</h1><br>
-            <div class="mb-3 row">
-                <div class="col-2">
+
+            <!-- BOTÕES -->
+            <div class="mb-3 d-flex">
+                <div class="p-2 g-6">
                     <i class="bi bi-arrow-down-up"></i>
                     Ordenar por
                 </div>
 
-                <div class="col-2">
+                <div class="p-2 g-6">
                     <a class="btn btn-outline-secondary" href="index.php?controle=animalController&metodo=listar_alf_publico">
                         A - B
                     </a>
                 </div>
-
-                <div class="col-2">
-                    <a class="btn btn-outline-secondary" href="index.php?controle=animalController&metodo=listar_tutor_publico">
-                        <i class="bi bi-person-square"></i>
-                        Tutor
-                    </a>
-                </div>
-                    
             </div>
             <div class="col-24">
                 <div class="row">

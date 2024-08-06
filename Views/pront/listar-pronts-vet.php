@@ -142,4 +142,10 @@
     </div>
 </div>
 
+<script>
+    document.getElementById('clear-search-button').addEventListener('click', function() {
+        window.location.href = 'index.php?controle=prontController&metodo=listar_pronts_vet&id=<?= $retorno[0]->id_vet ?>';
+    });
+</script>
+
 <?php require_once ROOT_PATH . '/views/rodape.html'; ?>

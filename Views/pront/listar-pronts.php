@@ -170,7 +170,6 @@
     document.getElementById('clear-search-button').addEventListener('click', function() {
         window.location.href = 'index.php?controle=prontController&metodo=listar';
     });
-
 </script>
 
 <?php require_once ROOT_PATH . '/views/rodape.html'; ?>

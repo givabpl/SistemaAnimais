@@ -14,40 +14,41 @@
         ?>
     
         <div>
+            <!-- TÍTULO -->
             <h1 class="row justify-content-center">Animais</h1><br>
 
-            <!-- BOTOES -->
-            <div class="mb-3 row">
-                <div class="col-2 mb-2">
+            <!-- BOTÕES -->
+            <div class="d-flex flex-wrap">
+                <div class="p-2 g-6">
                     <i class="bi bi-arrow-down-up"></i>
                     Ordenar por
                 </div>
-                <div class="col-md-2 col-sm-12 mb-2">
+
+                <div class="p-2 g-6">
                     <a class="btn btn-outline-secondary" href="index.php?controle=animalController&metodo=listar">
                         _/_/_ 
                         Cadastro
                     </a>
                 </div>
 
-                <div class="col-md-2 col-sm-12 mb-2">
+                <div class="p-2 g-6">
                     <a class="btn btn-outline-secondary" href="index.php?controle=animalController&metodo=listar_alf">
                         A - B
                     </a>
                 </div>
 
-                <div class="col-md-2 col-sm-12 mb-2">
+                <div class="p-2 g-6">
                     <a class="btn btn-outline-secondary" href="index.php?controle=animalController&metodo=listar_tutor">
                         <i class="bi bi-person-square"></i>
                         Tutor
                     </a>
                 </div>
 
-                <div class="col-md-4 d-flex justify-content-end mb-2">
+                <div class="p-2 g-6">
                     <div>
                         <a  class="btn btn-primary" href="index.php?controle=animalController&metodo=inserir">Cadastrar um animal</a>&nbsp;&nbsp;
                     </div>
                 </div>
-                    
             </div>
 
             <!-- FORMULÁRIO DE BUSCA -->

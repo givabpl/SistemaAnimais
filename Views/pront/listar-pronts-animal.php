@@ -37,11 +37,38 @@
                         </div>
                     </div>
 
-                <?php endif; ?>
+
             </div>
-            <div>
-                
-            </div>
+            <!-- FORMULÁRIO DE BUSCA -->
+            <form method="get" action="">
+                <input type="hidden" name="controle" value="prontController">
+                <input type="hidden" name="metodo" value="listar_pronts_animal">
+                <input type="hidden" name="id" value="<?= $retorno[0]->id_animal ?>">
+            <?php endif; ?>
+                <div class="mb-3 row">
+                    <div class="input-group col-md-6 col-sm-12">
+                        <!-- BOTÃO LIMPAR BUSCA -->
+                        <button class="btn btn-outline-secondary" type="button" id="clear-search-button">
+                            <i class="bi bi-x-square"></i>
+                        </button>
+                        <input
+                                type="text"
+                                class="form-control"
+                                name="busca"
+                                placeholder="Buscar por título, data, local ou veterinário"
+                                value="<?= isset($_GET['busca']) ? $_GET['busca'] : '' ?>">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-search"></i>
+                            Buscar
+                        </button>
+                    </div>
+                    <!-- BOTÃO NOVO PRONTUÁRIO -->
+                    <div class="justify-content-end col-md-6">
+                        <a  class="btn btn-primary" href="index.php?controle=prontController&metodo=criar">Novo Prontuário</a>&nbsp;&nbsp;
+                    </div>
+                </div>
+            </form>
+            <br>
             <table class="table table-hover table-striped table-striped-color col-24">
                 <tr>
                     <th>Título</th>
@@ -120,5 +147,11 @@
     
     </div>
 </div>
+
+<script>
+    document.getElementById('clear-search-button').addEventListener('click', function() {
+        window.location.href = 'index.php?controle=prontController&metodo=listar_pronts_animal&id=<?= $retorno[0]->id_animal ?>';
+    });
+</script>
 
 <?php require_once ROOT_PATH . '/views/rodape.html'; ?>

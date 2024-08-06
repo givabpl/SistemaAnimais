@@ -35,7 +35,7 @@
                                 type="text"
                                 class="form-control"
                                 name="busca"
-                                placeholder="Buscar por nome, RGA, chip, esécie, raça ou pelagem"
+                                placeholder="Buscar por nome, RGA, chip, espécie, raça ou pelagem"
                                 value="<?= isset($_GET['busca']) ? $_GET['busca'] : '' ?>">
                         <button type="submit" class="btn btn-primary">
                             <i class="bi bi-search"></i>
@@ -113,7 +113,6 @@
     document.getElementById('clear-search-button').addEventListener('click', function() {
         window.location.href = 'index.php?controle=tutorController&metodo=listar_animais&id=<?= $retorno[0]->id_tutor ?>';
     });
-
 </script>
 
 <?php require_once ROOT_PATH . '/views/rodape.html'; ?>

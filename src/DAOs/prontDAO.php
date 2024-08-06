@@ -164,15 +164,17 @@
                         OR tutores.nome LIKE :pesquisa
                         OR tutores.sobrenome LIKE :pesquisa
                         OR veterinarios.nome LIKE :pesquisa
-                        AND prontuarios.id_vet = :vet
+                        AND prontuarios.id_vet = :id_vet
                      LIMIT :offset, :limite";
 
             $stm = $this->db->prepare($sql);
+
             $stm->bindValue('id_vet', $vet->getId(), PDO::PARAM_INT);
             $stm->bindValue(':pesquisa', $pesquisa, PDO::PARAM_STR);
             $stm->bindValue(':limite', (int) $limite, PDO::PARAM_INT);
             $stm->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
             $stm->execute();
+
             return $stm->fetchAll(PDO::FETCH_OBJ);
         }
 
@@ -190,7 +192,7 @@
                        OR tutores.nome LIKE :pesquisa
                        OR tutores.sobrenome LIKE :pesquisa
                        OR veterinarios.nome LIKE :pesquisa
-                    AND prontuarios.id_vet = :vet";
+                    AND prontuarios.id_vet = :id_vet";
 
             $stm = $this->db->prepare($sql);
             $stm->bindValue('id_vet', $vet->getId(), PDO::PARAM_INT);
@@ -222,7 +224,7 @@
                         OR tutores.nome LIKE :pesquisa
                         OR tutores.sobrenome LIKE :pesquisa
                         OR veterinarios.nome LIKE :pesquisa
-                        AND prontuarios.id_animal = :animal
+                        AND prontuarios.id_animal = :id_animal
                      LIMIT :offset, :limite";
 
             $stm = $this->db->prepare($sql);
@@ -248,7 +250,7 @@
                        OR tutores.nome LIKE :pesquisa
                        OR tutores.sobrenome LIKE :pesquisa
                        OR veterinarios.nome LIKE :pesquisa
-                    AND prontuarios.id_animal = :animal";
+                    AND prontuarios.id_animal = :id_animal";
 
             $stm = $this->db->prepare($sql);
             $stm->bindValue('id_animal', $animal->getId(), PDO::PARAM_INT);
