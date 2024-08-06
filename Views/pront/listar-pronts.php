@@ -80,7 +80,7 @@
                 </div>
 
                 <div class="col-2">
-                    <a href="index.php?controle=prontController&metodo=estatisticas" class="btn btn-outline-primary">
+                    <a href="index.php?controle=prontController&metodo=listar_estatisticas" class="btn btn-outline-primary btn-estatisticas">
                         <i class="bi bi-bar-chart-line"></i>Estatísticas
                     </a>
                 </div>

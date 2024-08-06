@@ -7,7 +7,7 @@
     
     class vetController 
     {
-        // CADASTRAR
+        // CADASTRAR NOVO VETERINÁRIO
         public function cadastrar()
         {
             $msg = array("","","","","","","","","");
@@ -129,7 +129,7 @@
             require_once "Views/vet/form-login.php";
         }
 
-        // BUSCAR
+        // LISTAR
         public function listar()
         {
             // VERIFICA SESSAO DO VETERINARIO P/ EXIBIR DADOS PRIVADOS
@@ -138,10 +138,11 @@
             {
                 header("location:index.php");
             }
+
             $vetDAO = new vetDAO();
             $retorno = $vetDAO->buscar_vets();
+
             require_once "Views/vet/listar-vets.php";
-            return $retorno;
         }
 
         // LOGOUT

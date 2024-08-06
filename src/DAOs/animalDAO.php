@@ -53,7 +53,9 @@
             $stm = $this->db->prepare($sql);
             $stm->execute();
             $this->db = null;
-            return $stm->fetchAll(PDO::FETCH_OBJ);
+
+            $retorno = $stm->fetchAll(PDO::FETCH_OBJ);
+            return $retorno;
         }
 
         // BUSCAR ANIMAIS PUBLICO
@@ -67,7 +69,9 @@
             $stm = $this->db->prepare($sql);
             $stm->execute();
             $this->db = null;
-            return $stm->fetchAll(PDO::FETCH_OBJ);
+
+            $retorno = $stm->fetchAll(PDO::FETCH_OBJ);
+            return $retorno;
         }
 
         // BUSCA PAGINADA: ANIMAIS  (LIMITE 15)
@@ -85,7 +89,9 @@
             $stm->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
             $stm->bindValue(':limite', (int) $limite, PDO::PARAM_INT);
             $stm->execute();
-            return $stm->fetchAll(PDO::FETCH_OBJ);
+
+            $retorno = $stm->fetchAll(PDO::FETCH_OBJ);
+            return $retorno;
         }
 
         // BUSCA PAGINADA PÚBLICA: ANIMAIS  (LIMITE 15)
@@ -102,13 +108,16 @@
             $stm->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
             $stm->bindValue(':limite', (int) $limite, PDO::PARAM_INT);
             $stm->execute();
-            return $stm->fetchAll(PDO::FETCH_OBJ);
+
+            $retorno = $stm->fetchAll(PDO::FETCH_OBJ);
+            return $retorno;
         }
 
         // BUSCA PAGINADA: CONTA ANIMAIS
         public function contar_animais()
         {
             $sql = "SELECT COUNT(*) AS total FROM animais";
+
             $stm = $this->db->prepare($sql);
             $stm->execute();
             return $stm->fetch(PDO::FETCH_OBJ)->total;
@@ -133,7 +142,6 @@
                     LIMIT :limite OFFSET :offset";
 
             $stm = $this->db->prepare($sql);
-
             $stm->bindValue(':pesquisa', $pesquisa, PDO::PARAM_STR);
             $stm->bindValue(':limite', (int) $limite, PDO::PARAM_INT);
             $stm->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
@@ -161,6 +169,7 @@
             $stm = $this->db->prepare($sql);
             $stm->bindValue(':pesquisa', $pesquisa, PDO::PARAM_STR);
             $stm->execute();
+
             return $stm->fetch(PDO::FETCH_OBJ)->total;
         }
 
@@ -175,10 +184,12 @@
                     JOIN tutores ON animais.id_tutor = tutores.id_tutor
                     ORDER BY nome
                     LIMIT :offset, :limite";
+
             $stm = $this->db->prepare($sql);
             $stm->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
             $stm->bindValue(':limite', (int) $limite, PDO::PARAM_INT);
             $stm->execute();
+
             return $stm->fetchAll(PDO::FETCH_OBJ);
         }
 
@@ -195,6 +206,7 @@
             $stm->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
             $stm->bindValue(':limite', (int) $limite, PDO::PARAM_INT);
             $stm->execute();
+
             return $stm->fetchAll(PDO::FETCH_OBJ);
         }
 
@@ -208,10 +220,12 @@
                     JOIN tutores ON animais.id_tutor = tutores.id_tutor
                     ORDER BY nome_tutor
                     LIMIT :offset, :limite";
+
             $stm = $this->db->prepare($sql);
             $stm->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
             $stm->bindValue(':limite', (int) $limite, PDO::PARAM_INT);
             $stm->execute();
+
             return $stm->fetchAll(PDO::FETCH_OBJ);
         }
 
@@ -224,10 +238,12 @@
                     JOIN tutores ON animais.id_tutor = tutores.id_tutor
                     ORDER BY nome_tutor
                     LIMIT :offset, :limite";
+
             $stm = $this->db->prepare($sql);
             $stm->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
             $stm->bindValue(':limite', (int) $limite, PDO::PARAM_INT);
             $stm->execute();
+
             return $stm->fetchAll(PDO::FETCH_OBJ);
         }
 
@@ -322,47 +338,6 @@
                 return null;
             }
         }
-
-
-        public function pesquisa_todos($pesquisa)
-        {
-            $sql = "SELECT FROM animais 
-                    WHERE nome LIKE %$pesquisa% 
-                    OR rga LIKE %$pesquisa% 
-                    OR chip LIKE %$pesquisa%";
-            $stm = $this->db->prepare($sql);
-            $stm->bindValue(1, '%' . $pesquisa . '%');
-            $stm->execute();
-            return $stm->fetchAll(PDO::FETCH_OBJ);
-        }
-
-
-        public function buscar_por_nome($nome)
-        {
-            $sql = "SELECT * FROM animais WHERE nome LIKE ?";
-            $stm = $this->db->prepare($sql);
-            $stm->bindValue(1, '%' . $nome . '%');
-            $stm->execute();
-            return $stm->fetchAll(PDO::FETCH_OBJ);
-        }
-        public function buscar_por_rga($rga)
-        {
-            $sql = "SELECT * FROM animais WHERE rga LIKE ?";
-            $stm = $this->db->prepare($sql);
-            $stm->bindValue(1, '%' . $rga . '%');
-            $stm->execute();
-            return $stm->fetchAll(PDO::FETCH_OBJ);
-        }
-
-        public function buscar_por_chip($chip)
-        {
-            $sql = "SELECT * FROM animais WHERE chip LIKE ?";
-            $stm = $this->db->prepare($sql);
-            $stm->bindValue(1, '%' . $chip . '%');
-            $stm->execute();
-            return $stm->fetchAll(PDO::FETCH_OBJ);
-        }
-
 
         // EXCLUIR ANIMAL
         public function excluir($animal)

@@ -9,7 +9,7 @@
 
     class animalController
     {
-        // INSERIR ou CADASTRAR NOVO ANIMAL
+        // INSERIR NOVO ANIMAL
         public function inserir()
         {
             $tutorDAO = new tutorDAO();
@@ -173,6 +173,7 @@
                     $msg = "Animal alterado com sucesso";
 
                     header("location:index.php?controle=animalController&metodo=listar&msg=$msg");
+                    exit();
                 }
             }
             require_once "Views/animal/edit-animal.php";
@@ -186,6 +187,7 @@
             {
                 header("location:index.php");
             }
+
             $animalDAO = new animalDAO();
             $retorno = $animalDAO->buscar_animais();
             return $retorno;

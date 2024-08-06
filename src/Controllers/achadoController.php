@@ -145,7 +145,46 @@
             $total_registros = $achadoDAO->contar_achados();
 
             require_once "Views/achado/pub-listar-animais-achados.php";
-            return $retorno;
+        }
+
+        // LISTAR EM ORDEM ALFABETICA
+        public function listar_alf()
+        {
+            $limite = 15;
+
+            $pagina_atual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
+            $offset = ($pagina_atual - 1) * $limite;
+
+            $achadoDAO = new achadoDAO();
+            $retorno = $achadoDAO->ordenar_achados_alf($offset, $limite);
+
+            $total_registros = $achadoDAO->contar_achados();
+
+            // VERIFICA SESSAO DO VETERINARIO P/ EXIBIR DADOS PRIVADOS
+            session_start();
+            if(!isset($_SESSION["id_vet"]))
+            {
+                header("location:index.php?controle=achadoController&metodo=listar_alf_publico");
+                exit();
+            }
+
+            require_once "Views/achado/listar-animais-achados.php";
+        }
+
+        // LISTAR EM ORDEM ALFABETICA PUBLICO
+        public function listar_alf_publico()
+        {
+            $limite = 15;
+
+            $pagina_atual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
+            $offset = ($pagina_atual - 1) * $limite;
+
+            $achadoDAO = new achadoDAO();
+            $retorno = $achadoDAO->ordenar_achados_alf_publico($offset, $limite);
+
+            $total_registros = $achadoDAO->contar_achados();
+
+            require_once "Views/achado/pub-listar-animais-achados.php";
         }
 
         // BUSCAR UM ANIMAL ACHADO (PERFIL)
@@ -166,7 +205,6 @@
                 $retorno = $achadoDAO->buscar_achado($achado);
 
                 require_once "Views/achado/perfil-achado.php";
-                return $retorno;
             }
         }
 
@@ -180,7 +218,6 @@
                 $retorno = $achadoDAO->buscar_achado_publico($achado);
 
                 require_once "Views/achado/pub-perfil-achado.php";
-                return $retorno;
             }
         }
 

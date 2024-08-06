@@ -1,4 +1,4 @@
-<?php require_once ROOT_PATH . '/views/cabecalho.php'; ?>
+<?php require_once ROOT_PATH . '/Views/cabecalho.php'; ?>
 
 <div class="content">
     <div class="container">

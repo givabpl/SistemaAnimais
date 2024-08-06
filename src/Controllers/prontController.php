@@ -353,4 +353,29 @@
 			}
 		}
 
+
+
+
+
+        //////////////// ESTATÍSTICAS ////////////////
+
+        public function listar_estatisticas()
+        {
+            $prontDAO = new ProntDAO();
+
+            $dados_por_dia = $prontDAO->buscar_pronts_dia_mes();
+            $numero_pronts_hoje = $prontDAO->buscar_pronts_hoje();
+            $media_pronts_dia = $prontDAO->media_pronts_dia();
+
+            // VERIFICA SESSAO DO VETERINARIO P/ EXIBIR DADOS PRIVADOS
+            session_start();
+            if(!isset($_SESSION["id_vet"]))
+            {
+                header("location:index.php");
+                exit();
+            }
+
+            require_once "Views/pront/listar-estatisticas-pronts.php";
+        }
+
     }

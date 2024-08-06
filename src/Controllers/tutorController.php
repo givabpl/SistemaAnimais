@@ -7,7 +7,7 @@
 
     class tutorController
     {
-        // INSERIR
+        // INSERIR NOVO TUTOR
         public function inserir()
         {
             $msg = array("","","","","","","","","");
@@ -173,10 +173,12 @@
         // BUSCAR
         public function buscar()
         {
+            // VERIFICA SESSAO DO VETERINARIO P/ EXIBIR DADOS PRIVADOS
             if(!isset($_SESSION["id_vet"]))
             {
                 header("location:index.php");
             }
+
             $tutorDAO = new tutorDAO();
             $retorno = $tutorDAO->buscar_tutores();
             return $retorno;

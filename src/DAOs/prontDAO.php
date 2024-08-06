@@ -489,4 +489,67 @@
                 }
             }
         }
+
+
+
+        /////////// ESTATÍSTICAS ////////////
+
+        // SOMAR NÚMERO DE PRONTUÁRIOS/ATENDIMENTOS DO DIA DE HOJE
+        public function buscar_pronts_hoje()
+        {
+            $sql = "SELECT COUNT(*) AS total
+                    FROM prontuarios
+                    WHERE DATE(dataa) = CURDATE()";
+            try
+            {
+                $stm = $this->db->prepare($sql);
+                $stm->execute();
+                return $stm->fetch(PDO::FETCH_ASSOC)['total'];
+            }
+            catch (PDOException $e) {
+                echo "Problema ao buscar número de prontuários de hoje: " . $e->getMessage();
+                return 0;
+            }
+        }
+
+        // MÉDIA DE PRONTUÁRIOS/ATENDIMENTOS POR DIA, COM BASE NOS ÚLTIMOS 30 DIAS
+        public function media_pronts_dia()
+        {
+            $sql = "SELECT AVG(total) AS media FROM (
+                    SELECT COUNT(*) AS total FROM prontuarios
+                    WHERE DATE(dataa) >= CURDATE() - INTERVAL 30 DAY
+                    GROUP BY DATE(dataa) 
+                    ) AS subquery";
+            try
+            {
+                $stm = $this->db->prepare($sql);
+                $stm->execute();
+                return round($stm->fetch(PDO::FETCH_ASSOC)['media'], 2);
+            } catch (PDOException $e) {
+                echo "Problema ao buscar média de prontuários por dia: " . $e->getMessage();
+                return 0;
+            }
+        }
+
+        // BUSCAR NÚMERO DE PRONTUÁRIOS EM UM DIA ( GRÁFICO HEATCHART )
+        public function buscar_pronts_dia_mes()
+        {
+            $sql = "SELECT DATE(dataa) as dia, COUNT(*) as total
+                    FROM prontuarios
+                    GROUP BY DATE(dataa)";
+
+            try
+            {
+                $stm = $this->db->prepare($sql);
+                $stm->execute();
+                return $stm->fetchAll(PDO::FETCH_ASSOC);
+            }
+            catch(PDOException $e)
+            {
+                echo "Problema ao buscar prontuários por dia: " . $e->getMessage();
+                return null;
+            }
+        }
+
+        // SOMAR NÚMERO DE PRONTUÁRIOS/ATENDIMENTOS POR MÊS
     }

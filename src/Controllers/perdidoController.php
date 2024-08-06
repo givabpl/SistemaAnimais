@@ -148,6 +148,7 @@
             $retorno = $perdidoDAO->buscar_perdidos_paginados($offset, $limite);
 
             $total_registros = $perdidoDAO->contar_perdidos();
+
             // VERIFICA SESSAO DO VETERINARIO P/ EXIBIR DADOS PRIVADOS
             session_start();
             if(!isset($_SESSION["id_vet"]))
@@ -173,7 +174,6 @@
             $total_registros = $perdidoDAO->contar_perdidos();
 
             require_once "Views/perdido/pub-listar-animais-perdidos.php";
-            return $retorno;
         }
 
         // LISTAR EM ORDEM ALFABETICA
@@ -214,7 +214,6 @@
             $total_registros = $perdidoDAO->contar_perdidos();
 
             require_once "Views/perdido/pub-listar-animais-perdidos.php";
-            return $retorno;
         }
 
         // LISTAR POR NOME DO TUTOR
@@ -275,7 +274,6 @@
                 $retorno = $perdidoDAO->buscar_perdido($perdido);
 
                 require_once "Views/perdido/perfil-perdido.php";
-                return $retorno;
             }
         }
 
@@ -289,7 +287,6 @@
                 $retorno = $perdidoDAO->buscar_perdido_publico($perdido);
 
                 require_once "Views/perdido/pub-perfil-perdido.php";
-                return $retorno;
             }
         }
 
