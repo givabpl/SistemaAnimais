@@ -8,6 +8,7 @@
     // Inclui o autoloader do Composer
     require_once __DIR__ . '/vendor/autoload.php';
 
+
     use SistemaAnimais\Controllers\inicioController;
 
     if ($_GET) {

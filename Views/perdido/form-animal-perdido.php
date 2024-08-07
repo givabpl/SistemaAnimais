@@ -78,11 +78,10 @@
                 <div class="col-md-2 ">
                     <label for="sexo">SEXO</label>  <br> 
                     <select class="form-select-sexo" name="sexo" aria-label="label select example">
-                        <option value="0"></option>
+                        <option value="<?php echo isset($_POST['sexo'])?$_POST['sexo']:'';?>"><?php echo isset($_POST['sexo'])?$_POST['sexo']:'';?></option>
                         <option value="Fêmea">Fêmea</option>
                         <option value="Macho">Macho</option>
-                        <option value="Macho">Não identificado</option>
-                        <option value="<?php echo isset($_POST['sexo'])?$_POST['sexo']:'';?>"></option>
+                        <option value="Ni">Não identificado</option>
                     </select>
 
                     <div style="color:red"><?php echo $msg[2] != ""?$msg[2]:'';?></div>
@@ -207,7 +206,7 @@
                             <div style="color:red"><?php echo $msg[6] != ""?$msg[6]:'';?></div>
                 </div>
                 <div class="col-md-4">
-                    <img src="" id="img">
+                    <img src="<?php echo isset($_POST['imagem'])?$_POST['imagem']:'';?>" id="img">
                 </div>
                 
             </div>
@@ -247,7 +246,11 @@
             <div class="mb-3 row">
                 <div class="col-md-6">
                     <label for="descritivo" class="form-label">DESCRIÇÃO DO DESAPARECIMENTO</label><br>
-                    <textarea name="descritivo" id="descritivo" cols="50" rows="6"></textarea>
+                    <textarea
+                            name="descritivo"
+                            id="descritivo"
+                            cols="50"
+                            rows="6"><?php echo isset($_POST['descritivo'])?$_POST['descritivo']:'';?></textarea>
                 </div>
             </div>
             <br>
@@ -308,7 +311,7 @@
             <br><br>
 
             <br>
-            <input type="checkbox" name="termos" id="termos" value="termo">
+            <input type="checkbox" name="termos" id="termos" value="<?php echo isset($_POST['termos'])?$_POST['termos']:'';?>">
             <label for="termos">Concedo permissão de meus dados fornecidos ao Portal para prosseguir com a busca.</label>
             <br>
 

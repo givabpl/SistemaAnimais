@@ -10,7 +10,29 @@
         // CADASTRAR NOVO VETERINÁRIO
         public function cadastrar()
         {
-            $msg = array("","","","","","","","","");
+            $msg = array("","","","","","","","","","","");
+
+            $accessPassword = 'NAGty39!-byy$K3HiQ_V@ETB_WR62s';
+
+            session_start();
+
+            if (isset($_SESSION['password_correct'])) {
+                unset($_SESSION['password_correct']);
+            }
+
+            if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['access_password'])) {
+                if ($_POST['access_password'] === $accessPassword) {
+                    $_SESSION['password_correct'] = true;
+                } else {
+                    $msg[10] = "Senha de acesso incorreta.";
+                }
+            }
+
+            if (!isset($_SESSION['password_correct']) || $_SESSION['password_correct'] !== true) {
+                require_once "Views/vet/form-access-password.php";
+                return;
+            }
+
             if($_POST)
             {
                 $erro = false;

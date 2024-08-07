@@ -41,13 +41,18 @@
                     </a>
                 </div>
             </div>
+            <br>
             
             <!-- BOTÃO REGISTRAR -->
-            <div class="mb-3 row justify-content-end">
-                <div class="col-md-4 d-flex">
-                    <div class="">
-                        <a class="btn btn-primary" href="index.php?controle=perdidoController&metodo=inserir">Registrar desaparecimento</a>&nbsp;&nbsp;
-                    </div>
+            <div class="d-flex flex-wrap justify-content-center">
+                <div class="p-2 g-6">
+                    <a class="btn btn-danger" href="index.php?controle=perdidoController&metodo=inserir">Registrar animal desaparecido</a>&nbsp;&nbsp;
+                </div>
+                <div class="p-2 g-6">
+                    <a class="btn btn-primary" href="index.php?controle=achadoController&metodo=inserir">Registrar animal encontrado</a>&nbsp;&nbsp;
+                </div>
+                <div class="p-2 g-6">
+                    <a class="btn btn-outline-primary" href="index.php?controle=achadoController&metodo=listar_publico">Ver animais encontrados</a>&nbsp;&nbsp;
                 </div>
             </div>
 

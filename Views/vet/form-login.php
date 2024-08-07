@@ -1,4 +1,7 @@
-<?php require_once ROOT_PATH . '/views/cabecalho.php'; ?>
+<?php
+    require_once ROOT_PATH . '/views/cabecalho.php';
+
+?>
 
 <div class="content">
     <div class="container">
@@ -48,6 +51,7 @@
         </form>
         <br>
         <br>
+
         <a  class="btn btn-primary" href="index.php?controle=vetController&metodo=cadastrar">Novo cadastro</a>&nbsp;&nbsp;&nbsp;
 
     </div>

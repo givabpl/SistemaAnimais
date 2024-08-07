@@ -16,7 +16,7 @@
         // INSERIR ANIMAL
         public function inserir($perdido)
         {
-            $sql = "INSERT INTO perdidos (id_animal, imagem, locald, datad, horad, descritivo, id_tutor, statusd) VALUES (?,?,?,?,?,?,?,?)";
+            $sql = "INSERT INTO perdidos (id_animal, imagem, locald, datad, horad, descritivo, id_tutor, statusp) VALUES (?,?,?,?,?,?,?,?)";
 
             $stm = $this->db->prepare($sql);
             $stm->bindValue(1, $perdido->getAnimal()->getId());

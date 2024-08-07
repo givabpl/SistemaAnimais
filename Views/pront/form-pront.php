@@ -90,12 +90,10 @@
                 <label for="descritivo" class="form-label">DESCRITIVO</label>
                 <textarea
                     rows="4"
-                    type="text"  
                     class="form-control" 
                     name="descritivo" 
                     id="descritivo" 
-                    placeholder="Descrição do atendimento / anotações" 
-                    value="<?php echo isset($_POST['descritivo'])?$_POST['descritivo']:'';?>"></textarea>
+                    placeholder="Descrição do atendimento / anotações"><?php echo isset($_POST['descritivo'])?$_POST['descritivo']:'';?></textarea>
                     <div style="color:red"><?php echo $msg[3] != ""?$msg[3]:'';?></div>
             </div>
 
@@ -104,7 +102,7 @@
             <div class="col-md-4">
                 <label for="medicacao">MEDICAÇÃO</label>  <br>
                 <select class="form-select-pront" name="medicacao" id="medicacao" aria-label="Flabel select example">
-                    <option value="0">----</option>
+                    <option value="<?php echo isset($_POST['medicacao'])?$_POST['medicacao']:'';?>"><?php echo isset($_POST['medicacao'])?$_POST['medicacao']:'';?></option>
                     <option value="Sim">Sim</option>
                     <option value="Não">Não</option>
                 </select>
@@ -116,18 +114,17 @@
                 <label for="medicacao_info" class="form-label">Informe as medicações</label>
                 <textarea
                         rows="4"
-                        type="text"
                         class="form-control"
                         name="medicacao_info"
                         id="medicacao_info"
-                        placeholder="Descreva as medicações utilizadas na consulta"></textarea>
+                        placeholder="Descreva as medicações utilizadas na consulta"><?php echo isset($_POST['medicacao_info'])?$_POST['medicacao_info']:'';?></textarea>
             </div>
 
             <!-- INTERNACAO -->
             <div class="col-md-4">
                 <label for="internacao">INTERNAÇÃO</label>  <br>
                 <select class="form-select-pront" name="internacao" id="internacao" aria-label="Flabel select example">
-                    <option value="0">----</option>
+                    <option value="<?php echo isset($_POST['internacao'])?$_POST['internacao']:'';?>"><?php echo isset($_POST['internacao'])?$_POST['internacao']:'';?></option>
                     <option value="Sim">Sim</option>
                     <option value="Não">Não</option>
                 </select>
@@ -139,11 +136,10 @@
                 <label for="internacao_info" class="form-label">Informe detalhes da internação</label>
                 <textarea
                         rows="4"
-                        type="text"
                         class="form-control"
                         name="internacao_info"
                         id="internacao_info"
-                        placeholder="Informe o tempo, motivo..."></textarea>
+                        placeholder="Informe o tempo, motivo..."><?php echo isset($_POST['internacao_info'])?$_POST['internacao_info']:'';?></textarea>
             </div>
 
             <!-- RECEITA -->
@@ -151,12 +147,10 @@
                 <label for="receita" class="form-label">RECEITA</label>
                 <textarea
                         rows="4"
-                        type="text"
                         class="form-control"
                         name="receita"
                         id="receita"
-                        placeholder="Receita a ser entregue ao tutor"
-                        value="<?php echo isset($_POST['receita'])?$_POST['receita']:'';?>"></textarea>
+                        placeholder="Receita a ser entregue ao tutor"><?php echo isset($_POST['receita'])?$_POST['receita']:'';?></textarea>
             </div>
 
             <!-- ARQUIVOS -->

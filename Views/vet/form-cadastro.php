@@ -1,4 +1,15 @@
-<?php require_once ROOT_PATH . '/views/cabecalho.php'; ?>
+<?php
+    require_once ROOT_PATH . '/views/cabecalho.php';
+
+    $passwordCorrect = false;
+
+    // Senha de acesso definida diretamente no código
+    $accessPassword = 'your_secure_password';
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['access_password'])) {
+        $passwordCorrect = $_POST['access_password'] === $accessPassword;
+    }
+?>
 
 <div class="content">
     <div class="container">
