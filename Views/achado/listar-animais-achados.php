@@ -59,9 +59,20 @@
                                     <?= $dado->telefone1 ?> <br>
                                     <?= $dado->telefone2 ?> <br>
 
-                                    <a href="index.php?controle=achadoController&metodo=buscar_achado&id=<?= $dado->id_achado ?>" class="mb-2 btn btn-outline-primary">Mais informações</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <div class="d-flex flex-wrap">
+                                        <div class="m-2 g-2">
+                                            <a href="index.php?controle=achadoController&metodo=buscar_achado&id=<?= $dado->id_achado ?>" class="mb-2 btn btn-outline-primary">Mais informações</a>
+                                        </div>
+                                        <div class="m-2 g-2">
+                                            <a href="index.php?controle=achadoController&metodo=remover_achado&id=<?= $dado->id_perdido ?>" class="btn btn-outline-warning"><i class="bi bi-file-minus"></i> Remover de Encontrados</a>
+                                        </div>
+                                        <div class="m-2 g-2">
+                                            <a href="index.php?controle=achadoController&metodo=excluir&id=<?= $dado->id_achado ?>" class="mb-2 btn btn-danger"><i class="bi bi-x-square"></i> Excluir</a>
+                                        </div>
+                                    </div>
 
-                                    <a href="index.php?controle=achadoController&metodo=excluir&id=<?= $dado->id_achado ?>" class="mb-2 btn btn-danger"><i class="bi bi-x-square"></i> Excluir</a>
+
+
                                 </p>
                             </div>
                         </div>

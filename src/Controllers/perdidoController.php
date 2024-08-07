@@ -291,7 +291,6 @@
         }
 
 
-
         // GERAR PDF DO PERFIL DO ANIMAL
         public function gerar_pdf()
 		{
@@ -304,17 +303,28 @@
 			require_once "Views/perdido/pdf-perdido.php";
 		}
 
-        // EXCLUIR
-        public function excluir()
+        // REMOVER PERDIDO
+        public function remover_perdido()
 		{
 			if(isset($_GET["id"]))
 			{
 				$perdido = new Perdido($_GET["id"]);
 				$perdidoDAO = new perdidoDAO();
-				$retorno = $perdidoDAO->excluir($perdido);
+				$retorno = $perdidoDAO->remover_perdido($perdido);
 				header("location:index.php?controle=perdidoController&metodo=listar&msg=$retorno");
 			}
 		}
+
+        // EXCLUIR (EXCLUI DE ANIMAIS TAMBÉM)
+        public function excluir()
+        {
+            if (isset($_GET["id"])) {
+                $perdido = new Perdido($_GET["id"]);
+                $perdidoDAO = new PerdidoDAO();
+                $retorno = $perdidoDAO->excluir($perdido);
+                header("location:index.php?controle=perdidoController&metodo=listar&msg=$retorno");
+            }
+        }
     }
 
     

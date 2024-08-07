@@ -19,7 +19,8 @@
                     <!-- RGA -->
                     <div class="col-md-4">
                         <label for="rga" class="form-label">RGA</label> 
-                        <input 
+                        <input
+                            maxlength="9"
                             type="text" 
                             class="form-control" 
                             name="rga" 
@@ -286,7 +287,8 @@
                         type="text" 
                         class="form-control" 
                         name="telefone1" 
-                        id="telefone1" 
+                        id="telefone1"
+                        placeholder="(DDD) 9 XXXX-XXXX OU FIXO"
                         value="<?php echo isset($_POST['telefone1'])?$_POST['telefone1']:'';?>">
                         <div style="color:red"><?php echo $msg[12] != ""?$msg[12]:'';?></div>
                 </div>
@@ -317,6 +319,18 @@
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 	<script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const rgaInput = document.getElementById('rga');
+
+            rgaInput.addEventListener('input', function () {
+                let rga = rgaInput.value.replace(/\D/g, '');
+                rga = rga.replace(/(\d)(\d)/, '$1.$2');
+                rga = rga.replace(/(\d{3})(\d)/, '$1.$2');
+                rga = rga.replace(/(\d{3})(\d)$/, '$1.$2');
+                rgaInput.value = rga;
+            });
+        });
+
 		function mostrar(img)
 		{
 			if(img.files  && img.files[0])

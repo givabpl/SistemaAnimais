@@ -73,9 +73,21 @@
                                             <?= $dado->telefone1 ?> <br>
                                             <?= $dado->telefone2 ?> <br>
 
-                                            <a href="index.php?controle=perdidoController&metodo=buscar_perdido&id=<?= $dado->id_perdido ?>" class="btn btn-outline-primary">Mais informações</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <a href="index.php?controle=perdidoController&metodo=gerar_pdf&id=<?= $dado->id_perdido ?>" class="btn btn-outline-danger" target="_blank"><i class="bi bi-file-earmark-pdf"></i>PDF</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <a href="index.php?controle=perdidoController&metodo=excluir&id=<?= $dado->id_perdido ?>" class="btn btn-danger"><i class="bi bi-x-square"></i> Excluir</a>
+                                            <div class="d-flex flex-wrap">
+                                                <div class="m-2 g-2">
+                                                    <a href="index.php?controle=perdidoController&metodo=buscar_perdido&id=<?= $dado->id_perdido ?>" class="btn btn-outline-primary">Mais informações</a>
+                                                </div>
+                                                <div class="m-2 g-2">
+                                                    <a href="index.php?controle=perdidoController&metodo=gerar_pdf&id=<?= $dado->id_perdido ?>" class="btn btn-outline-danger" target="_blank"><i class="bi bi-file-earmark-pdf"></i>PDF</a>
+                                                </div>
+                                                <div class="m-2 g-2">
+                                                    <a href="index.php?controle=perdidoController&metodo=remover_perdido&id=<?= $dado->id_perdido ?>" class="btn btn-outline-warning"><i class="bi bi-file-minus"></i> Remover de Desaparecidos</a>
+                                                </div>
+                                                <div class="m-2 g-2">
+                                                    <a href="index.php?controle=perdidoController&metodo=excluir&id=<?= $dado->id_perdido ?>" class="btn btn-outline-danger"><i class="bi bi-x-square"></i> Excluir</a>
+                                                </div>
+                                            </div>
+
                                         </p>
                                     </div>
                                 </div>

@@ -103,9 +103,15 @@
                         </div>
                     </div>
                     <br>
-                    <div>
-                        <button onclick="history.back()" class="btn btn-primary"><i class="bi bi-caret-left-fill"></i> Voltar</button>
-                        <a href="index.php?controle=perdidoController&metodo=gerar_pdf&id=<?= $dado->id_perdido ?>" class="btn btn-danger" target="_blank"><i class="bi bi-file-earmark-pdf"></i>PDF para impressão</a>
+
+                    <div class="d-flex flex-wrap">
+                        <div class="m-2 g-2">
+                            <button onclick="history.back()" class="btn btn-primary"><i class="bi bi-caret-left-fill"></i> Voltar</button>
+                        </div>
+                        <div class="m-2 g-2">
+                            <a href="index.php?controle=perdidoController&metodo=gerar_pdf&id=<?= $dado->id_perdido ?>" class="btn btn-danger" target="_blank"><i class="bi bi-file-earmark-pdf"></i>PDF para impressão</a>
+                        </div>
+
                     </div>
                     <?php endforeach; ?>
                 <?php else: ?>

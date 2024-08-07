@@ -347,29 +347,58 @@
             }
         }
 
-        // EXCLUIR ANIMAL
-        public function excluir($perdido)
+        // REMOVER PERDIDO
+        public function remover_perdido($perdido)
         {
             $sql = "DELETE FROM perdidos WHERE id_perdido = ?";
 
-            try
-            {
+            $stm = $this->db->prepare($sql);
+            $stm->bindValue(1, $perdido->getId());
+            $stm->execute();
+            $this->db = null;
+            return "Animal excluído com sucesso";
+
+        }
+
+        // EXCLUIR PERDIDO E EXCLUIR ANIMAL
+        public function excluir($perdido)
+        {
+            try {
+                $this->db->beginTransaction();
+
+                // Obter ID do animal a partir do registro de perdido
+                $sql = "SELECT id_animal FROM perdidos WHERE id_perdido = ?";
                 $stm = $this->db->prepare($sql);
                 $stm->bindValue(1, $perdido->getId());
                 $stm->execute();
-                $this->db = null;
-                return "Animal excluído com sucesso";
-            }
-            catch(PDOException $e)
-            {
-                $this->db = null;
-                if($e->getCode() == "23000")
+                $id_animal = $stm->fetchColumn();
+
+                if ($id_animal)
                 {
-                    return "Animal contém prontuários. Não pode ser excluído.";
+                    // Excluir da tabela de perdidos
+                    $sql = "DELETE FROM perdidos WHERE id_perdido = ?";
+                    $stm = $this->db->prepare($sql);
+                    $stm->bindValue(1, $perdido->getId());
+                    $stm->execute();
+
+                    // Excluir da tabela de animais
+                    $sql = "DELETE FROM animais WHERE id_animal = ?";
+                    $stm = $this->db->prepare($sql);
+                    $stm->bindValue(1, $id_animal);
+                    $stm->execute();
+
+                    $this->db->commit();
+                    return "Animal excluído com sucesso";
+                } else {
+                    $this->db->rollBack();
+                    return "Animal não encontrado";
                 }
-                else
-                {
-                    return "Problema ao excluir animal";
+            } catch (PDOException $e) {
+                $this->db->rollBack();
+                if ($e->getCode() == 23000) {
+                    return "Animal contém prontuários. Não pode ser excluído";
+                } else {
+                    return "Problema ao excluir animal: " . $e->getMessage();
                 }
             }
         }

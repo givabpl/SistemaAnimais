@@ -171,6 +171,7 @@
                             class="form-control"
                             name="telefone1"
                             id="telefone1"
+                            placeholder="(DDD) 9 XXXX-XXXX OU FIXO"
                             value="<?php echo isset($_POST['telefone1'])?$_POST['telefone1']:'';?>">
                         <div style="color:red"><?php echo $msg[9] != ""?$msg[9]:'';?></div>
                     </div>
@@ -215,6 +216,47 @@
                 reader.readAsDataURL(img.files[0]);
             }
         }
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const phoneInputs = document.querySelectorAll('#telefone1, #telefone2');
+
+            phoneInputs.forEach(input => {
+                input.addEventListener('input', function(e) {
+                    let value = e.target.value.replace(/\D/g, '');
+                    let formattedValue = '';
+
+                    if (value.length <= 11) {
+                        // Format as (DDD) NNNN-NNNN
+                        if (value.length > 3) {
+                            formattedValue += '(' + value.substring(0, 3) + ') ';
+                            value = value.substring(3);
+                        }
+                        if (value.length > 4) {
+                            formattedValue += value.substring(0, 4) + '-' + value.substring(4, 8);
+                        } else {
+                            formattedValue += value;
+                        }
+                    } else {
+                        // Format as (DDD) 9 NNNN-NNNN
+                        if (value.length > 3) {
+                            formattedValue += '(' + value.substring(0, 3) + ') ';
+                            value = value.substring(3);
+                        }
+                        if (value.length > 1) {
+                            formattedValue += value[0] + ' ';
+                            value = value.substring(1);
+                        }
+                        if (value.length > 4) {
+                            formattedValue += value.substring(0, 4) + '-' + value.substring(4, 8);
+                        } else {
+                            formattedValue += value;
+                        }
+                    }
+
+                    e.target.value = formattedValue;
+                });
+            });
+        });
     </script>
 
 <?php require_once ROOT_PATH . '/views/rodape.html'; ?>

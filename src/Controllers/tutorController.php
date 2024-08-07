@@ -278,7 +278,7 @@
         }
 
         // EXCLUIR
-        public function excluir(): void
+        public function excluir()
         {
 			if(isset($_GET["id"]))
 			{

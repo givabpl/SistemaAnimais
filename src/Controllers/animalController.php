@@ -340,9 +340,9 @@
             require_once "Views/animal/listar-animais.php";
         }
 
-         // LISTAR POR NOME DO TUTOR PUBLICO
-         public function listar_tutor_publico()
-         {
+        // LISTAR POR NOME DO TUTOR PUBLICO
+        public function listar_tutor_publico()
+        {
              $limite = 15;
 
              $pagina_atual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
@@ -354,7 +354,7 @@
              $total_registros = $animalDAO->contar_animais();
 
              require_once "Views/animal/pub-listar-animais.php";
-         }
+        }
 
         // GERAR PDF DO PERFIL DO ANIMAL
         public function gerar_pdf()

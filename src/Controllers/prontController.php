@@ -107,6 +107,20 @@
             require_once "Views/pront/form-pront.php";
         }
 
+        // ABRIR/BUSCAR
+        public function abrir()
+        {
+            if(isset($_GET["id"]))
+            {
+                $pront = new Pront($_GET["id"]);
+                $prontDAO = new prontDAO();
+                $retorno = $prontDAO->buscar_pront($pront);
+
+                require_once "Views/pront/prontuario.php";
+                return $retorno;
+            }
+        }
+
         // LISTAR
         public function listar()
         {
@@ -282,20 +296,6 @@
             }
         }
 
-
-        // ABRIR
-        public function abrir() 
-        {
-            if(isset($_GET["id"]))
-            {
-                $pront = new Pront($_GET["id"]);
-                $prontDAO = new prontDAO();
-                $retorno = $prontDAO->buscar_pront($pront);
-
-                require_once "Views/pront/prontuario.php";
-                return $retorno;
-            }
-        }
 
         // GERAR PDF
         public function gerar_pdf()

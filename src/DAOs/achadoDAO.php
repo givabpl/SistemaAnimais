@@ -45,6 +45,7 @@
                     FROM achados 
                     JOIN animais ON achados.id_animal = animais.id_animal
                     LIMIT :limite OFFSET :offset";
+
             $stm = $this->db->prepare($sql);
             $stm->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
             $stm->bindValue(':limite', (int) $limite, PDO::PARAM_INT);
@@ -63,6 +64,7 @@
                     FROM achados 
                     JOIN animais ON achados.id_animal = animais.id_animal
                     LIMIT :limite OFFSET :offset";
+
             $stm = $this->db->prepare($sql);
             $stm->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
             $stm->bindValue(':limite', (int) $limite, PDO::PARAM_INT);
@@ -89,6 +91,7 @@
                     animais.pelagem AS pelagem
                     FROM achados 
                     JOIN animais ON achados.id_animal = animais.id_animal";
+
             $stm = $this->db->prepare($sql);
             $stm->execute();
             $this->db = null;
@@ -108,7 +111,6 @@
                     FROM achados 
                     JOIN animais ON achados.id_animal = animais.id_animal
                     WHERE achados.id_achado = ?";
-
             try
             {
                 $stm = $this->db->prepare($sql);
@@ -136,7 +138,6 @@
                     FROM achados 
                     JOIN animais ON achados.id_animal = animais.id_animal
                     WHERE achados.id_achado = ?";
-
             try
             {
                 $stm = $this->db->prepare($sql);
@@ -151,29 +152,58 @@
             }
         }
 
-        // EXCLUIR ANIMAL
-        public function excluir($achado)
+        // REMOVER ACHADO
+        public function remover_achado($achado)
         {
             $sql = "DELETE FROM achados WHERE id_achado = ?";
 
-            try
-            {
+            $stm = $this->db->prepare($sql);
+            $stm->bindValue(1, $achado->getId());
+            $stm->execute();
+            $this->db = null;
+            return "Animal excluído com sucesso";
+
+        }
+
+        // EXCLUIR ACHADO E EXCLUIR ANIMAL
+        public function excluir($achado)
+        {
+            try {
+                $this->db->beginTransaction();
+
+                // Obter ID do animal a partir do registro de perdido
+                $sql = "SELECT id_animal FROM achados WHERE id_achado = ?";
                 $stm = $this->db->prepare($sql);
                 $stm->bindValue(1, $achado->getId());
                 $stm->execute();
-                $this->db = null;
-                return "Animal excluído com sucesso";
-            }
-            catch(PDOException $e)
-            {
-                $this->db = null;
-                if($e->getCode() == "23000")
+                $id_animal = $stm->fetchColumn();
+
+                if ($id_animal)
                 {
-                    return "Animal contém prontuários. Não pode ser excluído.";
+                    // Excluir da tabela de achados
+                    $sql = "DELETE FROM achados WHERE id_achado = ?";
+                    $stm = $this->db->prepare($sql);
+                    $stm->bindValue(1, $achado->getId());
+                    $stm->execute();
+
+                    // Excluir da tabela de animais
+                    $sql = "DELETE FROM animais WHERE id_animal = ?";
+                    $stm = $this->db->prepare($sql);
+                    $stm->bindValue(1, $id_animal);
+                    $stm->execute();
+
+                    $this->db->commit();
+                    return "Animal excluído com sucesso";
+                } else {
+                    $this->db->rollBack();
+                    return "Animal não encontrado";
                 }
-                else
-                {
-                    return "Problema ao excluir animal";
+            } catch (PDOException $e) {
+                $this->db->rollBack();
+                if ($e->getCode() == 23000) {
+                    return "Animal contém prontuários. Não pode ser excluído";
+                } else {
+                    return "Problema ao excluir animal: " . $e->getMessage();
                 }
             }
         }

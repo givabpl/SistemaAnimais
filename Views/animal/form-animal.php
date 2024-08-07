@@ -18,7 +18,8 @@
                     <!-- RGA -->
                     <div class="col-md-4">
                         <label for="rga" class="form-label">RGA</label> 
-                        <input 
+                        <input
+                            maxlength="9"
                             type="text" 
                             class="form-control" 
                             name="rga" 
@@ -211,12 +212,26 @@
     <!-- PERMITE BUSCA DENTRO DO SELECT PARA FACILITAR -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const rgaInput = document.getElementById('rga');
+
+            rgaInput.addEventListener('input', function () {
+                let rga = rgaInput.value.replace(/\D/g, '');
+                rga = rga.replace(/(\d)(\d)/, '$1.$2');
+                rga = rga.replace(/(\d{3})(\d)/, '$1.$2');
+                rga = rga.replace(/(\d{3})(\d)$/, '$1.$2');
+                rgaInput.value = rga;
+            });
+        });
+
         $(document).ready(function() {
             $('#tutor-select').select2({
                 placeholder: "Selecione um tutor",
                 allowClear: true
             });
         });
+
+
     </script>
 
 <?php require_once ROOT_PATH . '/views/rodape.html'; ?>

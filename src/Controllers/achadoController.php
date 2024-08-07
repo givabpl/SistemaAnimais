@@ -239,7 +239,19 @@
             require_once "Views/achado/pdf-achado.php";
         }
 
-        // EXCLUIR
+        // REMOVER ACHADO
+        public function remover_achado()
+        {
+            if(isset($_GET["id"]))
+            {
+                $achado = new Achado($_GET["id"]);
+                $achadoDAO = new achadoDAO();
+                $retorno = $achadoDAO->remover_achado($achado);
+                header("location:index.php?controle=achadoController&metodo=listar&msg=$retorno");
+            }
+        }
+
+        // EXCLUIR (EXCLUI DE ANIMAIS TAMBÉM)
         public function excluir()
         {
             if(isset($_GET["id"]))
