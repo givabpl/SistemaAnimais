@@ -52,3 +52,5 @@
 
     </div>
 </div>
+
+<?php require_once ROOT_PATH . '/views/rodape.html'; ?>
