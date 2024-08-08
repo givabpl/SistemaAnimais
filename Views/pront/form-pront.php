@@ -158,7 +158,7 @@
                 <label for="arquivos" class="form-label">UPLOAD DE ARQUIVO</label> <br>
                 <input 
                     type="file" 
-                    name="arquivos[]"
+                    name="arquivos"
                     id="arquivos"
                     multiple
                     value="<?php echo isset($_POST['arquivos'])?$_POST['arquivos']:'';?>">

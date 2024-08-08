@@ -30,14 +30,14 @@
                     <!-- CHIP DE RASTREAMENTO -->
                     <div class="col-md-4">
                         <label for="chip" class="form-label">CHIP DE RASTREAMENTO</label> <!-- CHIP DE RASTREAMENTO -->
-                            <input 
-                                type="text" 
-                                class="form-control" 
-                                name="chip" 
-                                id="chip"
-                                placeholder="n° chip (Se houver)"
-                                value="<?php echo isset($_POST['chip'])?$_POST['chip']:'';?>">
-                                <!-- CHIP DE RASTREAMENTO NÃO TEM MENSAGEM DE AVISO DE PREENCHIMENTO, POIS NÃO É OBRIGATÓRIO, É OPCIONAL -->
+                        <input
+                            type="text"
+                            class="form-control"
+                            name="chip"
+                            id="chip"
+                            placeholder="n° chip (Se houver)"
+                            value="<?php echo isset($_POST['chip'])?$_POST['chip']:'';?>">
+                            <!-- CHIP DE RASTREAMENTO NÃO TEM MENSAGEM DE AVISO DE PREENCHIMENTO, POIS NÃO É OBRIGATÓRIO, É OPCIONAL -->
                     </div>
                     <!-- NOME -->
                     <div class="col-md-4">
@@ -51,10 +51,8 @@
                             value="<?php echo isset($_POST['nome'])?$_POST['nome']:'';?>">
                             <div style="color:red"><?php echo $msg[1] != ""?$msg[1]:'';?></div>
                     </div>
-                    
             </div>
 
-           
             <!-- DATA DE NASCIMENTO | SEXO | ALERGIAS -->
             <div class="mb-3 row"> <!-- INPUTS EM ROW / MESMA LINHA -->
                 <!-- DATA DE NASCIMENTO -->
@@ -83,6 +81,7 @@
 
                     <div style="color:red"><?php echo $msg[3] != ""?$msg[3]:'';?></div>
                 </div>
+
                 <!-- ALERGIAS -->
                 <div class="col-md-4">
                     <label for="alergias" class="form-label">ALERGIAS</label> 
@@ -111,6 +110,7 @@
                         id="doencas" 
                         value="<?php echo isset($_POST['doencas'])?$_POST['doencas']:'';?>">
                 </div>
+
                 <!-- CIRURGIAS ANTERIORES -->
                 <div class="col-md-4">
                     <label for="cirurgias" class="form-label">CIRURGIAS ANTERIORES</label> 
@@ -122,6 +122,7 @@
                         id="cirurgias" 
                         value="<?php echo isset($_POST['cirurgias'])?$_POST['cirurgias']:'';?>">
                 </div>
+
                 <!-- >PESO (KG) -->
                 <div class="col-md-2">
                     <label for="peso" class="form-label">PESO (KG)</label> 
@@ -134,6 +135,7 @@
                         <div style="color:red"><?php echo $msg[4] != ""?$msg[4]:'';?></div>
                 </div>
             </div>
+
             <!-- INPUTS NESSA LINHA: -->
             <!-- ESPÉCIE | RAÇA | PELAGEM | AQUISIÇÃO -->
             <div class="mb-3 row">
@@ -148,6 +150,7 @@
                         value="<?php echo isset($_POST['especie'])?$_POST['especie']:'';?>">
                         <div style="color:red"><?php echo $msg[5] != ""?$msg[5]:'';?></div>
                 </div>
+
                 <!-- RAÇA -->
                 <div class="col-md-2">
                     <label for="raca" class="form-label">RAÇA</label> 
@@ -159,6 +162,7 @@
                         value="<?php echo isset($_POST['raca'])?$_POST['raca']:'';?>">
                         <div style="color:red"><?php echo $msg[6] != ""?$msg[6]:'';?></div>
                 </div>
+
                 <!-- PELAGEM -->
                 <div class="col-md-2">
                     <label for="pelagem" class="form-label">PELAGEM</label> 
@@ -170,6 +174,7 @@
                         value="<?php echo isset($_POST['pelagem'])?$_POST['pelagem']:'';?>">
                         <div style="color:red"><?php echo $msg[7] != ""?$msg[7]:'';?></div>
                 </div>
+
                 <!-- AQUISIÇÃO -->
                 <div class="col-md-2">
                     <label for="aquisicao" class="form-label">AQUISIÇÃO</label> 
@@ -188,7 +193,6 @@
             <div class="col">
                 <!-- TUTOR -->
                 <label for="tutor" class="form-label">TUTOR</label> <br>
-
                 <select name="tutor" id="tutor-select" class="form-select-tutor">
                     <option value="0">Selecione um tutor</option>
                     <?php foreach($retorno as $dado): ?>

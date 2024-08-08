@@ -30,6 +30,7 @@
                         value="<?php echo isset($_POST['rga'])?$_POST['rga']:$retorno[0]->rga;?>">
                         <div style="color:red"><?php echo $msg[0] != ""?$msg[0]:'';?></div>
                 </div>
+
                 <!-- CHIP DE RASTREAMENTO -->
                 <div class="col-md-2">
                     <label for="chip" class="form-label">CHIP DE RASTREAMENTO</label>
@@ -41,6 +42,7 @@
                             value="<?php echo isset($_POST['chip'])?$_POST['chip']:$retorno[0]->chip;?>">
                             <!-- CHIP DE RASTREAMENTO NÃO TEM MENSAGEM DE AVISO DE PREENCHIMENTO, POIS NÃO É OBRIGATÓRIO, É OPCIONAL -->
                 </div>
+
                 <!-- NOME -->
                 <div class="col-md-4">
                     <label for="nome" class="form-label">NOME</label>
@@ -68,6 +70,7 @@
                             value="<?php echo isset($_POST['datan'])?$_POST['datan']:$retorno[0]->datan;?>">
                             <div style="color:red"><?php echo $msg[2] != ""?$msg[2]:'';?></div>
                 </div>
+
                 <!-- FORM-SELECT DO BOOTSTRAP NÃO ESTÁ FUNCIONANDO. PERSONALIZEI NO CSS
                      POSSÍVEL CAUSA: LIMITAÇÕES DO PRÓPRIO NAVEGADOR -->
                 <!-- SEXO -->
@@ -83,6 +86,7 @@
 
                     <div style="color:red"><?php echo $msg[3] != ""?$msg[3]:'';?></div>
                 </div>
+
                 <!-- ALERGIAS -->
                 <div class="col-md-4">
                     <label for="alergias" class="form-label">ALERGIAS</label> 
@@ -110,6 +114,7 @@
                         id="doencas" 
                         value="<?php echo isset($_POST['doencas'])?$_POST['doencas']:$retorno[0]->doencas;?>">
                 </div>
+
                 <!-- CIRURGIAS ANTERIORES -->
                 <div class="col-md-4">
                     <label for="cirurgias" class="form-label">CIRURGIAS ANTERIORES</label> 
@@ -121,6 +126,7 @@
                         id="cirurgias" 
                         value="<?php echo isset($_POST['cirurgias'])?$_POST['cirurgias']:$retorno[0]->cirurgias;?>">
                 </div>
+
                 <!-- >PESO (KG) -->
                 <div class="col-md-2">
                     <label for="peso" class="form-label">PESO (KG)</label> 
@@ -146,6 +152,7 @@
                         value="<?php echo isset($_POST['especie'])?$_POST['especie']:$retorno[0]->especie;?>">
                         <div style="color:red"><?php echo $msg[2] != ""?$msg[2]:'';?></div>
                 </div>
+
                 <!-- RAÇA -->
                 <div class="col-md-2">
                     <label for="raca" class="form-label">RAÇA</label>
@@ -157,6 +164,7 @@
                         value="<?php echo isset($_POST['raca'])?$_POST['raca']:$retorno[0]->raca;?>">
                         <div style="color:red"><?php echo $msg[3] != ""?$msg[3]:'';?></div>
                 </div>
+
                 <!-- PELAGEM -->
                 <div class="col-md-2">
                     <label for="pelagem" class="form-label">PELAGEM</label>
@@ -168,6 +176,7 @@
                         value="<?php echo isset($_POST['pelagem'])?$_POST['pelagem']:$retorno[0]->pelagem;?>">
                         <div style="color:red"><?php echo $msg[4] != ""?$msg[4]:'';?></div>
                 </div>
+
                 <!-- AQUISIÇÃO -->
                 <div class="col-md-2">
                     <label for="aquisicao" class="form-label">AQUISIÇÃO</label>
@@ -181,20 +190,15 @@
                 </div>
             </div>
 
+            <!-- SELECT TUTOR -->
             <div class="col">
                 <!-- TUTOR -->
-                <label for="tutor" class="form-label">TUTOR</label>
-                <select class="form-select-tutor" name="tutor" id="tutor">
+                <label for="tutor" class="form-label">TUTOR</label> <br>
+                <select name="tutor" id="tutor-select" class="form-select-tutor">
                     <option value="0">Selecione um tutor</option>
-                    <?php 
-
-                        $tutorDAO = new tutorDAO();
-                        $retorno = $tutorDAO->buscar_tutores();
-
-                        foreach($retorno as $tutor):
-                    ?>
+                    <?php foreach($ret as $tutor): ?>
                         <option value="<?php echo $tutor->id_tutor; ?>" <?php echo (isset($_POST["tutor"]) && $_POST["tutor"] == $tutor->id_tutor) || ($retorno[0]->id_tutor == $tutor->id_tutor) ? 'selected' : ''; ?>>
-                            <?php echo $tutor->nome; ?>
+                            <?php echo $tutor->nome; ?> <?php echo $tutor->sobrenome; ?>
                         </option>
                     <?php endforeach; ?>
                 </select>

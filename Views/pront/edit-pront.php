@@ -89,12 +89,10 @@
                 <label for="descritivo" class="form-label">DESCRITIVO</label>
                 <textarea
                     rows="4"
-                    type="text"  
                     class="form-control" 
                     name="descritivo" 
                     id="descritivo" 
-                    placeholder="Descrição do atendimento / anotações" 
-                    value="<?php echo isset($_POST['descritivo'])?$_POST['descritivo']:$retorno[0]->descritivo;?>">
+                    placeholder="Descrição do atendimento / anotações" >
                         <?php echo isset($_POST['descritivo'])?$_POST['descritivo']:$retorno[0]->descritivo;?>
                 </textarea>
                     <div style="color:red"><?php echo $msg[3] != ""?$msg[3]:'';?></div>

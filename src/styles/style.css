@@ -3,7 +3,7 @@
 body {
     font-family: "Manrope", sans-serif;
     font-weight: 400;
-    min-height: 100vh;
+    height: 100%;
 }
 
 .navbar {
@@ -19,6 +19,9 @@ body {
 }
 
 .container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
     max-width: 1400px;
 }
 

@@ -105,6 +105,7 @@
                             value="<?php echo isset($_POST['localac'])?$_POST['localac']:'';?>">
                         <div style="color:red"><?php echo $msg[5] != ""?$msg[5]:'';?></div>
                     </div>
+
                     <div class="col-md-4">
                         <!-- DATA DO ENCONTRO -->
                         <label for="dataac" class="form-label">DATA DO ENCONTRO</label><br>
@@ -127,15 +128,16 @@
                         <div style="color:red"><?php echo $msg[7] != ""?$msg[7]:'';?></div>
                     </div>
                 </div>
+
                 <!-- DESCRITIVO -->
                 <div class="mb-3 row">
                     <div class="col-md-6">
                         <label for="descritivo" class="form-label">DESCRIÇÃO DO ENCONTRO</label><br>
                         <textarea
-                                name="descritivo"
-                                id="descritivo"
-                                cols="50"
-                                rows="6"><?php echo isset($_POST['descritivo'])?$_POST['descritivo']:'';?></textarea>
+                            name="descritivo"
+                            id="descritivo"
+                            cols="50"
+                            rows="6"><?php echo isset($_POST['descritivo'])?$_POST['descritivo']:'';?></textarea>
                     </div>
                 </div>
                 <br>
@@ -165,6 +167,7 @@
                             value="<?php echo isset($_POST['sobrenome'])?$_POST['sobrenome']:'';?>">
                     </div>
                 </div>
+
                 <!-- INPUTS NESSA LINHA: -->
                 <!-- TELEFONE1 | TELEFONE2 -->
                 <div class="mb-3 row">
