@@ -52,7 +52,10 @@
         <br>
         <br>
 
-        <a  class="btn btn-primary" href="index.php?controle=vetController&metodo=cadastrar">Novo cadastro</a>&nbsp;&nbsp;&nbsp;
+        <div>
+            <a class="btn btn-primary" href="index.php?controle=vetController&metodo=cadastrar">Novo cadastro</a>
+        </div>
+
 
     </div>
 </div>
