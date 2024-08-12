@@ -91,7 +91,7 @@
                 }
                 if(!$erro)
                 {
-                    $animal = new Animal(rga:"", chip:"", nome:"", datan:"", sexo:$_POST["sexo"], alergias:"", doencas:"", cirurgias:"", peso:"", especie:$_POST["especie"], raca:$_POST["raca"], pelagem:$_POST["pelagem"], aquisicao:"", tutor:null);
+                     $animal = new Animal(rga:"", chip:"", nome:"", datan:"", sexo:$_POST["sexo"], alergias:"", doencas:"", cirurgias:"", peso:"", especie:$_POST["especie"], raca:$_POST["raca"], pelagem:$_POST["pelagem"], aquisicao:"", tutor:null);
                      $animalDAO = new animalDAO();
                      $animalId = $animalDAO->inserir($animal);
                      $animal->setId($animalId);

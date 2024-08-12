@@ -16,17 +16,27 @@
         // INSERIR ANIMAL
         public function inserir($perdido)
         {
-            $sql = "INSERT INTO perdidos (id_animal, imagem, locald, datad, horad, descritivo, id_tutor, statusp) VALUES (?,?,?,?,?,?,?,?)";
+            $sql = "INSERT INTO perdidos (rga, chip, nome, datan, sexo, alergias, doencas, peso, especie, raca, pelagem, imagem, locald, datad, horad, descritivo, nome_tutor, statusp) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
             $stm = $this->db->prepare($sql);
-            $stm->bindValue(1, $perdido->getAnimal()->getId());
-            $stm->bindValue(2, $perdido->getImagem());
-            $stm->bindValue(3, $perdido->getLocal());
-            $stm->bindValue(4, $perdido->getData());
-            $stm->bindValue(5, $perdido->getHora());
-            $stm->bindValue(6, $perdido->getDescr());
-            $stm->bindValue(7, $perdido->getTutor()->getId());
-            $stm->bindValue(8, $perdido->getStatus());
+            $stm->bindValue(1, $perdido->getRga());
+            $stm->bindValue(2, $perdido->getChip());
+            $stm->bindValue(3, $perdido->getNome());
+            $stm->bindValue(4, $perdido->getDatan());
+            $stm->bindValue(5, $perdido->getSexo());
+            $stm->bindValue(6, $perdido->getAlergias());
+            $stm->bindValue(7, $perdido->getDoencas());
+            $stm->bindValue(8, $perdido->getPeso());
+            $stm->bindValue(9, $perdido->getEspecie());
+            $stm->bindValue(10, $perdido->getRaca());
+            $stm->bindValue(11, $perdido->getPelagem());
+            $stm->bindValue(12, $perdido->getImagem());
+            $stm->bindValue(13, $perdido->getLocal());
+            $stm->bindValue(14, $perdido->getData());
+            $stm->bindValue(15, $perdido->getHora());
+            $stm->bindValue(16, $perdido->getDescr());
+            $stm->bindValue(17, $perdido->getNomeTutor());
+            $stm->bindValue(18, $perdido->getStatus());
             return $stm->execute();
         }
 
@@ -34,22 +44,8 @@
         // BUSCA PAGINADA: ANIMAIS PERDIDOS  (LIMITE 15)
         public function buscar_perdidos_paginados($offset, $limite)
         {
-            $sql = "SELECT perdidos.*, 
-                           tutores.nome AS nome_tutor, 
-                           tutores.sobrenome, 
-                           tutores.telefone1, 
-                           tutores.telefone2, 
-                           animais.rga, 
-                           animais.chip, 
-                           animais.nome AS nome_animal, 
-                           animais.sexo,
-                           animais.especie, 
-                           animais.raca, 
-                           animais.pelagem
-                    FROM perdidos 
-                    JOIN tutores ON perdidos.id_tutor = tutores.id_tutor
-                    JOIN animais ON perdidos.id_animal = animais.id_animal
-                    LIMIT :offset, :limite"; // ou id_perdido
+            $sql = "SELECT * FROM perdidos 
+                    LIMIT :offset, :limite";
 
             $stm = $this->db->prepare($sql);
             $stm->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
@@ -58,24 +54,18 @@
             return $stm->fetchAll(PDO::FETCH_OBJ);
         }
 
+
         // BUSCA PAGINADA: ANIMAIS PERDIDOS PUBLICO (LIMITE 15)
         public function buscar_perdidos_paginados_pub($offset, $limite)
         {
-            $sql = "SELECT perdidos.*, 
-                           tutores.nome AS nome_tutor, 
-                           tutores.telefone1, 
-                           tutores.telefone2, 
-                           animais.rga, 
-                           animais.chip, 
-                           animais.nome AS nome_animal, 
-                           animais.sexo,
-                           animais.especie, 
-                           animais.raca, 
-                           animais.pelagem
+            $sql = "SELECT rga, chip, nome, 
+                           DATE_FORMAT(datan, '%d/%m/%Y') AS datan_formatada, 
+                           sexo, alergias, doencas, peso, especie, raca, pelagem, imagem, locald, 
+                           DATE_FORMAT(datad, '%d/%m/%Y') AS data_formatada,
+                           DATE_FORMAT(horad, '%H:%i') AS hora_formatada,
+                           descritivo, nome_tutor, statusd 
                     FROM perdidos 
-                    JOIN tutores ON perdidos.id_tutor = tutores.id_tutor
-                    JOIN animais ON perdidos.id_animal = animais.id_animal
-                    LIMIT :offset, :limite"; // ou id_perdido
+                    LIMIT :offset, :limite";
             $stm = $this->db->prepare($sql);
             $stm->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
             $stm->bindValue(':limite', (int) $limite, PDO::PARAM_INT);
@@ -95,22 +85,8 @@
         // ORDENAR ANIMAIS PERDIDOS POR ORDEM ALFABETICA
         public function ordenar_perdidos_alf($offset, $limite)
         {
-            $sql = "SELECT perdidos.*, 
-                           tutores.nome AS nome_tutor, 
-                           tutores.sobrenome, 
-                           tutores.telefone1, 
-                           tutores.telefone2, 
-                           animais.rga, 
-                           animais.chip, 
-                           animais.nome AS nome_animal, 
-                           animais.sexo,
-                           animais.especie, 
-                           animais.raca, 
-                           animais.pelagem
-                    FROM perdidos 
-                    JOIN tutores ON perdidos.id_tutor = tutores.id_tutor
-                    JOIN animais ON perdidos.id_animal = animais.id_animal
-                    ORDER BY animais.nome
+            $sql = "SELECT * FROM perdidos 
+                    ORDER BY nome
                     LIMIT :offset, :limite";
 
             $stm = $this->db->prepare($sql);
@@ -123,21 +99,14 @@
         // ORDENAR ANIMAIS PERDIDOS POR ORDEM ALFABETICA PUBLICO
         public function ordenar_perdidos_alf_publico($offset, $limite)
         {
-            $sql = "SELECT perdidos.*, 
-                           tutores.nome AS nome_tutor, 
-                           tutores.telefone1, 
-                           tutores.telefone2, 
-                           animais.rga, 
-                           animais.chip, 
-                           animais.nome AS nome_animal, 
-                           animais.sexo,
-                           animais.especie, 
-                           animais.raca, 
-                           animais.pelagem
+            $sql = "SELECT rga, chip, nome, 
+                           DATE_FORMAT(datan, '%d/%m/%Y') AS datan_formatada, 
+                           sexo, alergias, doencas, peso, especie, raca, pelagem, imagem, locald, 
+                           DATE_FORMAT(datad, '%d/%m/%Y') AS data_formatada,
+                           DATE_FORMAT(horad, '%H:%i') AS hora_formatada,
+                           descritivo, nome_tutor, statusd 
                     FROM perdidos 
-                    JOIN tutores ON perdidos.id_tutor = tutores.id_tutor
-                    JOIN animais ON perdidos.id_animal = animais.id_animal
-                    ORDER BY animais.nome
+                    ORDER BY nome
                     LIMIT :offset, :limite";
 
             $stm = $this->db->prepare($sql);
@@ -150,22 +119,8 @@
         // ORDENAR ANIMAIS PERDIDOS POR NOME DO TUTOR
         public function ordenar_perdidos_tutor($offset, $limite)
         {
-            $sql = "SELECT perdidos.*, 
-                           tutores.nome AS nome_tutor, 
-                           tutores.sobrenome,
-                           tutores.telefone1, 
-                           tutores.telefone2, 
-                           animais.rga, 
-                           animais.chip, 
-                           animais.nome AS nome_animal, 
-                           animais.sexo,
-                           animais.especie, 
-                           animais.raca, 
-                           animais.pelagem
-                    FROM perdidos 
-                    JOIN tutores ON perdidos.id_tutor = tutores.id_tutor
-                    JOIN animais ON perdidos.id_animal = animais.id_animal
-                    ORDER BY tutores.nome
+            $sql = "SELECT * FROM perdidos 
+                    ORDER BY nome_tutor
                     LIMIT :offset, :limite";
 
             $stm = $this->db->prepare($sql);
@@ -178,21 +133,14 @@
         // ORDENAR ANIMAIS PERDIDOS POR NOME DO TUTOR PUBLICO
         public function ordenar_perdidos_tutor_publico($offset, $limite)
         {
-            $sql = "SELECT perdidos.*, 
-                           tutores.nome AS nome_tutor, 
-                           tutores.telefone1, 
-                           tutores.telefone2, 
-                           animais.rga, 
-                           animais.chip, 
-                           animais.nome AS nome_animal, 
-                           animais.sexo,
-                           animais.especie, 
-                           animais.raca, 
-                           animais.pelagem
-                    FROM perdidos 
-                    JOIN tutores ON perdidos.id_tutor = tutores.id_tutor
-                    JOIN animais ON perdidos.id_animal = animais.id_animal
-                    ORDER BY tutores.nome
+            $sql = "SELECT rga, chip, nome, 
+                           DATE_FORMAT(datan, '%d/%m/%Y') AS datan_formatada, 
+                           sexo, alergias, doencas, peso, especie, raca, pelagem, imagem, locald, 
+                           DATE_FORMAT(datad, '%d/%m/%Y') AS data_formatada,
+                           DATE_FORMAT(horad, '%H:%i') AS hora_formatada,
+                           descritivo, nome_tutor, statusd
+                    FROM perdidos
+                    ORDER BY nome_tutor
                     LIMIT :offset, :limite";
 
             $stm = $this->db->prepare($sql);
@@ -205,13 +153,8 @@
         // BUSCAR NOME DO ANIMAL PERDIDO & NOME DO TUTOR
         public function buscar_perdido_tutor($perdido)
         {
-            $sql = "SELECT 
-                        perdidos.nome AS nome_animal, 
-                        tutores.nome AS nome_tutor, 
-                        tutores.sobrenome
-                    FROM perdidos 
-                    JOIN tutores ON perdidos.id_tutor = tutores.id_tutor
-                    WHERE perdidos.id_perdido = ?";
+            $sql = "SELECT * FROM perdidos 
+                    WHERE id_perdido = ?";
             try
             {
                 $stm = $this->db->prepare($sql);
@@ -231,10 +174,8 @@
         // BUSCAR NOME DO ANIMAL PERDIDO PERDIDO & NOME DO TUTOR PUBLICO
         public function buscar_perdido_tutor_publico($perdido)
         {
-            $sql = "SELECT perdidos.nome AS nome_animal, tutores.nome AS nome_tutor
-                    FROM perdidos 
-                    JOIN tutores ON perdidos.id_tutor = tutores.id_tutor
-                    WHERE perdidos.id_perdido = ?";
+            $sql = "SELECT * FROM perdidos
+                    WHERE id_perdido = ?";
             try
             {
                 $stm = $this->db->prepare($sql);
@@ -256,26 +197,12 @@
         // BUSCAR UM ANIMAL PERDIDO
         public function buscar_perdido($perdido)
         {
-            $sql = "SELECT perdidos.*, 
+            $sql = "SELECT * 
                     DATE_FORMAT(datad, '%d/%m/%Y') AS data_formatada,
                     DATE_FORMAT(horad, '%H:%i') AS hora_formatada,
-                    tutores.nome AS nome_tutor, 
-                    tutores.sobrenome, 
-                    tutores.telefone1,
-                    tutores.telefone2
-                    animais.nome AS nome_animal,
-                    animais.sexo,
-                    animais.peso,
-                    animais.especie,
-                    animais.raca,
-                    animais.pelagem,
-                    animais.alergias,
-                    animais.doencas,
-                    DATE_FORMAT(animais.datan, '%d/%m/%Y') AS datan_formatada
+                    DATE_FORMAT(datan, '%d/%m/%Y') AS datan_formatada
                     FROM perdidos 
-                    JOIN tutores ON perdidos.id_tutor = tutores.id_tutor
-                    JOIN animais ON perdidos.id_animal = animais.id_animal
-                    WHERE perdidos.id_perdido = ?";
+                    WHERE id_perdido = ?";
 
             try
             {
@@ -294,25 +221,15 @@
         // BUSCAR UM ANIMAL PUBLICO
         public function buscar_perdido_publico($perdido)
         {
-            $sql = "SELECT perdidos.*, 
-                    DATE_FORMAT(datad, '%d/%m/%Y') AS data_formatada,
-                    DATE_FORMAT(horad, '%H:%i') AS hora_formatada,
-                    tutores.nome AS nome_tutor,
-                    tutores.telefone1,
-                    tutores.telefone2,
-                    animais.nome AS nome_animal,
-                    animais.sexo,
-                    animais.peso,
-                    animais.especie,
-                    animais.raca,
-                    animais.pelagem,
-                    animais.alergias,
-                    animais.doencas,
-                    DATE_FORMAT(animais.datan, '%d/%m/%Y') AS datan_formatada
+            $sql = "SELECT rga, chip, nome, 
+                           DATE_FORMAT(datan, '%d/%m/%Y') AS datan_formatada, 
+                           sexo, alergias, doencas, peso, especie, raca, pelagem, imagem, locald, 
+                           DATE_FORMAT(datad, '%d/%m/%Y') AS data_formatada,
+                           DATE_FORMAT(horad, '%H:%i') AS hora_formatada,
+                           descritivo, nome_tutor, statusd
+                           
                     FROM perdidos 
-                    JOIN tutores ON perdidos.id_tutor = tutores.id_tutor
-                    JOIN animais ON perdidos.id_animal = animais.id_animal
-                    WHERE perdidos.id_perdido = ?";
+                    WHERE id_perdido = ?";
 
             try
             {

@@ -5,7 +5,10 @@
     {
         public function __construct(
             private int $id_achado = 0,
-            private $animal = null,
+            private string $especie = "",
+            private string $raca = "",
+            private string $pelagem = "",
+            private string $sexo = "",
             private string $imagem = "",
             private string $localac = "",
             private string $dataac = "",
@@ -15,24 +18,48 @@
             private string $sobrenome = "",
             private string $telefone1 = "",
             private string $telefone2 = "",
-            private string $statusac = ""
+            private string $status = ""
             
         ){}
 
         /**
          * @return int
          */
-        public function getId(): int
+        public function getIdAchado(): int
         {
             return $this->id_achado;
         }
 
         /**
-         * @return null
+         * @return string
          */
-        public function getAnimal()
+        public function getEspecie(): string
         {
-            return $this->animal;
+            return $this->especie;
+        }
+
+        /**
+         * @return string
+         */
+        public function getRaca(): string
+        {
+            return $this->raca;
+        }
+
+        /**
+         * @return string
+         */
+        public function getPelagem(): string
+        {
+            return $this->pelagem;
+        }
+
+        /**
+         * @return string
+         */
+        public function getSexo(): string
+        {
+            return $this->sexo;
         }
 
         /**
@@ -70,7 +97,7 @@
         /**
          * @return string
          */
-        public function getDescr(): string
+        public function getDescritivo(): string
         {
             return $this->descritivo;
         }
@@ -78,7 +105,7 @@
         /**
          * @return string
          */
-        public function getNome(): string
+        public function getNomePessoa(): string
         {
             return $this->nome_pessoa;
         }
@@ -112,7 +139,8 @@
          */
         public function getStatus(): string
         {
-            return $this->statusac;
+            return $this->status;
         }
+
 
     }

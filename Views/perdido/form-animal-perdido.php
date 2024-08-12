@@ -166,7 +166,8 @@
                         <div style="color:red"><?php echo $msg[4] != ""?$msg[4]:'';?></div>
                 </div>
             </div>
-            <!-- AQUISIÇÃO -->
+
+            <!-- PELAGEM | AQUISIÇÃO -->
             <div class="mb-3 row">
                 <!-- PELAGEM -->
                 <div class="col-md-4">
@@ -180,6 +181,7 @@
                         value="<?php echo isset($_POST['pelagem'])?$_POST['pelagem']:'';?>">
                         <div style="color:red"><?php echo $msg[5] != ""?$msg[5]:'';?></div>
                 </div>
+                <!-- AQUISICAO -->
                 <div class="col-md-4">
                     <label for="aquisicao" class="form-label">AQUISIÇÃO</label> 
                     <input 

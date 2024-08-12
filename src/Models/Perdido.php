@@ -5,59 +5,184 @@
     {
         public function __construct(
             private int $id_perdido = 0,
-            private $animal = null,
+            private string $rga = "",
+            private string $chip = "",
+            private string $nome = "",
+            private string $datan = "",
+            private string $sexo = "",
+            private string $alergias = "",
+            private string $doencas = "",
+            private string $peso = "",
+            private string $especie = "",
+            private string $raca = "",
+            private string $pelagem = "",
             private string $imagem = "",
             private string $locald = "",
             private string $datad = "",
             private string $horad = "",
             private string $descritivo = "",
-            private $tutor = null,
+            private string $nome_tutor = "",
+            private string $sobrenome = "",
             private string $status = ""
             
         ){}
 
-        public function getId()
+        /**
+         * @return int
+         */
+        public function getIdPerdido(): int
         {
             return $this->id_perdido;
         }
 
-        public function getAnimal()
+        /**
+         * @return string
+         */
+        public function getRga(): string
         {
-            return $this->animal;
+            return $this->rga;
         }
 
-        public function getImagem()
+        /**
+         * @return string
+         */
+        public function getChip(): string
+        {
+            return $this->chip;
+        }
+
+        /**
+         * @return string
+         */
+        public function getNome(): string
+        {
+            return $this->nome;
+        }
+
+        /**
+         * @return string
+         */
+        public function getDatan(): string
+        {
+            return $this->datan;
+        }
+
+        /**
+         * @return string
+         */
+        public function getSexo(): string
+        {
+            return $this->sexo;
+        }
+
+        /**
+         * @return string
+         */
+        public function getAlergias(): string
+        {
+            return $this->alergias;
+        }
+
+        /**
+         * @return string
+         */
+        public function getDoencas(): string
+        {
+            return $this->doencas;
+        }
+
+        /**
+         * @return string
+         */
+        public function getPeso(): string
+        {
+            return $this->peso;
+        }
+
+        /**
+         * @return string
+         */
+        public function getEspecie(): string
+        {
+            return $this->especie;
+        }
+
+        /**
+         * @return string
+         */
+        public function getRaca(): string
+        {
+            return $this->raca;
+        }
+
+        /**
+         * @return string
+         */
+        public function getPelagem(): string
+        {
+            return $this->pelagem;
+        }
+
+        /**
+         * @return string
+         */
+        public function getImagem(): string
         {
             return $this->imagem;
         }
 
-        public function getLocal()
+        /**
+         * @return string
+         */
+        public function getLocald(): string
         {
             return $this->locald;
         }
 
-        public function getData()
+        /**
+         * @return string
+         */
+        public function getDatad(): string
         {
             return $this->datad;
         }
 
-        public function getHora()
+        /**
+         * @return string
+         */
+        public function getHorad(): string
         {
             return $this->horad;
         }
 
-        public function getDescr()
+        /**
+         * @return string
+         */
+        public function getDescritivo(): string
         {
             return $this->descritivo;
         }
 
-        
-        public function getTutor()
+        /**
+         * @return string
+         */
+        public function getNomeTutor(): string
         {
-            return $this->tutor;
+            return $this->nome_tutor;
         }
 
-        public function getStatus()
+        /**
+         * @return string
+         */
+        public function getSobrenome(): string
+        {
+            return $this->sobrenome;
+        }
+
+        /**
+         * @return string
+         */
+        public function getStatus(): string
         {
             return $this->status;
         }
