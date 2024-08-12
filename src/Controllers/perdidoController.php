@@ -113,18 +113,7 @@
                 }
                 if(!$erro)
                 {
-                    $tutor = new Tutor(nome:$_POST["nome_tutor"], sobrenome:$_POST["sobrenome"], rg:"", cpf:"", cep:"", logradouro:"", numero:"", bairro:"", telefone1:$_POST["telefone1"], telefone2:$_POST["telefone2"]);
-                    $tutorDAO = new tutorDAO();
-                    $tutorId = $tutorDAO->inserir($tutor);
-                    $tutor->setId($tutorId);
-
-                    $animal = new Animal(rga:$_POST["rga"], chip:$_POST["chip"], nome:$_POST["nome_animal"], datan:$_POST["datan"], sexo:$_POST["sexo"], alergias:$_POST["alergias"], doencas:$_POST["doencas"], cirurgias:$_POST["cirurgias"], peso:$_POST["peso"], especie:$_POST["especie"], raca:$_POST["raca"], pelagem:$_POST["pelagem"], aquisicao:$_POST["aquisicao"], tutor:$tutor);
-                    $animalDAO = new animalDAO();
-                    $animalId = $animalDAO->inserir($animal);
-                    $animal->setId($animalId);
-                    
-
-                    $perdido = new Perdido(animal:$animal, imagem:$imagem, locald:$_POST["locald"], datad:$_POST["datad"], horad:$_POST["horad"], descritivo:$_POST["descritivo"], tutor:$tutor, status:$_POST["status"]);
+                    $perdido = new Perdido(rga:$_POST["rga"], chip:$_POST["chip"], nome:$_POST["nome"], datan:$_POST["datan"], sexo:$_POST["sexo"], alergias:$_POST["alergias"], doencas:$_POST["doencas"], peso:$_POST["peso"], especie:$_POST["especie"], raca:$_POST["raca"], pelagem:$_POST["pelagem"], imagem:$imagem, locald:$_POST["locald"], datad:$_POST["datad"], horad:$_POST["horad"], descritivo:$_POST["descritivo"], nome_tutor:$_POST["nome_tutor"], sobrenome:$_POST["sobrenome"], telefone1:$_POST["telefone1"], telefone2:$_POST["telefone2"], status:$_POST["status"]);
 
                     $perdidoDAO = new perdidoDAO();
                     $retorno = $perdidoDAO->inserir($perdido);

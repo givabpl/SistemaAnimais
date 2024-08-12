@@ -48,14 +48,14 @@
             <div class="mb-3 row"> <!-- INPUTS EM ROW / MESMA LINHA -->
                 <!-- NOME -->
                 <div class="col-md-4">
-                    <label for="nome_animal" class="form-label">NOME</label> 
+                    <label for="nome" class="form-label">NOME</label>
                     <input 
                         type="text" 
                         class="form-control" 
-                        name="nome_animal" 
-                        id="nome_animal" 
+                        name="nome"
+                        id="nome"
                         placeholder="Nome do animal" 
-                        value="<?php echo isset($_POST['nome_animal'])?$_POST['nome_animal']:'';?>">
+                        value="<?php echo isset($_POST['nome'])?$_POST['nome']:'';?>">
                         
                         <div style="color:red"><?php echo $msg[0] != ""?$msg[0]:'';?></div>
                         
@@ -114,20 +114,8 @@
             </div>
             
             <!-- INPUTS NESSA LINHA: -->
-            <!-- CIRURGIAS ANTERIORES | PESO (KG) -->
+            <!-- PESO (KG) -->
             <div class="mb-3 row">
-               
-                <!-- CIRURGIAS ANTERIORES -->
-                <div class="col-md-4">
-                    <label for="cirurgias" class="form-label">CIRURGIAS ANTERIORES</label> 
-                    <input 
-                    placeholder="Responda 'Não' caso não exista"
-                        type="text"  
-                        class="form-control" 
-                        name="cirurgias" 
-                        id="cirurgias" 
-                        value="<?php echo isset($_POST['cirurgias'])?$_POST['cirurgias']:'';?>">
-                </div>
                 <!-- >PESO (KG) -->
                 <div class="col-md-2">
                     <label for="peso" class="form-label">PESO (KG)</label> 
@@ -181,17 +169,7 @@
                         value="<?php echo isset($_POST['pelagem'])?$_POST['pelagem']:'';?>">
                         <div style="color:red"><?php echo $msg[5] != ""?$msg[5]:'';?></div>
                 </div>
-                <!-- AQUISICAO -->
-                <div class="col-md-4">
-                    <label for="aquisicao" class="form-label">AQUISIÇÃO</label> 
-                    <input 
-                        type="text"
-                        class="form-control" 
-                        name="aquisicao" 
-                        id="aquisicao" 
-                        placeholder="Adotado, comprado, resgatado..."
-                        value="<?php echo isset($_POST['aquisicao'])?$_POST['aquisicao']:'';?>">
-                </div>
+
             </div>
             <!-- INPUTS NESSA LINHA: -->
             <!-- IMAGEM -->
@@ -212,8 +190,9 @@
                 </div>
                 
             </div>
-        <!-- LOCAL | DATA -->
+            <!-- LOCAL | DATA | HORA -->
             <div class="mb-3 row">
+                <!-- LOCAL -->
                 <div class="col-md-6">
                     <label for="locald" class="form-label">LOCAL DO DESAPARECIMENTO</label><br>
                     <input 
@@ -225,6 +204,7 @@
                         value="<?php echo isset($_POST['locald'])?$_POST['locald']:'';?>">
                     <div style="color:red"><?php echo $msg[7] != ""?$msg[7]:'';?></div>
                 </div>
+                <!-- DATA | HORA -->
                 <div class="col-md-4">
                     <label for="datad" class="form-label">DATA DO DESAPARECIMENTO</label><br>
                     <input 
@@ -245,6 +225,7 @@
                     <div style="color:red"><?php echo $msg[9] != ""?$msg[9]:'';?></div>
                 </div>
             </div>
+            <!-- DESCRITIVO -->
             <div class="mb-3 row">
                 <div class="col-md-6">
                     <label for="descritivo" class="form-label">DESCRIÇÃO DO DESAPARECIMENTO</label><br>
@@ -260,7 +241,7 @@
             <h2 class="col h3">Informações do Tutor</h2>
 
             <!-- INPUTS NESSA LINHA: -->
-            <!-- NOME DO TUTOR | EMAIL -->
+            <!-- NOME DO TUTOR | SOBRENOME -->
             <div class="mb-3 row">
                 <div class="col-md-4">
                     <label for="nome_tutor" class="form-label">NOME</label>
