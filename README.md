@@ -30,3 +30,14 @@ Este projeto está organizado no modelo MVC (Model, View e Controller), em PHP.
 
 
 
+# Alterações após testes
+
+De início, as tabelas de achados e perdidos eram vinculadas as tabelas de animais e tutores, porém, dessa forma, acessos públicos teriam a capacidade de inserir novos animais, "invadindo" a tabela de animais acessada pelos veterinários.
+
+Dessa forma, em 12/08/2024 foi iniciada a desvinculação da tabela de animais.
+
+Além dessa mudança, após análise, foi concluído que não seria prudente permitir que acessos públicos pudessem registrar diretamente animais desaparecidos/encontrados, em função de cadastros maliciosos que poderiam invadir a listagem de achados e perdidos.
+
+Dito isso, em 12/08 também foi iniciada a implementação de uma etapa de aprovação de postagens, que devem ser atorizadas ou barradas pelos veterinários.
+
+
