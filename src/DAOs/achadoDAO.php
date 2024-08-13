@@ -86,7 +86,7 @@
         // BUSCAR UM ANIMAL achado
         public function buscar_achado($achado)
         {
-            $sql = "SELECT achados.*, 
+            $sql = "SELECT *,
                     DATE_FORMAT(dataac, '%d/%m/%Y') AS data_formatada,
                     DATE_FORMAT(horaac, '%H:%i') AS hora_formatada,
                     FROM achados 
@@ -108,7 +108,7 @@
         // BUSCAR UM ANIMAL PUBLICO
         public function buscar_achado_publico($achado)
         {
-            $sql = "SELECT achados.*, 
+            $sql = "SELECT *, 
                     DATE_FORMAT(dataac, '%d/%m/%Y') AS data_formatada,
                     DATE_FORMAT(horaac, '%H:%i') AS hora_formatada,
                     FROM achados 

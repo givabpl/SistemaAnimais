@@ -2,12 +2,8 @@
     namespace SistemaAnimais\Controllers;
 
     use SistemaAnimais\DAOs\perdidoDAO;
-    use SistemaAnimais\DAOs\animalDAO;
-    use SistemaAnimais\DAOs\tutorDAO;
     
     use SistemaAnimais\Models\Perdido;
-    use SistemaAnimais\Models\Animal;
-    use SistemaAnimais\Models\Tutor;
 
     class perdidoController
     {
@@ -19,7 +15,7 @@
             {
                 $tipos = array("image/png","image/jpeg");
                 $erro = false;
-                if(empty($_POST["nome_animal"]))
+                if(empty($_POST["nome"]))
                 {
                     $msg[0] = "Preencha o nome";
                     $erro = true;
@@ -113,11 +109,25 @@
                 }
                 if(!$erro)
                 {
-                    $perdido = new Perdido(rga:$_POST["rga"], chip:$_POST["chip"], nome:$_POST["nome"], datan:$_POST["datan"], sexo:$_POST["sexo"], alergias:$_POST["alergias"], doencas:$_POST["doencas"], peso:$_POST["peso"], especie:$_POST["especie"], raca:$_POST["raca"], pelagem:$_POST["pelagem"], imagem:$imagem, locald:$_POST["locald"], datad:$_POST["datad"], horad:$_POST["horad"], descritivo:$_POST["descritivo"], nome_tutor:$_POST["nome_tutor"], sobrenome:$_POST["sobrenome"], telefone1:$_POST["telefone1"], telefone2:$_POST["telefone2"], status:$_POST["status"]);
+                    //  se estiver sem sessão de vet, solicitar
+                    //  se estiver com sessão de vet, cadastrar direto
+
+                    $perdido = new Perdido(rga:$_POST["rga"], chip:$_POST["chip"], nome:$_POST["nome"], datan:$_POST["datan"], sexo:$_POST["sexo"], alergias:$_POST["alergias"], doencas:$_POST["doencas"], peso:$_POST["peso"], especie:$_POST["especie"], raca:$_POST["raca"], pelagem:$_POST["pelagem"], imagem:$imagem, descritivo:$_POST["descritivo"], locald:$_POST["locald"], datad:$_POST["datad"], horad:$_POST["horad"],  nome_tutor:$_POST["nome_tutor"], sobrenome:$_POST["sobrenome"], telefone1:$_POST["telefone1"], telefone2:$_POST["telefone2"], status:$_POST["status"]);
 
                     $perdidoDAO = new perdidoDAO();
-                    $retorno = $perdidoDAO->inserir($perdido);
-                    $msg = "Animal cadastrado com sucesso";
+
+                    session_start();
+                    if(!isset($_SESSION["id_vet"]))
+                    {
+                        header("location:index.php?controle=perdidoController&metodo=listar_publico");
+
+                        $retorno = $perdidoDAO->solicitar($perdido);
+                        $msg = "Sua solicitação de registro foi enviada para aprovação. Verifique também se o seu animal se encontra na lista de Achados!";
+                        exit();
+                    }
+
+                    $retorno = $perdidoDAO->solicitar($perdido);
+                    $msg = "Sua solicitação de registro foi enviada para aprovação. Verifique também se o seu animal se encontra na lista de Achados!";
 
                     header("location:index.php?controle=perdidoController&metodo=listar&msg=$msg");
                 }
@@ -245,6 +255,11 @@
             require_once "Views/perdido/pub-listar-animais-perdidos.php";
         }
 
+        public function listar_solici()
+        {
+
+        }
+
         // BUSCAR UM ANIMAL (PERFIL)
         public function buscar_perdido()
         {
@@ -303,17 +318,6 @@
 				header("location:index.php?controle=perdidoController&metodo=listar&msg=$retorno");
 			}
 		}
-
-        // EXCLUIR (EXCLUI DE ANIMAIS TAMBÉM)
-        public function excluir()
-        {
-            if (isset($_GET["id"])) {
-                $perdido = new Perdido($_GET["id"]);
-                $perdidoDAO = new PerdidoDAO();
-                $retorno = $perdidoDAO->excluir($perdido);
-                header("location:index.php?controle=perdidoController&metodo=listar&msg=$retorno");
-            }
-        }
     }
 
     

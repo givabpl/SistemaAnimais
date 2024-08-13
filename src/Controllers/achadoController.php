@@ -3,12 +3,9 @@
 
     use SistemaAnimais\DAOs\perdidoDAO;
     use SistemaAnimais\DAOs\achadoDAO;
-    use SistemaAnimais\DAOs\animalDAO;
 
     use SistemaAnimais\Models\Achado;
     use SistemaAnimais\Models\Perdido;
-    use SistemaAnimais\Models\Animal;
-    use SistemaAnimais\Models\Tutor;
 
     class achadoController
     {
@@ -91,15 +88,10 @@
                 }
                 if(!$erro)
                 {
-                     $animal = new Animal(rga:"", chip:"", nome:"", datan:"", sexo:$_POST["sexo"], alergias:"", doencas:"", cirurgias:"", peso:"", especie:$_POST["especie"], raca:$_POST["raca"], pelagem:$_POST["pelagem"], aquisicao:"", tutor:null);
-                     $animalDAO = new animalDAO();
-                     $animalId = $animalDAO->inserir($animal);
-                     $animal->setId($animalId);
-
-                    $achado = new Achado(animal:$animal, imagem:$imagem, localac:$_POST["localac"], dataac:$_POST["dataac"], horaac:$_POST["horaac"], descritivo:$_POST["descritivo"], nome_pessoa:$_POST["nome_pessoa"], sobrenome:$_POST["sobrenome"], telefone1:$_POST["telefone1"], telefone2:$_POST["telefone2"], statusac:$_POST["statusac"]);
+                    $achado = new Achado(especie:$_POST["especie"], raca:$_POST["raca"], pelagem:$_POST["pelagem"],sexo:$_POST["sexo"], imagem:$imagem, localac:$_POST["localac"], dataac:$_POST["dataac"], horaac:$_POST["horaac"], descritivo:$_POST["descritivo"], nome_pessoa:$_POST["nome_pessoa"], sobrenome:$_POST["sobrenome"], telefone1:$_POST["telefone1"], telefone2:$_POST["telefone2"], status:$_POST["status"]);
                     $achadoDAO = new achadoDAO();
                     $retorno = $achadoDAO->inserir($achado);
-                    $msg = "Animal cadastrado com suceso. Verifique se alguém está procurando por esse bichinho em nossa lista de desaparecidos!";
+                    $msg = "Sua solicitação de registro foi enviada para aprovação.";
 
                     header("location:index.php?controle=perdidoController&metodo=listar&msg=$msg");
                 }
@@ -141,46 +133,6 @@
 
             $achadoDAO = new achadoDAO();
             $retorno = $achadoDAO->buscar_achados_paginados_pub($offset, $limite);
-
-            $total_registros = $achadoDAO->contar_achados();
-
-            require_once "Views/achado/pub-listar-animais-achados.php";
-        }
-
-        // LISTAR EM ORDEM ALFABETICA
-        public function listar_alf()
-        {
-            $limite = 15;
-
-            $pagina_atual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
-            $offset = ($pagina_atual - 1) * $limite;
-
-            $achadoDAO = new achadoDAO();
-            $retorno = $achadoDAO->ordenar_achados_alf($offset, $limite);
-
-            $total_registros = $achadoDAO->contar_achados();
-
-            // VERIFICA SESSAO DO VETERINARIO P/ EXIBIR DADOS PRIVADOS
-            session_start();
-            if(!isset($_SESSION["id_vet"]))
-            {
-                header("location:index.php?controle=achadoController&metodo=listar_alf_publico");
-                exit();
-            }
-
-            require_once "Views/achado/listar-animais-achados.php";
-        }
-
-        // LISTAR EM ORDEM ALFABETICA PUBLICO
-        public function listar_alf_publico()
-        {
-            $limite = 15;
-
-            $pagina_atual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
-            $offset = ($pagina_atual - 1) * $limite;
-
-            $achadoDAO = new achadoDAO();
-            $retorno = $achadoDAO->ordenar_achados_alf_publico($offset, $limite);
 
             $total_registros = $achadoDAO->contar_achados();
 
@@ -250,18 +202,5 @@
                 header("location:index.php?controle=achadoController&metodo=listar&msg=$retorno");
             }
         }
-
-        // EXCLUIR (EXCLUI DE ANIMAIS TAMBÉM)
-        public function excluir()
-        {
-            if(isset($_GET["id"]))
-            {
-                $achado = new Achado($_GET["id"]);
-                $achadoDAO = new achadoDAO();
-                $retorno = $achadoDAO->excluir($achado);
-                header("location:index.php?controle=achadoController&metodo=listar&msg=$retorno");
-            }
-        }
-
     }
 
