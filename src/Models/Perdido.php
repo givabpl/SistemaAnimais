@@ -136,7 +136,7 @@
         /**
          * @return string
          */
-        public function getLocald(): string
+        public function getLocal(): string
         {
             return $this->locald;
         }
@@ -144,7 +144,7 @@
         /**
          * @return string
          */
-        public function getDatad(): string
+        public function getData(): string
         {
             return $this->datad;
         }
@@ -152,7 +152,7 @@
         /**
          * @return string
          */
-        public function getHorad(): string
+        public function getHora(): string
         {
             return $this->horad;
         }
@@ -160,7 +160,7 @@
         /**
          * @return string
          */
-        public function getDescritivo(): string
+        public function getDescr(): string
         {
             return $this->descritivo;
         }

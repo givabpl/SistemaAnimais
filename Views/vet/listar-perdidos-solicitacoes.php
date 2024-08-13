@@ -59,9 +59,9 @@ $total_paginas = ceil($total_registros / $limite);
                 <?php foreach($retorno as $dado): ?>
                     <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
                         <div class="card">
-                            <img src="<?= $dado->imagem ?>" class="card-img-top" style="height: 250px; width: 100%; object-fit: cover; object-position: center;" alt="<?= $dado->nome_animal ?>">
+                            <img src="<?= $dado->imagem ?>" class="card-img-top" style="height: 250px; width: 100%; object-fit: cover; object-position: center;" alt="<?= $dado->nome ?>">
                             <div class="card-body">
-                                <h5 class="card-title"><?= $dado->nome_animal ?></h5>
+                                <h5 class="card-title"><?= $dado->nome ?></h5>
                                 <p class="card-text">
                                     <i class="bi bi-gender-ambiguous"></i>&nbsp;<?= $dado->sexo ?>&nbsp; | &nbsp;<?= $dado->raca ?> <br>
                                     Pelagem: <?= $dado->pelagem ?> <br>
@@ -84,7 +84,7 @@ $total_paginas = ceil($total_registros / $limite);
                                         <a href="index.php?controle=perdidoController&metodo=aprovar&id=<?= $dado->id_perdido ?>" class="btn btn-outline-success"><i class="bi bi-check-square"></i> Aprovar</a>
                                     </div>
                                     <div class="m-2 g-2">
-                                        <a href="index.php?controle=perdidoController&metodo=remover_perdido&id=<?= $dado->id_perdido ?>" class="btn btn-outline-danger"><i class="bi bi-x-square"></i> Excluir</a>
+                                        <a href="index.php?controle=perdidoController&metodo=remover_solici&id=<?= $dado->id_perdido ?>" class="btn btn-outline-danger"><i class="bi bi-x-square"></i> Excluir</a>
                                     </div>
                                 </div>
 

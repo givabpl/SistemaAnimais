@@ -13,7 +13,7 @@ $total_paginas = ceil($total_registros / $limite);
         }
         ?>
         <!-- TITULO -->
-        <h1 class="h2 row justify-content-center">Animais Encontrados</h1><br>
+        <h1 class="h2 row justify-content-center">Solicitações: Animais Encontrados</h1><br>
 
         <!-- BOTOES -->
         <div class="d-flex flex-wrap justify-content-center">
@@ -34,7 +34,7 @@ $total_paginas = ceil($total_registros / $limite);
                     <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
                         <div class="card">
                             <!-- IMAGEM -->
-                            <img src="<?= $dado->imagem ?>" class="card-img-top" style="height: 250px; width: 100%; object-fit: cover; object-position: center;" alt="<?= $dado->nome_animal ?>">
+                            <img src="<?= $dado->imagem ?>" class="card-img-top" style="height: 250px; width: 100%; object-fit: cover; object-position: center;" alt="<?= $dado->especie ?> <?= $dado->raca ?>">
 
                             <!-- TITULO -->
                             <!-- TIPO -->
@@ -67,7 +67,7 @@ $total_paginas = ceil($total_registros / $limite);
                                             <a href="index.php?controle=achadoController&metodo=aprovar&id=<?= $dado->id_perdido ?>" class="btn btn-outline-success"><i class="bi bi-check-square"></i> Aprovar</a>
                                         </div>
                                         <div class="m-2 g-2">
-                                            <a href="index.php?controle=achadoController&metodo=remover_achado&id=<?= $dado->id_achado ?>" class="mb-2 btn btn-danger"><i class="bi bi-x-square"></i> Excluir</a>
+                                            <a href="index.php?controle=achadoController&metodo=remover_solici&id=<?= $dado->id_achado ?>" class="mb-2 btn btn-danger"><i class="bi bi-x-square"></i> Excluir</a>
                                         </div>
                                     </div>
 

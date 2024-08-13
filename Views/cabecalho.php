@@ -57,27 +57,18 @@
                         <li class='nav-item'>
                             <a class='nav-link' href='index.php?controle=prontController&metodo=listar'>Prontuários</a>
                         </li>
+                        <li class='nav-item dropdown'>
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Solicitações
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="index.php?controle=perdidoController&metodo=listar_solicis">Animais Desaparecidos</a></li>
+                                <li><a class="dropdown-item" href="index.php?controle=achadoController&metodo=listar_solicis">Animais Encontrados</a></li>
+                            </ul>
+                        </li>
+
                 </ul>
                 <div class='collapse navbar-collapse justify-content-end'>
-                    <div class='collapse navbar-collapse justify-content-end'>
-
-                        <!--<form class="d-flex" role="search" method="get" action="">
-
-                            <select name="entidade_busca" class="form-control form-select-entidade-busca" id="entidade_busca"  onchange="updateTipoBusca()">
-                                <option value="todos">Todos</option>
-                                <option value="animal">Animal</option>
-                                <option value="tutor">Tutor</option>
-                                <option value="vet">Veterinário</option>
-                            </select>
-                            <select name="tipo_busca" class="form-control form-select-tipo-busca" id="tipo_busca">
-                                 As opções serão preenchidas dinamicamente pelo JavaScript
-                            </select>
-
-                            <input name="busca" id="busca" class="form-control me-2" type="search" placeholder="Busca" aria-label="Search">
-
-                            <input class="btn btn-outline-success" type="submit" value="Buscar">
-                        </form>-->
-                    </div>
                             <ul class='navbar-nav'>
                                 <li class='nav-item'>
                                     <a class='nav-link' href='index.php?controle=vetController&metodo=logout'><i class="bi bi-power"></i> Sair</a>
@@ -87,11 +78,10 @@
 <!-- exibir se a sessão de veterinário NÃO estiver ativa -->
                     <?php else: ?>
                         <li class='nav-item'>
-                            <a class='nav-link' href='index.php?controle=vetController&metodo=login'>Login veterinário</a>
-                        </li>
-
-                        <li class='nav-item'>
                             <a class='nav-link' href='index.php?controle=animalController&metodo=listar_publico'>Animais</a>
+                        </li>
+                        <li class='nav-item'>
+                            <a class='nav-link' href='index.php?controle=vetController&metodo=login'>Login veterinário</a>
                         </li>
                         </ul>
 

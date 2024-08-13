@@ -89,11 +89,29 @@
                 if(!$erro)
                 {
                     $achado = new Achado(especie:$_POST["especie"], raca:$_POST["raca"], pelagem:$_POST["pelagem"],sexo:$_POST["sexo"], imagem:$imagem, localac:$_POST["localac"], dataac:$_POST["dataac"], horaac:$_POST["horaac"], descritivo:$_POST["descritivo"], nome_pessoa:$_POST["nome_pessoa"], sobrenome:$_POST["sobrenome"], telefone1:$_POST["telefone1"], telefone2:$_POST["telefone2"], status:$_POST["status"]);
-                    $achadoDAO = new achadoDAO();
-                    $retorno = $achadoDAO->inserir($achado);
-                    $msg = "Sua solicitação de registro foi enviada para aprovação.";
 
-                    header("location:index.php?controle=perdidoController&metodo=listar&msg=$msg");
+                    //  se estiver sem sessão de vet, solicitar (achado vai pra tabela de solicitações)
+                    //  se estiver com sessão de vet, cadastrar direto (achado vai pra tabela de achados)
+
+                    $achadoDAO = new achadoDAO();
+
+                    session_start();
+                    if(!isset($_SESSION["id_vet"]))
+                    {
+                        $retorno = $achadoDAO->inserir_solici($achado);
+                        $msg = "Sua solicitação de registro foi enviada para aprovação. Verifique também se esse animal se encontra na lista de Desaparecidos!";
+
+                        header("location:index.php?controle=achadoController&metodo=listar_publico&msg=$msg");
+                        exit();
+                    }
+                    else
+                    {
+                        $retorno = $achadoDAO->inserir($achado);
+                        $msg = "Sua solicitação de registro foi enviada para aprovação.";
+
+                        header("location:index.php?controle=achadoController&metodo=listar&msg=$msg");
+                        exit();
+                    }
                 }
             }
             require_once "Views/achado/form-animal-achado.php";
@@ -137,6 +155,51 @@
             $total_registros = $achadoDAO->contar_achados();
 
             require_once "Views/achado/pub-listar-animais-achados.php";
+        }
+
+        // LISTAR
+        public function listar_solicis()
+        {
+            $limite = 15;
+
+            $pagina_atual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
+            $offset = ($pagina_atual - 1) * $limite;
+
+            $achadoDAO = new achadoDAO();
+            $retorno = $achadoDAO->buscar_solicis_paginados($offset, $limite);
+
+            $total_registros = $achadoDAO->contar_solicis();
+
+            // VERIFICA SESSAO DO VETERINARIO P/ EXIBIR DADOS PRIVADOS
+            session_start();
+            if(!isset($_SESSION["id_vet"]))
+            {
+                header("location:index.php?controle=achadoController&metodo=listar_publico");
+                exit();
+            }
+
+            require_once "Views/vet/listar-achados-solicitacoes.php";
+        }
+
+        // BUSCAR UMA SOLICITAÇÃO (PERFIL)
+        public function buscar_solici()
+        {
+            // VERIFICA SESSAO DO VETERINARIO P/ EXIBIR DADOS PRIVADOS
+            session_start();
+            if(!isset($_SESSION["id_vet"]))
+            {
+                header("location:index.php?controle=achadoController&metodo=buscar_achados_publico");
+                exit();
+            }
+
+            if(isset($_GET["id"]))
+            {
+                $achado = new Achado($_GET["id"]);
+                $achadoDAO = new achadoDAO();
+                $retorno = $achadoDAO->buscar_solici($achado);
+
+                require_once "Views/vet/perfil-achado-solicitacao.php";
+            }
         }
 
         // BUSCAR UM ANIMAL ACHADO (PERFIL)

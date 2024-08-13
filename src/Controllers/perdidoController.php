@@ -109,27 +109,30 @@
                 }
                 if(!$erro)
                 {
-                    //  se estiver sem sessão de vet, solicitar
-                    //  se estiver com sessão de vet, cadastrar direto
+                    $perdido = new Perdido(rga:$_POST["rga"], chip:$_POST["chip"], nome:$_POST["nome"], datan:$_POST["datan"], sexo:$_POST["sexo"], alergias:$_POST["alergias"], doencas:$_POST["doencas"], peso:$_POST["peso"], especie:$_POST["especie"], raca:$_POST["raca"], pelagem:$_POST["pelagem"], imagem:$imagem, descritivo:$_POST["descritivo"], locald:$_POST["locald"], datad:$_POST["datad"], horad:$_POST["horad"], nome_tutor:$_POST["nome_tutor"], sobrenome:$_POST["sobrenome"], telefone1:$_POST["telefone1"], telefone2:$_POST["telefone2"], status:$_POST["status"]);
 
-                    $perdido = new Perdido(rga:$_POST["rga"], chip:$_POST["chip"], nome:$_POST["nome"], datan:$_POST["datan"], sexo:$_POST["sexo"], alergias:$_POST["alergias"], doencas:$_POST["doencas"], peso:$_POST["peso"], especie:$_POST["especie"], raca:$_POST["raca"], pelagem:$_POST["pelagem"], imagem:$imagem, descritivo:$_POST["descritivo"], locald:$_POST["locald"], datad:$_POST["datad"], horad:$_POST["horad"],  nome_tutor:$_POST["nome_tutor"], sobrenome:$_POST["sobrenome"], telefone1:$_POST["telefone1"], telefone2:$_POST["telefone2"], status:$_POST["status"]);
+                    //  se estiver sem sessão de vet, solicitar (perdido vai pra tabela de solicitações)
+                    //  se estiver com sessão de vet, cadastrar direto (perdido vai pra tabela de perdidos)
 
                     $perdidoDAO = new perdidoDAO();
 
                     session_start();
                     if(!isset($_SESSION["id_vet"]))
                     {
-                        header("location:index.php?controle=perdidoController&metodo=listar_publico");
+                        $retorno = $perdidoDAO->inserir_solici($perdido);
+                        $msg = "Sua solicitação de registro foi enviada para aprovação. Verifique também se o seu animal se encontra na lista de Encontrado!";
 
-                        $retorno = $perdidoDAO->solicitar($perdido);
-                        $msg = "Sua solicitação de registro foi enviada para aprovação. Verifique também se o seu animal se encontra na lista de Achados!";
+                        header("location:index.php?controle=perdidoController&metodo=listar_publico&msg=$msg");
                         exit();
                     }
+                    else
+                    {
+                        $retorno = $perdidoDAO->inserir($perdido);
+                        $msg = "Animal Perdido registrado com sucesso! Verifique também se o seu animal se encontra na lista de Achados!";
 
-                    $retorno = $perdidoDAO->solicitar($perdido);
-                    $msg = "Sua solicitação de registro foi enviada para aprovação. Verifique também se o seu animal se encontra na lista de Achados!";
-
-                    header("location:index.php?controle=perdidoController&metodo=listar&msg=$msg");
+                        header("location:index.php?controle=perdidoController&metodo=listar&msg=$msg");
+                        exit();
+                    }
                 }
             }
             require_once "Views/perdido/form-animal-perdido.php";
@@ -255,10 +258,52 @@
             require_once "Views/perdido/pub-listar-animais-perdidos.php";
         }
 
-        public function listar_solici()
-        {
 
+        // LISTAR SOLICITAÇÕES PARA VETERINÁRIOS BARRAREM/APROVAREM
+        public function listar_solicis()
+        {
+            $limite = 15;
+
+            $pagina_atual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
+            $offset = ($pagina_atual - 1) * $limite;
+
+            $perdidoDAO = new perdidoDAO();
+            $retorno = $perdidoDAO->buscar_solicis_paginados($offset, $limite);
+
+            $total_registros = $perdidoDAO->contar_solicis();
+
+            // VERIFICA SESSAO DO VETERINARIO P/ EXIBIR DADOS PRIVADOS
+            session_start();
+            if(!isset($_SESSION["id_vet"]))
+            {
+                header("location:index.php?controle=perdidoController&metodo=listar_publico");
+                exit();
+            }
+
+            require_once "Views/vet/listar-perdidos-solicitacoes.php";
         }
+
+        // BUSCAR UMA SOLICITAÇÃO (PERFIL)
+        public function buscar_solici()
+        {
+            // VERIFICA SESSAO DO VETERINARIO P/ EXIBIR DADOS PRIVADOS
+            session_start();
+            if(!isset($_SESSION["id_vet"]))
+            {
+                header("location:index.php?controle=perdidoController&metodo=buscar_perdidos_publico");
+                exit();
+            }
+
+            if(isset($_GET["id"]))
+            {
+                $perdido = new Perdido($_GET["id"]);
+                $perdidoDAO = new perdidoDAO();
+                $retorno = $perdidoDAO->buscar_solici($perdido);
+
+                require_once "Views/vet/perfil-perdido-solicitacao.php";
+            }
+        }
+
 
         // BUSCAR UM ANIMAL (PERFIL)
         public function buscar_perdido()
