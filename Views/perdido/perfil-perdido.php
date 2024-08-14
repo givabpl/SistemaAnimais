@@ -39,6 +39,10 @@
                                         Desaparecido desde <?= $dado->data_formatada ?> às <?= $dado->hora_formatada ?> <br><br>
                                         No local <?= $dado->locald ?>
                                     </h5>
+                                    <!-- DESCRITIVO -->
+                                    <h6 class="card-title">Descritivo:</h6>
+                                    <p><?= $dado->descritivo ?></p>
+
 
                                     <!-- DADOS -->
                                     <ul class="list-group list-group-flush no-indent">

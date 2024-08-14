@@ -73,17 +73,17 @@ $total_paginas = ceil($total_registros / $limite);
                                     <?= $dado->telefone1 ?> <br>
                                     <?= $dado->telefone2 ?> <br>
 
-                                <div class="d-flex flex-wrap">
-                                    <div class="m-2 g-2">
-                                        <a href="index.php?controle=perdidoController&metodo=buscar_solici&id=<?= $dado->id_solici_perdido ?>" class="btn btn-outline-primary"> Mais informações</a>
+                                    <div class="d-flex flex-wrap">
+                                        <div class="m-2 g-2">
+                                            <a href="index.php?controle=perdidoController&metodo=buscar_solici&id=<?= $dado->id_solici_perdido ?>" class="btn btn-outline-primary"><i class="bi bi-plus-square"></i> Informações</a>
+                                        </div>
+                                        <div class="m-2 g-2">
+                                            <a href="index.php?controle=perdidoController&metodo=aprovar&id=<?= $dado->id_solici_perdido ?>" class="btn btn-outline-success"><i class="bi bi-check-square"></i> Aprovar</a>
+                                        </div>
+                                        <div class="m-2 g-2">
+                                            <a href="index.php?controle=perdidoController&metodo=remover_solici&id=<?= $dado->id_solici_perdido ?>" class="btn btn-outline-danger"><i class="bi bi-x-square"></i> Excluir</a>
+                                        </div>
                                     </div>
-                                    <div class="m-2 g-2">
-                                        <a href="index.php?controle=perdidoController&metodo=aprovar&id=<?= $dado->id_solici_perdido ?>" class="btn btn-outline-success"><i class="bi bi-check-square"></i> Aprovar</a>
-                                    </div>
-                                    <div class="m-2 g-2">
-                                        <a href="index.php?controle=perdidoController&metodo=remover_solici&id=<?= $dado->id_solici_perdido ?>" class="btn btn-outline-danger"><i class="bi bi-x-square"></i> Excluir</a>
-                                    </div>
-                                </div>
 
                                 </p>
                             </div>

@@ -97,10 +97,16 @@
                     </div>
                     <br>
                 </div>
-                <div>
-                    <button onclick="history.back()" class="btn btn-primary"><i class="bi bi-caret-left-fill"></i> Voltar</button>
-
-
+                <div class="d-flex flex-wrap">
+                    <div class="m-2 g-2">
+                        <button onclick="history.back()" class="btn btn-primary"><i class="bi bi-caret-left-fill"></i> Voltar</button>
+                    </div>
+                    <div class="m-2 g-2">
+                        <a href="index.php?controle=achadoController&metodo=aprovar&id=<?= $dado->id_solici_achado ?>" class="btn btn-outline-success"><i class="bi bi-check-square"></i> Aprovar</a>
+                    </div>
+                    <div class="m-2 g-2">
+                        <a href="index.php?controle=achadoController&metodo=remover_solici&id=<?= $dado->id_solici_achado ?>" class="mb-2 btn btn-danger"><i class="bi bi-x-square"></i> Excluir</a>
+                    </div>
                 </div>
                 <br>
                 <p>

@@ -305,6 +305,17 @@
             }
         }
 
+        public function aprovar()
+        {
+           // metodo onde deve chamar metodo DAO que remova o animal perdido da tabela de solicitacao (solici_perdidos) e mova para a tabela de perdidos. Continua na mesma visão.
+
+        }
+
+        public function remover_solici()
+        {
+            // metodo que chama metodo DAO que remove solicitacao de perdido completamente da tabela solici_perdidos. Continua na mesma visão.
+        }
+
 
         // BUSCAR UM ANIMAL (PERFIL)
         public function buscar_perdido()

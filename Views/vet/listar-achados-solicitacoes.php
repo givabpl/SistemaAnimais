@@ -61,7 +61,7 @@ $total_paginas = ceil($total_registros / $limite);
 
                                     <div class="d-flex flex-wrap">
                                         <div class="m-2 g-2">
-                                            <a href="index.php?controle=achadoController&metodo=buscar_solici&id=<?= $dado->id_solici_achado ?>" class="mb-2 btn btn-outline-primary"> Mais informações</a>
+                                            <a href="index.php?controle=achadoController&metodo=buscar_solici&id=<?= $dado->id_solici_achado ?>" class="mb-2 btn btn-outline-primary"><i class="bi bi-plus-square"></i> Informações</a>
                                         </div>
                                         <div class="m-2 g-2">
                                             <a href="index.php?controle=achadoController&metodo=aprovar&id=<?= $dado->id_solici_achado ?>" class="btn btn-outline-success"><i class="bi bi-check-square"></i> Aprovar</a>

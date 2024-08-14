@@ -39,6 +39,7 @@
                                     Desaparecido desde <?= $dado->data_formatada ?> às <?= $dado->hora_formatada ?> <br><br>
                                     No local <?= $dado->locald ?>
                                 </h5>
+                                <!-- DESCRITIVO -->
                                 <h6 class="card-title">Descritivo:</h6>
                                 <p><?= $dado->descritivo ?></p>
 
@@ -109,6 +110,12 @@
                 <div class="d-flex flex-wrap">
                     <div class="m-2 g-2">
                         <button onclick="history.back()" class="btn btn-primary"><i class="bi bi-caret-left-fill"></i> Voltar</button>
+                    </div>
+                    <div class="m-2 g-2">
+                        <a href="index.php?controle=perdidoController&metodo=aprovar&id=<?= $dado->id_solici_perdido ?>" class="btn btn-outline-success"><i class="bi bi-check-square"></i> Aprovar</a>
+                    </div>
+                    <div class="m-2 g-2">
+                        <a href="index.php?controle=perdidoController&metodo=remover_solici&id=<?= $dado->id_solici_perdido ?>" class="btn btn-outline-danger"><i class="bi bi-x-square"></i> Excluir</a>
                     </div>
                 </div>
                 <?php endforeach; ?>
