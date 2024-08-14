@@ -308,12 +308,51 @@
         public function aprovar()
         {
            // metodo onde deve chamar metodo DAO que remova o animal perdido da tabela de solicitacao (solici_perdidos) e mova para a tabela de perdidos. Continua na mesma visão.
+            session_start();
+            if (!isset($_SESSION["id_vet"]))
+            {
+                header("location:index.php?controle=perdidoController&metodo=listar_publico");
+                exit();
+            }
 
+            if (isset($_GET["id"]))
+            {
+                $perdidoDAO = new perdidoDAO();
+
+                // Mover o registro da tabela 'solici_perdidos' para 'perdidos'
+                $perdido = $_GET["id"];
+                $perdidoDAO->aprovar($perdido);
+
+                // Redireciona para a mesma página com uma mensagem de sucesso
+                $msg = "Solicitação aprovada com sucesso.";
+                header("location:index.php?controle=perdidoController&metodo=listar_solicis&msg=$msg");
+                exit();
+            }
         }
 
         public function remover_solici()
         {
             // metodo que chama metodo DAO que remove solicitacao de perdido completamente da tabela solici_perdidos. Continua na mesma visão.
+            session_start();
+            if (!isset($_SESSION["id_vet"]))
+            {
+                header("location:index.php?controle=perdidoController&metodo=listar_publico");
+                exit();
+            }
+
+            if (isset($_GET["id"])) {
+                $perdidoDAO = new perdidoDAO();
+
+                // Remove a solicitação da tabela 'solici_perdidos'
+                $perdido = $_GET["id"];
+                $perdidoDAO->remover_solici($perdido);
+
+                // atribuir mensagem vermelha ou de outra cor para alerta de exclusão
+                $msg = "Solicitação removida com sucesso.";
+                // Redireciona para a mesma página com uma mensagem de sucesso
+                header("location:index.php?controle=perdidoController&metodo=listar_solicis&msg=$msg");
+                exit();
+            }
         }
 
 
