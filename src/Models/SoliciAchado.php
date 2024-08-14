@@ -1,10 +1,10 @@
 <?php
     namespace SistemaAnimais\Models;
 
-    class Achado
+    class SoliciAchado
     {
         public function __construct(
-            private int $id_achado = 0,
+            private int $id_solici_achado = 0,
             private string $especie = "",
             private string $raca = "",
             private string $pelagem = "",
@@ -19,7 +19,7 @@
             private string $telefone1 = "",
             private string $telefone2 = "",
             private string $status = ""
-            
+
         ){}
 
         /**
@@ -27,7 +27,7 @@
          */
         public function getId(): int
         {
-            return $this->id_achado;
+            return $this->id_solici_achado;
         }
 
         /**
@@ -141,6 +141,4 @@
         {
             return $this->status;
         }
-
-
     }

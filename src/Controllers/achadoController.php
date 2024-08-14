@@ -107,7 +107,7 @@
                     else
                     {
                         $retorno = $achadoDAO->inserir($achado);
-                        $msg = "Sua solicitação de registro foi enviada para aprovação.";
+                        $msg = "Animal Encontrado registrado com sucesso!";
 
                         header("location:index.php?controle=achadoController&metodo=listar&msg=$msg");
                         exit();

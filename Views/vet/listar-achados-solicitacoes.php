@@ -43,8 +43,8 @@ $total_paginas = ceil($total_registros / $limite);
                             <!-- CONTATO -->
                             <!-- BOTOES -->
                             <div class="card-body">
-                                <!-- TIPO -->
-                                <h5 class="card-title"><?= $dado->tipo ?></h5>
+                                <!-- ESPECIE -->
+                                <h5 class="card-title"><?= $dado->especie ?></h5>
                                 <!-- PELAGEM | SEXO | RACA -->
                                 <p class="card-text">
                                     Pelagem: <?= $dado->pelagem ?> <br>
@@ -61,13 +61,13 @@ $total_paginas = ceil($total_registros / $limite);
 
                                     <div class="d-flex flex-wrap">
                                         <div class="m-2 g-2">
-                                            <a href="index.php?controle=achadoController&metodo=buscar_achado&id=<?= $dado->id_achado ?>" class="mb-2 btn btn-outline-primary"> Mais informações</a>
+                                            <a href="index.php?controle=achadoController&metodo=buscar_solici&id=<?= $dado->id_solici_achado ?>" class="mb-2 btn btn-outline-primary"> Mais informações</a>
                                         </div>
                                         <div class="m-2 g-2">
-                                            <a href="index.php?controle=achadoController&metodo=aprovar&id=<?= $dado->id_perdido ?>" class="btn btn-outline-success"><i class="bi bi-check-square"></i> Aprovar</a>
+                                            <a href="index.php?controle=achadoController&metodo=aprovar&id=<?= $dado->id_solici_achado ?>" class="btn btn-outline-success"><i class="bi bi-check-square"></i> Aprovar</a>
                                         </div>
                                         <div class="m-2 g-2">
-                                            <a href="index.php?controle=achadoController&metodo=remover_solici&id=<?= $dado->id_achado ?>" class="mb-2 btn btn-danger"><i class="bi bi-x-square"></i> Excluir</a>
+                                            <a href="index.php?controle=achadoController&metodo=remover_solici&id=<?= $dado->id_solici_achado ?>" class="mb-2 btn btn-danger"><i class="bi bi-x-square"></i> Excluir</a>
                                         </div>
                                     </div>
 

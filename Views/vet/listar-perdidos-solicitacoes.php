@@ -75,16 +75,13 @@ $total_paginas = ceil($total_registros / $limite);
 
                                 <div class="d-flex flex-wrap">
                                     <div class="m-2 g-2">
-                                        <a href="index.php?controle=perdidoController&metodo=buscar_perdido&id=<?= $dado->id_perdido ?>" class="btn btn-outline-primary"> Mais informações</a>
+                                        <a href="index.php?controle=perdidoController&metodo=buscar_solici&id=<?= $dado->id_solici_perdido ?>" class="btn btn-outline-primary"> Mais informações</a>
                                     </div>
                                     <div class="m-2 g-2">
-                                        <a href="index.php?controle=perdidoController&metodo=gerar_pdf&id=<?= $dado->id_perdido ?>" class="btn btn-outline-danger" target="_blank"><i class="bi bi-file-earmark-pdf"></i> PDF</a>
+                                        <a href="index.php?controle=perdidoController&metodo=aprovar&id=<?= $dado->id_solici_perdido ?>" class="btn btn-outline-success"><i class="bi bi-check-square"></i> Aprovar</a>
                                     </div>
                                     <div class="m-2 g-2">
-                                        <a href="index.php?controle=perdidoController&metodo=aprovar&id=<?= $dado->id_perdido ?>" class="btn btn-outline-success"><i class="bi bi-check-square"></i> Aprovar</a>
-                                    </div>
-                                    <div class="m-2 g-2">
-                                        <a href="index.php?controle=perdidoController&metodo=remover_solici&id=<?= $dado->id_perdido ?>" class="btn btn-outline-danger"><i class="bi bi-x-square"></i> Excluir</a>
+                                        <a href="index.php?controle=perdidoController&metodo=remover_solici&id=<?= $dado->id_solici_perdido ?>" class="btn btn-outline-danger"><i class="bi bi-x-square"></i> Excluir</a>
                                     </div>
                                 </div>
 

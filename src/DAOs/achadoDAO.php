@@ -178,7 +178,7 @@
         {
             $sql = "SELECT *,
                     DATE_FORMAT(dataac, '%d/%m/%Y') AS data_formatada,
-                    DATE_FORMAT(horaac, '%H:%i') AS hora_formatada,
+                    DATE_FORMAT(horaac, '%H:%i') AS hora_formatada
                     FROM solici_achados 
                     WHERE id_solici_achado = ?";
             try

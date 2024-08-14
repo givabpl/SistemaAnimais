@@ -1,10 +1,10 @@
 <?php
     namespace SistemaAnimais\Models;
 
-    class Perdido
+    class SoliciPerdido
     {
         public function __construct(
-            private int $id_perdido = 0,
+            private int $id_solici_perdido = 0,
             private string $rga = "",
             private string $chip = "",
             private string $nome = "",
@@ -26,7 +26,7 @@
             private string $telefone1 = "",
             private string $telefone2 = "",
             private string $status = ""
-            
+
         ){}
 
         /**
@@ -34,7 +34,7 @@
          */
         public function getId(): int
         {
-            return $this->id_perdido;
+            return $this->id_solici_perdido;
         }
 
         /**
@@ -136,7 +136,15 @@
         /**
          * @return string
          */
-        public function getLocal(): string
+        public function getDescritivo(): string
+        {
+            return $this->descritivo;
+        }
+
+        /**
+         * @return string
+         */
+        public function getLocald(): string
         {
             return $this->locald;
         }
@@ -144,7 +152,7 @@
         /**
          * @return string
          */
-        public function getData(): string
+        public function getDatad(): string
         {
             return $this->datad;
         }
@@ -152,17 +160,9 @@
         /**
          * @return string
          */
-        public function getHora(): string
+        public function getHorad(): string
         {
             return $this->horad;
-        }
-
-        /**
-         * @return string
-         */
-        public function getDescr(): string
-        {
-            return $this->descritivo;
         }
 
         /**
@@ -204,6 +204,4 @@
         {
             return $this->status;
         }
-
-
     }

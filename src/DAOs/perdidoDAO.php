@@ -317,7 +317,7 @@
         // BUSCAR UMA SOLICITAÇÃO DE ANIMAL PERDIDO
         public function buscar_solici($perdido)
         {
-            $sql = "SELECT * 
+            $sql = "SELECT *,
                     DATE_FORMAT(datad, '%d/%m/%Y') AS data_formatada,
                     DATE_FORMAT(horad, '%H:%i') AS hora_formatada,
                     DATE_FORMAT(datan, '%d/%m/%Y') AS datan_formatada

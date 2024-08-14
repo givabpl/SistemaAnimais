@@ -4,6 +4,7 @@
     use SistemaAnimais\DAOs\perdidoDAO;
     
     use SistemaAnimais\Models\Perdido;
+    use SistemaAnimais\Models\SoliciPerdido;
 
     class perdidoController
     {
@@ -120,7 +121,7 @@
                     if(!isset($_SESSION["id_vet"]))
                     {
                         $retorno = $perdidoDAO->inserir_solici($perdido);
-                        $msg = "Sua solicitação de registro foi enviada para aprovação. Verifique também se o seu animal se encontra na lista de Encontrado!";
+                        $msg = "Sua solicitação de registro foi enviada para aprovação. Verifique também se o seu animal se encontra na lista de Encontrados!";
 
                         header("location:index.php?controle=perdidoController&metodo=listar_publico&msg=$msg");
                         exit();
