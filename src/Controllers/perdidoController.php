@@ -321,7 +321,7 @@
 
                 // Mover o registro da tabela 'solici_perdidos' para 'perdidos'
                 $perdido = $_GET["id"];
-                $perdidoDAO->aprovar($perdido);
+                $perdidoDAO->buscar_solici($perdido);
 
                 // Redireciona para a mesma página com uma mensagem de sucesso
                 $msg = "Solicitação aprovada com sucesso.";
