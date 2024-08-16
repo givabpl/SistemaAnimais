@@ -1,5 +1,8 @@
 <?php
-
+if(empty($retorno)) {
+    echo "Nenhum dado encontrado para gerar o PDF.";
+    exit();
+}
 date_default_timezone_set("America/Sao_Paulo");
 require 'vendor/autoload.php'; 
 
@@ -40,7 +43,7 @@ try {
         $header = " 
                         <div>
                             <img src='$dado->imagem' class='card-img-top' alt='...'>
-                            <h1>$dado->nome_animal</h1>
+                            <h1>$dado->nome</h1>
                             <p>
                                 Visto(a) pela última vez em $dado->data_formatada às $dado->hora_formatada <br>
                                 $dado->locald

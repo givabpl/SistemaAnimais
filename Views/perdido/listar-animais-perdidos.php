@@ -9,7 +9,7 @@
         <?php
             if(isset($_GET["msg"]))
             {
-                echo "<div class='alert alert-success' role='alert'><h2>{$_GET['msg']}</h2></div>";
+                echo "<div class='alert alert-success' role='alert'><h5>{$_GET['msg']}</h5></div>";
             }
         ?>
 
@@ -61,7 +61,7 @@
                                 <div class="card">
                                     <img src="<?= $dado->imagem ?>" class="card-img-top" style="height: 250px; width: 100%; object-fit: cover; object-position: center;" alt="<?= $dado->nome_animal ?>">
                                     <div class="card-body">
-                                        <h5 class="card-title"><?= $dado->nome_animal ?></h5>
+                                        <h5 class="card-title"><?= $dado->nome ?></h5>
                                         <p class="card-text">
                                         <i class="bi bi-gender-ambiguous"></i>&nbsp;<?= $dado->sexo ?>&nbsp; | &nbsp;<?= $dado->raca ?> <br>
                                         Pelagem: <?= $dado->pelagem ?> <br>
@@ -80,11 +80,9 @@
                                                 <div class="m-2 g-2">
                                                     <a href="index.php?controle=perdidoController&metodo=gerar_pdf&id=<?= $dado->id_perdido ?>" class="btn btn-outline-danger" target="_blank"><i class="bi bi-file-earmark-pdf"></i>PDF</a>
                                                 </div>
+
                                                 <div class="m-2 g-2">
-                                                    <a href="index.php?controle=perdidoController&metodo=remover_perdido&id=<?= $dado->id_perdido ?>" class="btn btn-outline-warning"><i class="bi bi-file-minus"></i> Remover de Desaparecidos</a>
-                                                </div>
-                                                <div class="m-2 g-2">
-                                                    <a href="index.php?controle=perdidoController&metodo=excluir&id=<?= $dado->id_perdido ?>" class="btn btn-outline-danger"><i class="bi bi-x-square"></i> Excluir</a>
+                                                    <a href="index.php?controle=perdidoController&metodo=remover_perdido&id=<?= $dado->id_perdido ?>" class="btn btn-outline-danger"><i class="bi bi-x-square"></i> Excluir</a>
                                                 </div>
                                             </div>
 

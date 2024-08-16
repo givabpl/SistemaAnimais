@@ -15,6 +15,7 @@
         
         <div>
             <h1 class="row justify-content-center">Animais Desaparecidos</h1><br>
+
             <!-- MENU DE ORDEM -->
             <div class="d-flex flex-wrap justify-content-center">
                 <div class="p-2 g-6">
@@ -64,7 +65,7 @@
                             <div class="card" style="height: 550px;">
                                 <img src="<?= $dado->imagem ?>" class="card-img-top img-fluid" alt="<?= $dado->nome_animal ?>" style="height: 250px; width: 100%; object-fit: cover; object-position: center;">
                                 <div class="card-body">
-                                    <h5 class="card-title"><?= $dado->nome_animal ?></h5>
+                                    <h5 class="card-title"><?= $dado->nome ?></h5>
                                     <p class="card-text">
                                     <i class="bi bi-gender-ambiguous"></i>&nbsp;<?= $dado->sexo ?>&nbsp; | &nbsp;<?= $dado->raca ?> <br>
                                     Pelagem: <?= $dado->pelagem ?> <br>

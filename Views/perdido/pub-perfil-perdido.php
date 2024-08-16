@@ -23,7 +23,7 @@
                                 <!-- NOME ANIMAL -->
                                 <h5 class="card-title">
                                     <span class="material-symbols-outlined" style="vertical-align: middle; margin-top: -5px;">pets</span> <!-- ÍCONE -->
-                                    <?= $dado->nome_animal ?>
+                                    <?= $dado->nome ?>
                                 </h5>
 
                                 <!-- TITULO -->

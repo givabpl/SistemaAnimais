@@ -34,7 +34,7 @@
                     <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
                         <div class="card">
                             <!-- IMAGEM -->
-                            <img src="<?= $dado->imagem ?>" class="card-img-top" style="height: 250px; width: 100%; object-fit: cover; object-position: center;" alt="<?= $dado->nome_animal ?>">
+                            <img src="<?= $dado->imagem ?>" class="card-img-top" style="height: 250px; width: 100%; object-fit: cover; object-position: center;" alt="<?= $dado->especie ?> <?= $dado->raca ?>">
 
                             <!-- TITULO -->
                             <!-- TIPO -->

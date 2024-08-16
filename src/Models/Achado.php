@@ -31,11 +31,27 @@
         }
 
         /**
+         * @param int $id_achado
+         */
+        public function setId(int $id_achado): void
+        {
+            $this->id_achado = $id_achado;
+        }
+
+        /**
          * @return string
          */
         public function getEspecie(): string
         {
             return $this->especie;
+        }
+
+        /**
+         * @param string $especie
+         */
+        public function setEspecie(string $especie): void
+        {
+            $this->especie = $especie;
         }
 
         /**
@@ -47,11 +63,27 @@
         }
 
         /**
+         * @param string $raca
+         */
+        public function setRaca(string $raca): void
+        {
+            $this->raca = $raca;
+        }
+
+        /**
          * @return string
          */
         public function getPelagem(): string
         {
             return $this->pelagem;
+        }
+
+        /**
+         * @param string $pelagem
+         */
+        public function setPelagem(string $pelagem): void
+        {
+            $this->pelagem = $pelagem;
         }
 
         /**
@@ -63,6 +95,14 @@
         }
 
         /**
+         * @param string $sexo
+         */
+        public function setSexo(string $sexo): void
+        {
+            $this->sexo = $sexo;
+        }
+
+        /**
          * @return string
          */
         public function getImagem(): string
@@ -71,27 +111,59 @@
         }
 
         /**
+         * @param string $imagem
+         */
+        public function setImagem(string $imagem): void
+        {
+            $this->imagem = $imagem;
+        }
+
+        /**
          * @return string
          */
-        public function getLocalac(): string
+        public function getLocal(): string
         {
             return $this->localac;
         }
 
         /**
-         * @return string
+         * @param string $localac
          */
-        public function getDataac(): string
+        public function setLocal(string $localac): void
         {
-            return $this->dataac;
+            $this->localac = $localac;
         }
 
         /**
          * @return string
          */
-        public function getHoraac(): string
+        public function getData(): string
+        {
+            return $this->dataac;
+        }
+
+        /**
+         * @param string $dataac
+         */
+        public function setData(string $dataac): void
+        {
+            $this->dataac = $dataac;
+        }
+
+        /**
+         * @return string
+         */
+        public function getHora(): string
         {
             return $this->horaac;
+        }
+
+        /**
+         * @param string $horaac
+         */
+        public function setHora(string $horaac): void
+        {
+            $this->horaac = $horaac;
         }
 
         /**
@@ -103,11 +175,27 @@
         }
 
         /**
+         * @param string $descritivo
+         */
+        public function setDescr(string $descritivo): void
+        {
+            $this->descritivo = $descritivo;
+        }
+
+        /**
          * @return string
          */
-        public function getNome(): string
+        public function getNomePessoa(): string
         {
             return $this->nome_pessoa;
+        }
+
+        /**
+         * @param string $nome_pessoa
+         */
+        public function setNomePessoa(string $nome_pessoa): void
+        {
+            $this->nome_pessoa = $nome_pessoa;
         }
 
         /**
@@ -119,11 +207,27 @@
         }
 
         /**
+         * @param string $sobrenome
+         */
+        public function setSobrenome(string $sobrenome): void
+        {
+            $this->sobrenome = $sobrenome;
+        }
+
+        /**
          * @return string
          */
         public function getTelefone1(): string
         {
             return $this->telefone1;
+        }
+
+        /**
+         * @param string $telefone1
+         */
+        public function setTelefone1(string $telefone1): void
+        {
+            $this->telefone1 = $telefone1;
         }
 
         /**
@@ -135,6 +239,14 @@
         }
 
         /**
+         * @param string $telefone2
+         */
+        public function setTelefone2(string $telefone2): void
+        {
+            $this->telefone2 = $telefone2;
+        }
+
+        /**
          * @return string
          */
         public function getStatus(): string
@@ -142,5 +254,12 @@
             return $this->status;
         }
 
+        /**
+         * @param string $status
+         */
+        public function setStatus(string $status): void
+        {
+            $this->status = $status;
+        }
 
     }

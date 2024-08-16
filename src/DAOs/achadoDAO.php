@@ -2,6 +2,7 @@
     namespace SistemaAnimais\DAOs;
 
     use SistemaAnimais\Models\Conexao;
+    use SistemaAnimais\Models\Achado;
     use PDO;
     use PDOException;
     
@@ -73,8 +74,17 @@
             return $stm->fetchAll(PDO::FETCH_OBJ);
         }
 
+        // BUSCA PAGINADA: CONTA SOLICITAÇÕES
+        public function contar_solicis()
+        {
+            $sql = "SELECT COUNT(*) AS total FROM solici_achados";
+            $stm = $this->db->prepare($sql);
+            $stm->execute();
+            return $stm->fetch(PDO::FETCH_OBJ)->total;
+        }
 
-        // BUSCA PAGINADA: ANIMAIS  (LIMITE 15)
+
+        // BUSCA PAGINADA: ANIMAIS ACHADOS (LIMITE 15)
         public function buscar_achados_paginados($offset, $limite)
         {
             $sql = "SELECT * FROM achados 
@@ -87,19 +97,16 @@
             return $stm->fetchAll(PDO::FETCH_OBJ);
         }
 
-        // BUSCA PAGINADA: CONTA SOLICITAÇÕES
-        public function contar_solicis()
-        {
-            $sql = "SELECT COUNT(*) AS total FROM solici_achados";
-            $stm = $this->db->prepare($sql);
-            $stm->execute();
-            return $stm->fetch(PDO::FETCH_OBJ)->total;
-        }
+
 
         // BUSCA PAGINADA: ANIMAIS  (LIMITE 15)
         public function buscar_achados_paginados_pub($offset, $limite)
         {
-            $sql = "SELECT * FROM achados
+            $sql = "SELECT id_achado, especie, raca, pelage,, sexo, imagem, localac, 
+                           DATE_FORMAT(dataac, '%d/%m/%Y') AS data_formatada,
+                           DATE_FORMAT(horaac, '%H:%i') AS hora_formatada,
+                           descritivo, nome_pessoa, telefone1, telefone2, statusac
+                    FROM achados
                     LIMIT :limite OFFSET :offset";
 
             $stm = $this->db->prepare($sql);
@@ -154,10 +161,11 @@
         // BUSCAR UM ANIMAL PUBLICO
         public function buscar_achado_publico($achado)
         {
-            $sql = "SELECT *, 
-                    DATE_FORMAT(dataac, '%d/%m/%Y') AS data_formatada,
-                    DATE_FORMAT(horaac, '%H:%i') AS hora_formatada,
-                    FROM achados 
+            $sql = "SELECT id_achado, especie, raca, pelage,, sexo, imagem, localac, 
+                           DATE_FORMAT(dataac, '%d/%m/%Y') AS data_formatada,
+                           DATE_FORMAT(horaac, '%H:%i') AS hora_formatada,
+                           descritivo, nome_pessoa, telefone1, telefone2, statusac
+                    FROM achados
                     WHERE id_achado = ?";
             try
             {
@@ -193,6 +201,56 @@
                 echo "Problema ao buscar animal: " . $e->getMessage();
                 return null;
             }
+        }
+
+        public function aprovar_solici($achadoId)
+        {
+            $sql = "SELECT * FROM solici_achados WHERE id_solici_achado = ?";
+            $stm = $this->db->prepare($sql);
+            $stm->bindValue(1, $achadoId);
+            $stm->execute();
+            $dados = $stm->fetch(PDO::FETCH_OBJ);
+
+            if ($dados)
+            {
+                $achado = new Achado();
+                $achado->setEspecie($dados->especie);
+                $achado->setRaca($dados->raca);
+                $achado->setPelagem($dados->pelagem);
+                $achado->setSexo($dados->sexo);
+                $achado->setImagem($dados->imagem);
+                $achado->setLocal($dados->localac);
+                $achado->setData($dados->dataac);
+                $achado->setHora($dados->horaac);
+                $achado->setDescr($dados->descritivo);
+                $achado->setNomePessoa($dados->nome_pessoa);
+
+                $sobrenome = $dados->sobrenome ?? '';
+                $achado->setSobrenome($sobrenome);
+
+                $achado->setTelefone1($dados->telefone1);
+
+                $telefone2 = $dados->telefone2 ?? '';
+                $achado->setTelefone2($telefone2);
+
+                $achado->setStatus($dados->status);
+
+                $this->inserir($achado);
+
+                $sql = "DELETE FROM solici_achados WHERE id_solici_achado = ?";
+                $stm = $this->db->prepare($sql);
+                $stm->bindValue(1, $achadoId);
+                $stm->execute();
+            }
+        }
+
+        public function remover_solici($achadoId)
+        {
+            $sql = "DELETE FROM solici_achados WHERE id_solici_achado = ?";
+            $stm = $this->db->prepare($sql);
+            $stm->bindValue(1, $achadoId);
+            $stm->execute();
+            $this->db = null;
         }
 
         // REMOVER ACHADO

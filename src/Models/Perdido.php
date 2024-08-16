@@ -256,7 +256,7 @@
         /**
          * @return string
          */
-        public function getLocald(): string
+        public function getLocal(): string
         {
             return $this->locald;
         }
@@ -264,7 +264,7 @@
         /**
          * @param string $locald
          */
-        public function setLocald(string $locald): void
+        public function setLocal(string $locald): void
         {
             $this->locald = $locald;
         }
@@ -272,7 +272,7 @@
         /**
          * @return string
          */
-        public function getDatad(): string
+        public function getData(): string
         {
             return $this->datad;
         }
@@ -280,7 +280,7 @@
         /**
          * @param string $datad
          */
-        public function setDatad(string $datad): void
+        public function setData(string $datad): void
         {
             $this->datad = $datad;
         }
@@ -288,7 +288,7 @@
         /**
          * @return string
          */
-        public function getHorad(): string
+        public function getHora(): string
         {
             return $this->horad;
         }
@@ -296,7 +296,7 @@
         /**
          * @param string $horad
          */
-        public function setHorad(string $horad): void
+        public function setHora(string $horad): void
         {
             $this->horad = $horad;
         }

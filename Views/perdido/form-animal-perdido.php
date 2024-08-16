@@ -48,7 +48,7 @@
             <div class="mb-3 row"> <!-- INPUTS EM ROW / MESMA LINHA -->
                 <!-- NOME -->
                 <div class="col-md-4">
-                    <label for="nome" class="form-label">NOME</label>
+                    <label for="nome" class="form-label">NOME (ANIMAL)</label>
                     <input 
                         type="text" 
                         class="form-control" 

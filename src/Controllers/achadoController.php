@@ -202,6 +202,56 @@
             }
         }
 
+        public function aprovar()
+        {
+            session_start();
+            if (!isset($_SESSION["id_vet"]))
+            {
+                header("location:index.php?controle=achadoController&metodo=listar_publico");
+                exit();
+            }
+
+            if (isset($_GET["id"]))
+            {
+                $achadoDAO = new achadoDAO();
+
+                // Mover o registro da tabela 'solici_achados' para 'achados'
+                $achadoId = $_GET["id"];
+                $achadoDAO->aprovar_solici($achadoId);
+
+                // Redireciona para a mesma página com uma mensagem de sucesso
+                $msg = "Solicitação aprovada com sucesso.";
+                header("location:index.php?controle=achadoController&metodo=listar_solicis&msg=$msg");
+                exit();
+            }
+        }
+
+        public function remover_solici()
+        {
+            // metodo que chama metodo DAO que remove solicitacao de achado completamente da tabela solici_achados. Continua na mesma visão.
+            session_start();
+            if (!isset($_SESSION["id_vet"]))
+            {
+                header("location:index.php?controle=achadoController&metodo=listar_publico");
+                exit();
+            }
+
+            if (isset($_GET["id"])) {
+                $achadoDAO = new achadoDAO();
+
+                // Remove a solicitação da tabela 'solici_achados'
+                $achado = $_GET["id"];
+                $achadoDAO->remover_solici($achado);
+
+                // atribuir mensagem vermelha ou de outra cor para alerta de exclusão
+                $msg = "Solicitação removida com sucesso.";
+                // Redireciona para a mesma página com uma mensagem de sucesso
+                header("location:index.php?controle=achadoController&metodo=listar_solicis&msg=$msg");
+                exit();
+            }
+        }
+
+
         // BUSCAR UM ANIMAL ACHADO (PERFIL)
         public function buscar_achado()
         {
