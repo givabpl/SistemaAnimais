@@ -9,7 +9,7 @@
         <?php
         if(isset($_GET["msg"]))
         {
-            echo "<div class='alert alert-success' role='alert'>{$_GET['msg']}</div>";
+            echo "<div class='alert alert-success' role='alert'><h5>{$_GET['msg']}</h5></div>";
         }
         ?>
         <!-- TITULO -->
@@ -44,7 +44,7 @@
                             <!-- BOTOES -->
                             <div class="card-body">
                                 <!-- TIPO -->
-                                <h5 class="card-title"><?= $dado->tipo ?></h5>
+                                <h5 class="card-title"><?= $dado->especie ?></h5>
                                 <!-- PELAGEM | SEXO | RACA -->
                                 <p class="card-text">
                                     Pelagem: <?= $dado->pelagem ?> <br>

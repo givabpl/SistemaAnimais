@@ -17,7 +17,7 @@
         // INSERIR ANIMAL ACHADO
         public function inserir($achado)
         {
-            $sql = "INSERT INTO achados (especie, raca, pelagem, sexo, imagem, localac, dataac, horaac, descritivo, nome_pessoa, sobrenome, telefone1, telefone2, statusac) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            $sql = "INSERT INTO achados (especie, raca, pelagem, sexo, imagem, localac, dataac, horaac, descritivo, nome_pessoa, sobrenome, telefone1, telefone2) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
             $stm = $this->db->prepare($sql);
             $stm->bindValue(1, $achado->getEspecie());
@@ -25,15 +25,14 @@
             $stm->bindValue(3, $achado->getPelagem());
             $stm->bindValue(4, $achado->getSexo());
             $stm->bindValue(5, $achado->getImagem());
-            $stm->bindValue(6, $achado->getLocalac());
-            $stm->bindValue(7, $achado->getDataac());
-            $stm->bindValue(8, $achado->getHoraac());
+            $stm->bindValue(6, $achado->getLocal());
+            $stm->bindValue(7, $achado->getData());
+            $stm->bindValue(8, $achado->getHora());
             $stm->bindValue(9, $achado->getDescr());
             $stm->bindValue(10, $achado->getNome());
             $stm->bindValue(11, $achado->getSobrenome());
             $stm->bindValue(12, $achado->getTelefone1());
             $stm->bindValue(13, $achado->getTelefone2());
-            $stm->bindValue(14, $achado->getStatus());
             return $stm->execute();
         }
 
@@ -41,7 +40,7 @@
         // INSERIR SOLICITAÇÃO ANIMAL ACHADO (USUÁRIO PÚBLICO ENVIA PARA A TABELA DE SOLICITAÇÕES)
         public function inserir_solici($achado)
         {
-            $sql = "INSERT INTO solici_achados (especie, raca, pelagem, sexo, imagem, localac, dataac, horaac, descritivo, nome_pessoa, sobrenome, telefone1, telefone2, statusac) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            $sql = "INSERT INTO solici_achados (especie, raca, pelagem, sexo, imagem, localac, dataac, horaac, descritivo, nome_pessoa, sobrenome, telefone1, telefone2) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
             $stm = $this->db->prepare($sql);
             $stm->bindValue(1, $achado->getEspecie());
@@ -49,15 +48,14 @@
             $stm->bindValue(3, $achado->getPelagem());
             $stm->bindValue(4, $achado->getSexo());
             $stm->bindValue(5, $achado->getImagem());
-            $stm->bindValue(6, $achado->getLocalac());
-            $stm->bindValue(7, $achado->getDataac());
-            $stm->bindValue(8, $achado->getHoraac());
+            $stm->bindValue(6, $achado->getLocal());
+            $stm->bindValue(7, $achado->getData());
+            $stm->bindValue(8, $achado->getHora());
             $stm->bindValue(9, $achado->getDescr());
             $stm->bindValue(10, $achado->getNome());
             $stm->bindValue(11, $achado->getSobrenome());
             $stm->bindValue(12, $achado->getTelefone1());
             $stm->bindValue(13, $achado->getTelefone2());
-            $stm->bindValue(14, $achado->getStatus());
             return $stm->execute();
         }
 
@@ -102,10 +100,10 @@
         // BUSCA PAGINADA: ANIMAIS  (LIMITE 15)
         public function buscar_achados_paginados_pub($offset, $limite)
         {
-            $sql = "SELECT id_achado, especie, raca, pelage,, sexo, imagem, localac, 
+            $sql = "SELECT id_achado, especie, raca, pelagem, sexo, imagem, localac, 
                            DATE_FORMAT(dataac, '%d/%m/%Y') AS data_formatada,
                            DATE_FORMAT(horaac, '%H:%i') AS hora_formatada,
-                           descritivo, nome_pessoa, telefone1, telefone2, statusac
+                           descritivo, nome_pessoa, telefone1, telefone2
                     FROM achados
                     LIMIT :limite OFFSET :offset";
 
@@ -141,7 +139,7 @@
         {
             $sql = "SELECT *,
                     DATE_FORMAT(dataac, '%d/%m/%Y') AS data_formatada,
-                    DATE_FORMAT(horaac, '%H:%i') AS hora_formatada,
+                    DATE_FORMAT(horaac, '%H:%i') AS hora_formatada
                     FROM achados 
                     WHERE id_achado = ?";
             try
@@ -161,10 +159,10 @@
         // BUSCAR UM ANIMAL PUBLICO
         public function buscar_achado_publico($achado)
         {
-            $sql = "SELECT id_achado, especie, raca, pelage,, sexo, imagem, localac, 
+            $sql = "SELECT id_achado, especie, raca, pelagem, sexo, imagem, localac, 
                            DATE_FORMAT(dataac, '%d/%m/%Y') AS data_formatada,
                            DATE_FORMAT(horaac, '%H:%i') AS hora_formatada,
-                           descritivo, nome_pessoa, telefone1, telefone2, statusac
+                           descritivo, nome_pessoa, telefone1, telefone2
                     FROM achados
                     WHERE id_achado = ?";
             try
@@ -232,8 +230,6 @@
 
                 $telefone2 = $dados->telefone2 ?? '';
                 $achado->setTelefone2($telefone2);
-
-                $achado->setStatus($dados->status);
 
                 $this->inserir($achado);
 

@@ -9,7 +9,7 @@
         <?php
         if(isset($_GET["msg"]))
         {
-            echo "<div class='alert alert-success' role='alert'><h2>{$_GET['msg']}</h2></div>";
+            echo "<div class='alert alert-success' role='alert'><h5>{$_GET['msg']}</h5></div>";
         }
         ?>
         <!-- TITULO -->
@@ -44,7 +44,7 @@
                             <!-- BOTOES -->
                             <div class="card-body">
                                 <!-- TIPO -->
-                                <h5 class="card-title"><?= $dado->tipo ?></h5>
+                                <h5 class="card-title"><?= $dado->especie ?></h5>
                                 <!-- PELAGEM | SEXO | RACA -->
                                 <p class="card-text">
                                     Pelagem: <?= $dado->pelagem ?> <br>
@@ -64,11 +64,9 @@
                                             <a href="index.php?controle=achadoController&metodo=buscar_achado&id=<?= $dado->id_achado ?>" class="mb-2 btn btn-outline-primary">Mais informações</a>
                                         </div>
                                         <div class="m-2 g-2">
-                                            <a href="index.php?controle=achadoController&metodo=remover_achado&id=<?= $dado->id_perdido ?>" class="btn btn-outline-warning"><i class="bi bi-file-minus"></i> Remover de Encontrados</a>
+                                            <a href="index.php?controle=achadoController&metodo=remover_achado&id=<?= $dado->id_perdido ?>" class="btn btn-outline-danger"><i class="bi bi-x-square"></i> Excluir</a>
                                         </div>
-                                        <div class="m-2 g-2">
-                                            <a href="index.php?controle=achadoController&metodo=excluir&id=<?= $dado->id_achado ?>" class="mb-2 btn btn-danger"><i class="bi bi-x-square"></i> Excluir</a>
-                                        </div>
+
                                     </div>
 
 

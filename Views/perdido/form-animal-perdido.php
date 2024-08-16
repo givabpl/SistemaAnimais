@@ -288,7 +288,7 @@
                         placeholder="Opcional (não obrigatório)"
                         value="<?php echo isset($_POST['telefone2'])?$_POST['telefone2']:'';?>">
                 </div>
-                <input type="hidden" name="status" value="Perdido">
+
             </div>
             
             <br><br>

@@ -24,8 +24,7 @@
             private string $nome_tutor = "",
             private string $sobrenome = "",
             private string $telefone1 = "",
-            private string $telefone2 = "",
-            private string $status = ""
+            private string $telefone2 = ""
             
         ){}
 
@@ -364,22 +363,4 @@
         {
             $this->telefone2 = $telefone2;
         }
-
-        /**
-         * @return string
-         */
-        public function getStatus(): string
-        {
-            return $this->status;
-        }
-
-        /**
-         * @param string $status
-         */
-        public function setStatus(string $status): void
-        {
-            $this->status = $status;
-        }
-
-
     }

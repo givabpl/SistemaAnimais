@@ -88,7 +88,7 @@
                 }
                 if(!$erro)
                 {
-                    $achado = new Achado(especie:$_POST["especie"], raca:$_POST["raca"], pelagem:$_POST["pelagem"],sexo:$_POST["sexo"], imagem:$imagem, localac:$_POST["localac"], dataac:$_POST["dataac"], horaac:$_POST["horaac"], descritivo:$_POST["descritivo"], nome_pessoa:$_POST["nome_pessoa"], sobrenome:$_POST["sobrenome"], telefone1:$_POST["telefone1"], telefone2:$_POST["telefone2"], status:$_POST["status"]);
+                    $achado = new Achado(especie:$_POST["especie"], raca:$_POST["raca"], pelagem:$_POST["pelagem"],sexo:$_POST["sexo"], imagem:$imagem, localac:$_POST["localac"], dataac:$_POST["dataac"], horaac:$_POST["horaac"], descritivo:$_POST["descritivo"], nome_pessoa:$_POST["nome_pessoa"], sobrenome:$_POST["sobrenome"], telefone1:$_POST["telefone1"], telefone2:$_POST["telefone2"]);
 
                     //  se estiver sem sessão de vet, solicitar (achado vai pra tabela de solicitações)
                     //  se estiver com sessão de vet, cadastrar direto (achado vai pra tabela de achados)

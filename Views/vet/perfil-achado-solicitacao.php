@@ -109,11 +109,7 @@
                     </div>
                 </div>
                 <br>
-                <p>
-                    O PDF: Caso o tutor seja encontrado, preencher com informações do mesmo. Caso o tutor não seja encontrado, preencher com informações do novo tutor.
-                    <br>
-                    O cadastro do animal deve ser feito com informações atualizadas. Anexar o PDF preenchido no primeiro prontuário.
-                </p>
+
                 <?php endforeach; ?>
                 <?php else: ?>
                     <tr><td colspan='4'>Animal não encontrado</td></tr>

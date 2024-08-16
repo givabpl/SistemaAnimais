@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `sistema-vet` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `sistema-vet`;
 -- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: sistema-vet
@@ -24,7 +26,10 @@ DROP TABLE IF EXISTS `achados`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `achados` (
   `id_achado` int NOT NULL AUTO_INCREMENT,
-  `id_animal` int DEFAULT NULL,
+  `especie` varchar(100) DEFAULT NULL,
+  `raca` varchar(100) DEFAULT NULL,
+  `pelagem` varchar(100) DEFAULT NULL,
+  `sexo` varchar(40) DEFAULT NULL,
   `imagem` varchar(100) DEFAULT NULL,
   `localac` varchar(100) DEFAULT NULL,
   `dataac` date DEFAULT NULL,
@@ -34,11 +39,8 @@ CREATE TABLE `achados` (
   `sobrenome` varchar(45) DEFAULT NULL,
   `telefone1` varchar(20) DEFAULT NULL,
   `telefone2` varchar(20) DEFAULT NULL,
-  `statusac` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id_achado`),
-  KEY `fka_id_animal` (`id_animal`),
-  CONSTRAINT `fka_id_animal` FOREIGN KEY (`id_animal`) REFERENCES `animais` (`id_animal`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`id_achado`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -47,7 +49,7 @@ CREATE TABLE `achados` (
 
 LOCK TABLES `achados` WRITE;
 /*!40000 ALTER TABLE `achados` DISABLE KEYS */;
-INSERT INTO `achados` VALUES (2,38,'src/achados-img/calico.jpg','Marginal','2024-07-12','19:52:00','Encontrei enquanto caminhava. Gata dócil. Quase foi atropelada por um ciclista.  Está com uma coleira rosa sem identificação.','Pedro','Mamoni','(14) 9 4542-3379','','Achado'),(3,55,'src/achados-img/siames.jpg','Bairro Jardim Regina','2024-08-06','18:30:00','Encontrada miando muito. Depois de algumas horas, já de noite, ela continuou ali. Parecia perdida. \r\nRecolhi ela em casa, dei água e comida.\r\nUsa uma coleira com sininho.','Giovana','Balestrero','14900000','','Achado'),(4,56,'src/achados-img/golden.jpg','Marginal','2024-07-22','19:00:00','Estava andando sozinho pela marginal e começou a me seguir.\r\nEstá com coleira. O número de telefone na coleira não atende.','Pedro','Mamoni','14000000','','Achado'),(5,60,'src/achados-img/cachorro-marrom-misto-rua.jpg','Marginal, parque dos saltos','2024-07-18','10:15:00','Visto caminhando. Parece não ter dono.\r\nNão está comigo, mas sempre vejo na marginal ou parque dos saltos.','Ana','Santos','(014) 9 0000-0000','','Achado');
+INSERT INTO `achados` VALUES (6,'cachorro','pinscher','Curta e preta','Ni','src/achados-img/pinscher.jpg','Jardim Regina','2024-08-16','13:39:00','Cachorro com muita sede. Está desde manhã na rua.','Giovana','Balestrero','(014) 9 0000-0000','');
 /*!40000 ALTER TABLE `achados` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -100,20 +102,28 @@ DROP TABLE IF EXISTS `perdidos`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `perdidos` (
   `id_perdido` int NOT NULL AUTO_INCREMENT,
-  `id_animal` int NOT NULL,
+  `rga` varchar(45) DEFAULT NULL,
+  `chip` varchar(45) DEFAULT NULL,
+  `nome` varchar(45) DEFAULT NULL,
+  `datan` date DEFAULT NULL,
+  `sexo` varchar(45) DEFAULT NULL,
+  `alergias` varchar(45) DEFAULT NULL,
+  `doencas` varchar(45) DEFAULT NULL,
+  `peso` varchar(45) DEFAULT NULL,
+  `especie` varchar(45) DEFAULT NULL,
+  `raca` varchar(45) DEFAULT NULL,
+  `pelagem` varchar(45) DEFAULT NULL,
   `imagem` varchar(200) DEFAULT NULL,
   `descritivo` varchar(1000) DEFAULT NULL,
   `locald` varchar(1000) DEFAULT NULL,
   `datad` date DEFAULT NULL,
   `horad` time DEFAULT NULL,
-  `id_tutor` int NOT NULL,
-  `statusp` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id_perdido`),
-  KEY `fkp_id_tutor` (`id_tutor`),
-  KEY `fkp_id_animal` (`id_animal`),
-  CONSTRAINT `fkp_id_animal` FOREIGN KEY (`id_animal`) REFERENCES `animais` (`id_animal`),
-  CONSTRAINT `fkp_id_tutor` FOREIGN KEY (`id_tutor`) REFERENCES `tutores` (`id_tutor`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `nome_tutor` varchar(45) DEFAULT NULL,
+  `sobrenome` varchar(45) DEFAULT NULL,
+  `telefone1` varchar(45) DEFAULT NULL,
+  `telefone2` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id_perdido`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -122,7 +132,7 @@ CREATE TABLE `perdidos` (
 
 LOCK TABLES `perdidos` WRITE;
 /*!40000 ALTER TABLE `perdidos` DISABLE KEYS */;
-INSERT INTO `perdidos` VALUES (4,32,'src/perdidos-img/cachorro.jpg','Escapou pelo portão e desapareceu na avenida','Av Rui Barbosa','2024-07-19','19:09:00',19,'Perdido'),(5,58,'src/perdidos-img/golden.jpg','ggfdgdsger','Marginal','2024-08-04','17:00:00',30,'Perdido'),(6,59,'src/perdidos-img/salsicha.jpg','Sumiu no fim da tarde. Escapou e não voltou.\r\n','Santa Cecília','2024-08-03','18:50:00',31,'Perdido');
+INSERT INTO `perdidos` VALUES (9,'0.000.000','00000000','Thor','2017-10-16','Macho','Não','Não','19.5','cachorro','Golden','Longa e amarela','src/perdidos-img/golden.jpg','adsdaa aa aaaaaaaa asdsadsa\r\nasdasdsd asfddf\r\n\r\nf fafa','Santa Cecília','2024-08-14','11:31:00','Julia','Silva','(014) 0 0000-0000',''),(10,'0.000.000','00000000000','Pitica','2015-07-15','Fêmea','Não','Não','4.7','Felino','Siamês','Curta, bege e preta','src/perdidos-img/siames.jpg','Pulou o muro no fim da tarde e não voltou. Usa coleira com sino. É bem dócil.\r\nEla não costuma escapar, ela tem medo.','Av Rui Barbosa','2024-08-07','18:20:00','Pedro','Mamoni','(014) 0 0000-0000','');
 /*!40000 ALTER TABLE `perdidos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -165,25 +175,85 @@ LOCK TABLES `prontuarios` WRITE;
 INSERT INTO `prontuarios` VALUES (6,'Primeira Consulta','2024-07-17','Posto 1','vacinas em ordem\r\n**Temperatura Corporal:** [Temperatura Corporal]\r\n**Frequência Respiratória:** [Frequência Respiratória]\r\n\r\n**Medicação:** [Medicação Prescrita]\r\n**Dosagem:** [Dosagem da Medicação]\r\n**Duração:** [Duração do Tratamento]\r\n**Outras Recomendações:** [Outras Recomendações]',NULL,NULL,NULL,NULL,NULL,'',NULL,15,1),(8,'Lesão pata','2024-07-19','Posto 2','## Motivo da Consulta\r\n- **Descrição:** [Descrição do Motivo da Consulta]\r\n\r\n## Exame Físico\r\n- **Temperatura Corporal:** [Temperatura Corporal]\r\n- **Frequência Cardíaca:** [Frequência Cardíaca]\r\n- **Frequência Respiratória:** [Frequência Respiratória]\r\n- **Estado Geral:** [Estado Geral do Animal]\r\n- **Sistema Respiratório:** [Avaliação do Sistema Respiratório]\r\n\r\n## Exames Complementares\r\n- **Exames Solicitados:** [Lista de Exames Solicitados]\r\n- **Resultados dos Exames:** [Resultados dos Exames]\r\n\r\n## Diagnóstico Definitivo\r\n- **Diagnóstico:** [Diagnóstico Definitivo]\r\n\r\n## Plano Terapêutico\r\n- **Medicação:** [Medicação Prescrita]\r\n- **Dosagem:** [Dosagem da Medicação]\r\n- **Duração:** [Duração do Tratamento]\r\n- **Outras Recomendações:** [Outras Recomendações]\r\n\r\n## Procedimentos Realizados\r\n- **Procedimento:** [Descrição do Procedimento Realizado]\r\n- **Data:** [Data do Procedimento]\r\n\r\n### Notas Finais\r\nEste prontuário deve ser mantido atualizado em cada consulta e revisão do paciente. Todos os dados devem ser inseridos de maneira precisa e detalhada para garantir o melhor atendimento ao animal.\r\n\r\n',NULL,NULL,NULL,NULL,NULL,'gato.jpg',NULL,20,2),(9,'Dor e febre','2024-07-11','Posto 4','## Plano Terapêutico\r - **Medicação:** [Medicação Prescrita]',NULL,NULL,NULL,NULL,NULL,'cachorro.jpg',NULL,19,5),(13,'Primeira Consulta','2023-03-17','Posto 2','## Motivo da Consulta\r\n- **Descrição:** [Descrição do Motivo da Consulta]\r\n\r\n## Exame Físico\r\n- **Temperatura Corporal:** [Temperatura Corporal]\r\n- **Frequência Cardíaca:** [Frequência Cardíaca]\r\n- **Frequência Respiratória:** [Frequência Respiratória]\r\n- **Estado Geral:** [Estado Geral do Animal]\r\n- **Mucosas:** [Descrição das Mucosas]\r\n- **Pele e Pelagem:** [Condição da Pele e Pelagem]\r\n- **Linfonodos:** [Avaliação dos Linfonodos]\r\n- **Sistema Respiratório:** [Avaliação do Sistema Respiratório]\r\n- **Sistema Cardiovascular:** [Avaliação do Sistema Cardiovascular]\r\n- **Sistema Digestório:** [Avaliação do Sistema Digestório]\r\n- **Sistema Urinário:** [Avaliação do Sistema Urinário]\r\n- **Sistema Musculoesquelético:** [Avaliação do Sistema Musculoesquelético]\r\n- **Sistema Nervoso:** [Avaliação do Sistema Nervoso]\r\n\r\n## Diagnóstico Presuntivo\r\n- **Diagnóstico:** [Diagnóstico Presuntivo]\r\n\r\n## Exames Complementares\r\n- **Exames Solicitados:** [Lista de Exames Solicitados]\r\n- **Resultados dos Exames:** [Resultados dos Exames]\r\n\r\n## Diagnóstico Definitivo\r\n- **Diagnóstico:** [Diagnóstico Definitivo]\r\n\r\n## Plano Terapêutico\r\n- **Medicação:** [Medicação Prescrita]\r\n- **Dosagem:** [Dosagem da Medicação]\r\n- **Duração:** [Duração do Tratamento]\r\n- **Outras Recomendações:** [Outras Recomendações]\r\n',NULL,NULL,NULL,NULL,NULL,'Ficha do animal de estimação.pdf',NULL,18,5),(16,'Primeira Consulta','2024-07-11','Posto 1','Vermifugação\r\n\r\nExame Físico\r\nTemperatura: 38.5°C\r\nFrequência Cardíaca: 90 bpm\r\nFrequência Respiratória: 20 rpm\r\nMucosas: Normais\r\nHidratação: Adequada\r\n\r\nDiagnóstico\r\nDiagnóstico Principal: Saúde geral boa\r\nDiagnósticos Secundários: Nenhum\r\n\r\nTratamento Prescrito\r\nMedicação: Vermífugo (Milbemax) - 1 comprimido\r\n\r\nRecomendações: Continuar alimentação balanceada, exercício regular, próximo check-up em um ano',NULL,NULL,NULL,NULL,NULL,'gato.png',NULL,22,3),(17,'Segunda consulta','2024-07-29','Posto 2','teste update peso\r\npeso antigo 6kg\r\nnovo peso 7kg',NULL,NULL,NULL,NULL,NULL,'','7',15,1),(18,'Terceira consulta','2024-07-30','Posto 2','Lorem ipsum dolor sit amet, consectetur adipiscing elit, \r\nsed do eiusmod tempor incididunt ut labore et dolore magna aliqua. \r\nUt enim ad minim veniam, quis nostrud exercitation ullamco\r\nlaboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu','Sim','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore ','Não','','Lorem ipsum dolor \r\nsit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut \r\nlabore et dolore magna aliqua. \r\nUt enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut \r\n\r\naliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu','','8',15,1),(19,'AAAAAAAAAA','2024-08-01','Posto 4','fdfsaaaaaaaaarg\r\ngagfakriqpwokpsf\r\nfsdfjsdahfkjsdahfuiwehfwuiefkDF','','','','','','','',15,1),(20,'AAAAAAAAAA','2024-08-01','Posto 4','fdfsaaaaaaaaarg\r\ngagfakriqpwokpsf\r\nfsdfjsdahfkjsdahfuiwehfwuiefkDF','Não','','Não','','aaaaaaaaaaaaaaaaaa\r\naaaaaaaaaaaaaaaaaaaaaaa\r\naaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\r\naaaaaaaaaaaaaaaaa','','4,5',15,1),(22,'Primeira Consulta','2024-08-01','Posto 4','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer placerat nisi eget nisi placerat, quis euismod turpis dignissim. \r\nSuspendisse imperdiet non ex vitae congue. \r\n\r\nDonec leo sem, bibendum in semper ut, fringilla sed massa. Mauris eleifend tortor justo, ac sagittis sapien luctus id. \r\nUt auctor sem pretium risus commodo volutpat. Vivamus bibendum bibendum enim at finibus. Sed rutrum feugiat dui ac porttitor. Fusce ut ante dapibus, posuere risus vel, consectetur eros. \r\n\r\nNulla efficitur bibendum orci eu tempor. Sed hendrerit lorem turpis, non pulvinar sapien accumsan eget. \r\nCras tincidunt massa tempor risus mattis hendrerit. Vivamus aliquet tellus eleifend ante auctor ultricies.','Sim','Lorem ipsum dolor sit amet, consectetur adipiscing elit. \r\n\r\nInteger placerat nisi eget nisi placerat, quis euismod turpis dignissim.','Não','','Suspendisse imperdiet non ex vitae congue. \r\n\r\nDonec leo sem, bibendum in semper ut, fringilla sed massa. \r\n\r\nMauris eleifend tortor justo, ac sagittis sapien luctus id. Ut auctor sem pretium risus commodo volutpat.\r\n\r\n','','8',16,1),(23,'Segunda consulta','2024-08-06','Posto 1','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. \r\nUt enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. \r\n\r\nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. \r\nExcepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit.\r\n\r\nIn reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. ','','','','','','','',20,1),(24,'Segunda consulta','2024-08-06','Posto 1','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. \r\nUt enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. \r\n\r\nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. \r\nExcepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit.\r\n\r\nIn reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. ','Sim','Cupidatat non proident.','Sim','Cupidatat non proident.Cupidatat non proident.','Sunt in culpa qui officia deserunt mollit anim id est laborum.\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit.\r\n\r\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque.','','4.2',20,1),(25,'Primeira Consulta','2024-08-06','Posto 2','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. \r\nUt enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. \r\n\r\nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. \r\nExcepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit.','','','','','','','',42,1),(26,'Primeira Consulta','2024-08-06','Posto 2','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. \r\nUt enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. \r\n\r\nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. \r\nExcepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit.','Sim','Cupidatat non proident.','Não','','Sunt in culpa qui officia deserunt mollit anim id est laborum.\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit.\r\n\r\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque.','','4.4',42,1),(27,'Primeira Consulta','2024-08-06','Posto 1','Sunt in culpa qui officia deserunt mollit anim id est laborum.\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit.\r\n\r\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque.','','','','','','','',40,2),(28,'Primeira Consulta','2024-08-06','Posto 1','Sunt in culpa qui officia deserunt mollit anim id est laborum.\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit.\r\n\r\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque.','Não','','Não','','','','4.8',40,2),(29,'Segunda consulta','2024-08-05','Posto 4','Sunt in culpa qui officia deserunt mollit anim id est laborum.\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit.\r\n\r\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque.','','','','','','','',19,2),(30,'Segunda consulta','2024-08-05','Posto 4','Sunt in culpa qui officia deserunt mollit anim id est laborum.\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit.\r\n\r\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque.','Sim','Cupidatat non proident.\r\nSunt in culpa qui officia deserunt mollit anim id est laborum.','Não','','Cupidatat non proident.\r\nSunt in culpa qui officia deserunt mollit anim id est laborum.\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit.\r\n\r\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque.','','6.1',19,2),(31,'Segunda consulta','2024-08-04','Posto 4','Cupidatat non proident.\r\nSunt in culpa qui officia deserunt mollit anim id est laborum.\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit.\r\n\r\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque.','','','','','','','',18,2),(32,'Segunda consulta','2024-08-04','Posto 4','Cupidatat non proident.\r\nSunt in culpa qui officia deserunt mollit anim id est laborum.\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit.\r\n\r\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque.','Não','','Não','','','','0.2',18,2),(33,'Primeira Consulta','2024-08-03','Posto 2','Cupidatat non proident.\r\nSunt in culpa qui officia deserunt mollit anim id est laborum.\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit.\r\n\r\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque.','','','','','','','',32,2),(34,'Primeira Consulta','2024-08-03','Posto 2','Cupidatat non proident.\r\nSunt in culpa qui officia deserunt mollit anim id est laborum.\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit.\r\n\r\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque.','Não','','Não','','Cupidatat non proident.\r\nSunt in culpa qui officia deserunt mollit anim id est laborum.\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit.','','14.2',32,2),(36,'Primeira Consulta','2024-07-11','Posto 2','Lorem ipsum dolor sit amet, consectetur adipiscing elit. \r\nUt enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. \r\n\r\nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. \r\nExcepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit.\r\n\r\nIn reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. ','Sim','Vermifugação 1 dose','Não','','Cupidatat non proident.\r\nSunt in culpa qui officia deserunt mollit anim id est laborum.\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit.\r\n\r\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque.','','6.7',43,2),(38,'Primeira Consulta','2024-08-07','Posto 1','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. \r\nUt enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. \r\n\r\nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. \r\nExcepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit.','Não','','Não','','','','18.9',23,2),(43,'Primeira Consulta','2024-06-29','Posto 1','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. \r\nUt enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. \r\n\r\nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. \r\nExcepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit.\r\n\r\nIn reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. \r\n','Não','','Não','','','','4.8',17,2);
 /*!40000 ALTER TABLE `prontuarios` ENABLE KEYS */;
 UNLOCK TABLES;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `atualizar_peso_animal` AFTER INSERT ON `prontuarios` FOR EACH ROW BEGIN
-    UPDATE animais
-    SET peso = NEW.peso
-    WHERE id_animal = NEW.id_animal;
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Table structure for table `solici_achados`
+--
+
+DROP TABLE IF EXISTS `solici_achados`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `solici_achados` (
+  `id_solici_achado` int NOT NULL AUTO_INCREMENT,
+  `especie` varchar(100) DEFAULT NULL,
+  `raca` varchar(100) DEFAULT NULL,
+  `pelagem` varchar(100) DEFAULT NULL,
+  `sexo` varchar(40) DEFAULT NULL,
+  `imagem` varchar(100) DEFAULT NULL,
+  `localac` varchar(100) DEFAULT NULL,
+  `dataac` date DEFAULT NULL,
+  `horaac` time DEFAULT NULL,
+  `descritivo` varchar(500) DEFAULT NULL,
+  `nome_pessoa` varchar(45) DEFAULT NULL,
+  `sobrenome` varchar(45) DEFAULT NULL,
+  `telefone1` varchar(20) DEFAULT NULL,
+  `telefone2` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id_solici_achado`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `solici_achados`
+--
+
+LOCK TABLES `solici_achados` WRITE;
+/*!40000 ALTER TABLE `solici_achados` DISABLE KEYS */;
+INSERT INTO `solici_achados` VALUES (3,'cachorro','Pug','Curta, bege e preta','Ni','src/achados-img/pug.jpg','Bela Vista, Rua São carlos','2024-08-09','10:00:00','Andando com dificuldade para respirar.','Bruno','Alvarez','(014) 9000-0000','');
+/*!40000 ALTER TABLE `solici_achados` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `solici_perdidos`
+--
+
+DROP TABLE IF EXISTS `solici_perdidos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `solici_perdidos` (
+  `id_solici_perdido` int NOT NULL AUTO_INCREMENT,
+  `rga` varchar(45) DEFAULT NULL,
+  `chip` varchar(45) DEFAULT NULL,
+  `nome` varchar(45) DEFAULT NULL,
+  `datan` date DEFAULT NULL,
+  `sexo` varchar(45) DEFAULT NULL,
+  `alergias` varchar(45) DEFAULT NULL,
+  `doencas` varchar(45) DEFAULT NULL,
+  `peso` varchar(45) DEFAULT NULL,
+  `especie` varchar(45) DEFAULT NULL,
+  `raca` varchar(45) DEFAULT NULL,
+  `pelagem` varchar(45) DEFAULT NULL,
+  `imagem` varchar(200) DEFAULT NULL,
+  `descritivo` varchar(1000) DEFAULT NULL,
+  `locald` varchar(1000) DEFAULT NULL,
+  `datad` date DEFAULT NULL,
+  `horad` time DEFAULT NULL,
+  `nome_tutor` varchar(45) DEFAULT NULL,
+  `sobrenome` varchar(45) DEFAULT NULL,
+  `telefone1` varchar(45) DEFAULT NULL,
+  `telefone2` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id_solici_perdido`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `solici_perdidos`
+--
+
+LOCK TABLES `solici_perdidos` WRITE;
+/*!40000 ALTER TABLE `solici_perdidos` DISABLE KEYS */;
+INSERT INTO `solici_perdidos` VALUES (6,'0.000.000','---','Beck','2018-10-25','Fêmea','Não','Não','14.7','cachorro','Border Collie','Longa, preta com branco','src/perdidos-img/collie.jpg','Fugiu de manhã, ninguém percebeu. Não voltou.','Compos Elíseos','2024-08-14','10:00:00','João','P.','(014) 9 0000-0000','(014) 3653-0000');
+/*!40000 ALTER TABLE `solici_perdidos` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `tutores`
@@ -245,62 +315,6 @@ LOCK TABLES `veterinarios` WRITE;
 INSERT INTO `veterinarios` VALUES (1,'Vet1','XJHD75','Administrador','vet1@mail.com','e10adc3949ba59abbe56e057f20f883e'),(2,'Vet2','6473829T','Administrador','vet2@mail.com','a8698009bce6d1b8c2128eddefc25aad'),(3,'Vet3','534543','Administrador','vet3@mail.comn','a8698009bce6d1b8c2128eddefc25aad'),(4,'Vet4','893404238','Membro','vet4@mail.com','e10adc3949ba59abbe56e057f20f883e'),(5,'Vet5','984032','Membro','vet5@mail.com','e10adc3949ba59abbe56e057f20f883e');
 /*!40000 ALTER TABLE `veterinarios` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Dumping events for database 'sistema-vet'
---
-
---
--- Dumping routines for database 'sistema-vet'
---
-/*!50003 DROP PROCEDURE IF EXISTS `BuscarProntuario` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `BuscarProntuario`(IN id_pront INT)
-BEGIN
-    SELECT 
-        prontuarios.*,
-        DATE_FORMAT(prontuarios.dataa, '%d/%m/%Y') AS dataa_formatada,
-        animais.nome AS nome_animal,
-        animais.rga,
-        animais.chip,
-        DATE_FORMAT(animais.datan, '%d/%m/%Y') AS datan_formatada,
-        animais.sexo,
-        animais.peso AS peso_animal,
-        animais.alergias,
-        animais.doencas,
-        animais.cirurgias,
-        animais.peso,
-        animais.especie,
-        animais.raca,
-        animais.pelagem,
-        animais.aquisicao,
-        tutores.nome AS nome_tutor,
-        tutores.sobrenome,
-        veterinarios.nome AS nome_vet
-    FROM 
-        prontuarios
-    JOIN 
-        animais ON prontuarios.id_animal = animais.id_animal
-    JOIN 
-        tutores ON animais.id_tutor = tutores.id_tutor
-    JOIN 
-        veterinarios ON prontuarios.id_vet = veterinarios.id_vet
-    WHERE 
-        prontuarios.id_pront = id_pront;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -311,4 +325,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-08-07 15:53:18
+-- Dump completed on 2024-08-16 14:34:40

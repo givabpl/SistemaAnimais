@@ -47,7 +47,7 @@
         // INSERIR SOLICITAÇÃO ANIMAL PERDIDO (USUÁRIO PÚBLICO ENVIA PARA A TABELA DE SOLICITAÇÕES)
         public function inserir_solici($perdido)
         {
-            $sql = "INSERT INTO solici_perdidos (rga, chip, nome, datan, sexo, alergias, doencas, peso, especie, raca, pelagem, imagem, locald, datad, horad, descritivo, nome_tutor, sobrenome, telefone1, telefone2, statusp) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            $sql = "INSERT INTO solici_perdidos (rga, chip, nome, datan, sexo, alergias, doencas, peso, especie, raca, pelagem, imagem, locald, datad, horad, descritivo, nome_tutor, sobrenome, telefone1, telefone2) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
             $stm = $this->db->prepare($sql);
             $stm->bindValue(1, $perdido->getRga());
@@ -70,7 +70,6 @@
             $stm->bindValue(18, $perdido->getSobrenome());
             $stm->bindValue(19, $perdido->getTelefone1());
             $stm->bindValue(20, $perdido->getTelefone2());
-            $stm->bindValue(21, $perdido->getStatus());
             return $stm->execute();
         }
 
@@ -119,7 +118,7 @@
                            sexo, alergias, doencas, peso, especie, raca, pelagem, imagem, descritivo, locald, 
                            DATE_FORMAT(datad, '%d/%m/%Y') AS data_formatada,
                            DATE_FORMAT(horad, '%H:%i') AS hora_formatada,
-                           nome_tutor, telefone1, telefone2, statusp
+                           nome_tutor, telefone1, telefone2
                     FROM perdidos 
                     LIMIT :offset, :limite";
             $stm = $this->db->prepare($sql);
@@ -160,7 +159,7 @@
                            sexo, alergias, doencas, peso, especie, raca, pelagem, imagem, locald, 
                            DATE_FORMAT(datad, '%d/%m/%Y') AS data_formatada,
                            DATE_FORMAT(horad, '%H:%i') AS hora_formatada,
-                           descritivo, nome_tutor, telefone1, statusp
+                           descritivo, nome_tutor, telefone1
                     FROM perdidos 
                     ORDER BY nome
                     LIMIT :offset, :limite";
@@ -194,7 +193,7 @@
                            sexo, alergias, doencas, peso, especie, raca, pelagem, imagem, locald, 
                            DATE_FORMAT(datad, '%d/%m/%Y') AS data_formatada,
                            DATE_FORMAT(horad, '%H:%i') AS hora_formatada,
-                           descritivo, nome_tutor, telefone1, statusp
+                           descritivo, nome_tutor, telefone1
                     FROM perdidos
                     ORDER BY nome_tutor
                     LIMIT :offset, :limite";
@@ -281,7 +280,7 @@
                            sexo, alergias, doencas, peso, especie, raca, pelagem, imagem, locald, 
                            DATE_FORMAT(datad, '%d/%m/%Y') AS data_formatada,
                            DATE_FORMAT(horad, '%H:%i') AS hora_formatada,
-                           descritivo, nome_tutor, telefone1, telefone2, statusp
+                           descritivo, nome_tutor, telefone1, telefone2
                     FROM perdidos 
                     WHERE id_perdido = ?";
 
@@ -381,8 +380,6 @@
 
                 $telefone2 = $dados->telefone2 ?? '';
                 $perdido->setTelefone2($telefone2);
-
-                $perdido->setStatus($dados->status);
 
                 // Usar o método inserir para mover os dados para a tabela 'perdidos'
                 $this->inserir($perdido);

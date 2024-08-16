@@ -9,7 +9,7 @@
         <?php
             if(isset($_GET["msg"]))
             {
-                echo "<div class='alert alert-success' role='alert'>{$_GET['msg']}</div>";
+                echo "<div class='alert alert-success' role='alert'><h5>{$_GET['msg']}</h5></div>";
             }
         ?>
         
