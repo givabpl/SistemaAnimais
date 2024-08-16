@@ -17,7 +17,7 @@
         // INSERIR ANIMAL PERDIDO
         public function inserir($perdido)
         {
-            $sql = "INSERT INTO perdidos (rga, chip, nome, datan, sexo, alergias, doencas, peso, especie, raca, pelagem, imagem, locald, datad, horad, descritivo, nome_tutor, sobrenome, telefone1, telefone2, statusp) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            $sql = "INSERT INTO perdidos (rga, chip, nome, datan, sexo, alergias, doencas, peso, especie, raca, pelagem, imagem, locald, datad, horad, descritivo, nome_tutor, sobrenome, telefone1, telefone2) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
             $stm = $this->db->prepare($sql);
             $stm->bindValue(1, $perdido->getRga());
@@ -40,7 +40,6 @@
             $stm->bindValue(18, $perdido->getSobrenome());
             $stm->bindValue(19, $perdido->getTelefone1());
             $stm->bindValue(20, $perdido->getTelefone2());
-            $stm->bindValue(21, $perdido->getStatus());
             return $stm->execute();
         }
 

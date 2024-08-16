@@ -54,7 +54,7 @@
             </div>
             <br>
 
-            <div class="row justify-content-evenly justify-content-sm-center justify-content-sm-center">
+            <div class="row justify-content-evenly justify-content-sm-center">
                 <?php if (is_array($retorno) || is_object($retorno)): ?>
                     <?php foreach($retorno as $dado): ?>
                             <div class="col-lg-4 col-md-6 col-sm-12 mb-4">

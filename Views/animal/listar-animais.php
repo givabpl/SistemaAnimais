@@ -4,7 +4,7 @@
 ?>
 
 <div class="content p-4" id="listar-animais">
-    <div class="container-fluid">
+    <div class="container">
         
         <?php
             if(isset($_GET["msg"]))

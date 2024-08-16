@@ -317,6 +317,15 @@
             });
         });
 
+        document.getElementById('imagem').addEventListener('change', function() {
+            const file = this.files[0];
+            const maxSize = 2 * 1024 * 1024; // 3MB em bytes
+            if (file.size > maxSize) {
+                alert('O arquivo é muito grande! O tamanho máximo permitido é 3MB.');
+                this.value = ''; // Limpa o campo de upload
+            }
+        });
+
 		function mostrar(img)
 		{
 			if(img.files  && img.files[0])
@@ -372,6 +381,7 @@
                 });
             });
         });
+
 	</script>
 
 <?php require_once ROOT_PATH . '/views/rodape.html'; ?>

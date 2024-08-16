@@ -1,7 +1,7 @@
 <?php require_once ROOT_PATH . '/Views/cabecalho.php'; ?>
 
 <div class="content">
-    <div class="container-fluid">
+    <div class="container-fluid container-fluido">
 
         <h1 class="text-center">Estatísticas de Atendimentos</h1>
         <br>

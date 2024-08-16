@@ -12,7 +12,7 @@
         {
             $msg = array("","","","","","","","","","","");
 
-            $accessPassword = 'NAGty39!-byy$K3HiQ_V@ETB_WR62s';
+            $accessPassword = 'bhTRWE%@-JSn73ndmJhLQ_VbWLx--WogT7$s';
 
             session_start();
 

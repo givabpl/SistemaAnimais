@@ -4,7 +4,7 @@
 ?>
 
 <div class="content p-4" id="listar-tutores">
-    <div class="container-fluid">
+    <div class="container-fluid container-fluido">
         <?php
             if(isset($_GET["msg"]))
             {

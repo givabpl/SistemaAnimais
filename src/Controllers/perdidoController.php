@@ -110,7 +110,7 @@
                 }
                 if(!$erro)
                 {
-                    $perdido = new Perdido(rga:$_POST["rga"], chip:$_POST["chip"], nome:$_POST["nome"], datan:$_POST["datan"], sexo:$_POST["sexo"], alergias:$_POST["alergias"], doencas:$_POST["doencas"], peso:$_POST["peso"], especie:$_POST["especie"], raca:$_POST["raca"], pelagem:$_POST["pelagem"], imagem:$imagem, descritivo:$_POST["descritivo"], locald:$_POST["locald"], datad:$_POST["datad"], horad:$_POST["horad"], nome_tutor:$_POST["nome_tutor"], sobrenome:$_POST["sobrenome"], telefone1:$_POST["telefone1"], telefone2:$_POST["telefone2"], status:$_POST["status"]);
+                    $perdido = new Perdido(rga:$_POST["rga"], chip:$_POST["chip"], nome:$_POST["nome"], datan:$_POST["datan"], sexo:$_POST["sexo"], alergias:$_POST["alergias"], doencas:$_POST["doencas"], peso:$_POST["peso"], especie:$_POST["especie"], raca:$_POST["raca"], pelagem:$_POST["pelagem"], imagem:$imagem, descritivo:$_POST["descritivo"], locald:$_POST["locald"], datad:$_POST["datad"], horad:$_POST["horad"], nome_tutor:$_POST["nome_tutor"], sobrenome:$_POST["sobrenome"], telefone1:$_POST["telefone1"], telefone2:$_POST["telefone2"]);
 
                     //  se estiver sem sessão de vet, solicitar (perdido vai pra tabela de solicitações)
                     //  se estiver com sessão de vet, cadastrar direto (perdido vai pra tabela de perdidos)

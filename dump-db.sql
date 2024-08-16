@@ -75,8 +75,7 @@ CREATE TABLE `animais` (
   `raca` varchar(45) NOT NULL,
   `pelagem` varchar(45) NOT NULL,
   `aquisicao` varchar(45) DEFAULT NULL,
-  `id_tutor` int DEFAULT NULL,
-  `statusan` varchar(45) DEFAULT NULL,
+  `id_tutor` int DEFAULT NULL
   PRIMARY KEY (`id_animal`),
   KEY `fk_id_tutor` (`id_tutor`),
   CONSTRAINT `fk_id_tutor` FOREIGN KEY (`id_tutor`) REFERENCES `tutores` (`id_tutor`)

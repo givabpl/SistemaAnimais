@@ -24,8 +24,7 @@
             private string $nome_tutor = "",
             private string $sobrenome = "",
             private string $telefone1 = "",
-            private string $telefone2 = "",
-            private string $status = ""
+            private string $telefone2 = ""
 
         ){}
 
@@ -187,21 +186,5 @@
         public function getTelefone1(): string
         {
             return $this->telefone1;
-        }
-
-        /**
-         * @return string
-         */
-        public function getTelefone2(): string
-        {
-            return $this->telefone2;
-        }
-
-        /**
-         * @return string
-         */
-        public function getStatus(): string
-        {
-            return $this->status;
         }
     }

@@ -7,8 +7,8 @@
         </div>
         <br>
         
-            <div class="row justify-content-evenly justify-content-sm-center justify-content-sm-center">
-                <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+            <div class="d-flex flex-wrap justify-content-center">
+                <div class="p-2 g-6">
                     <div class="card" style="width: 20rem; height:545px;">
                         <img src="../src/assets/rga.png" class="card-img-top" alt="...">
                         <div class="card-body">
@@ -18,7 +18,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                <div class="p-2 g-6">
                     <div class="card" style="width: 20rem;  height:545px;">
                         <img src="../src/assets/cachorro.png" class="card-img-top" alt="..." >
                         <div class="card-body">
@@ -27,13 +27,13 @@
                             <br>
                             <a class="btn btn-outline-success" href="index.php?controle=achadoController&metodo=listar">
                                 <span class="material-symbols-outlined" style="vertical-align: middle; margin-top: -5px;">pets</span> <!-- ÍCONE --> 
-                            ANIMAIS ACHADOS
+                            ANIMAIS ENCONTRADOS
                             </a>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                <div class="p-2 g-6">
                     <div class="card" style="width: 20rem; height:545px;">
                         <img src="../src/assets/gato.png" class="card-img-top" alt="..." >
                         <div class="card-body">
